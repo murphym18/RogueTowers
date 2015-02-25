@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		MoveSimple();
+		//MoveSimple();
 	}
 	
 	void MoveSimple() {
@@ -27,5 +27,14 @@ public class Enemy : MonoBehaviour {
 		Vector3 direction = target.rigidbody2D.position - this.rigidbody2D.position;
 		Vector3 velocity = direction.normalized * movementSpeed;
 		rigidbody2D.velocity = velocity;
+	}
+
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		if (coll.gameObject.tag == "Cage")
+		{
+			// stop and attack
+			rigidbody2D.velocity = Vector3.zero;
+		}
 	}
 }
