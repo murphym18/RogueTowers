@@ -194,6 +194,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11476406, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+      propertyPath: movementSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+      propertyPath: m_Mass
+      value: 9.99999975e-05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
   m_RootGameObject: {fileID: 1465983073}
@@ -237,7 +245,7 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 165261788}
   m_GameObject: {fileID: 1465983073}
-  m_Mass: 1
+  m_Mass: 9.99999975e-05
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
@@ -293,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c079cbd5c02447baccd2d73e893a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: .0500000007
+  movementSpeed: 1
 --- !u!1001 &1579213651
 Prefab:
   m_ObjectHideFlags: 0
