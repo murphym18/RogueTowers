@@ -26,6 +26,8 @@ public class BoardManager : MonoBehaviour
     public GameObject[] foodTiles;
     public GameObject[] enemyTiles;
     public GameObject[] outerWallTiles;
+    private MapBuilder map;
+    public int numLevels, levelWidth, levelHeight;
 
     private Transform boardHolder;
     private List<Vector3> gridPositions = new List<Vector3>();
@@ -46,6 +48,7 @@ public class BoardManager : MonoBehaviour
     void BoardSetup()
     {
         boardHolder = new GameObject("Board").transform;
+        /*
         for (int x = -1; x <= columns; x++)
         {
             for (int y = -1; y <= rows; y++)
@@ -59,7 +62,9 @@ public class BoardManager : MonoBehaviour
                 instance.transform.SetParent(boardHolder);
             }
         }
+        */
     }
+    /*
 
     Vector3 RandomPosition()
     {
@@ -78,17 +83,33 @@ public class BoardManager : MonoBehaviour
             GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
             Instantiate(tileChoice, randomPosition, Quaternion.identity);
         }
+    }*/
+
+    private void GenerateMap()
+    {
+        map = new MapBuilder(numLevels, levelWidth, levelHeight);
     }
 
-    public void SetupScene(int level)
+    private void LayoutMap()
+    {
+        for (int y = 0; y < levelHeight; y++)
+            for (int x = 0; x < numLevels * levelWidth; x++)
+            {
+                UnityEngine.Object instance;
+                if (map[x, y])
+                    instance = Instantiate(wallTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
+                else
+                    instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
+                ((GameObject)instance).transform.SetParent(boardHolder);
+            }
+    }
+
+    public void SetupScene()
     {
         BoardSetup();
         InitializeList();
-        LayoutObjectAtRandom(wallTiles, wallCount.min, wallCount.max);
-        LayoutObjectAtRandom(foodTiles, foodCount.min, foodCount.max);
-        int enemyCount = (int)Math.Log(level, 2f);
-        LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
-        Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
+        GenerateMap();
+        LayoutMap();
     }
 
     // Use this for initialization
