@@ -55,4 +55,20 @@ public class BoardManager : MonoBehaviour
     {
 
     }
+
+    public bool this[int x, int y]
+    {
+        get { return map[x, y]; }
+        set { map[x, y] = value; }
+    }
+
+    public int MapWidth
+    {
+        get { return numLevels * levelWidth; }
+    }
+
+    public int MapHeight
+    {
+        get { return levelHeight; }
+    }
 }
