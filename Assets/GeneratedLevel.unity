@@ -86,7 +86,7 @@ GameObject:
   - 114: {fileID: 491985817}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,8 +107,8 @@ MonoBehaviour:
   wallTiles:
   - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
   numLevels: 1
-  levelWidth: 40
-  levelHeight: 40
+  levelWidth: 20
+  levelHeight: 20
   boardHolder: {fileID: 0}
 --- !u!114 &491985818
 MonoBehaviour:

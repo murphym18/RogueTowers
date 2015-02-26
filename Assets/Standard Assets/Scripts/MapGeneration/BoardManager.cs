@@ -42,6 +42,11 @@ public class BoardManager : MonoBehaviour
         BoardSetup();
         GenerateMap();
         LayoutMap();
+
+		// Setup enemy spawnpoints
+		gameObject.AddComponent("EnemyLayoutScript");
+		EnemyLayoutScript enemyLayoutScript = GetComponent<EnemyLayoutScript>();
+		enemyLayoutScript.SetupEnemyLayout();
     }
 
     // Use this for initialization

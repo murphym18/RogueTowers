@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour {
 	
 	public float movementSpeed;
 	
-	private Transform target;
+	private GameObject target;
 	private AStar aStar;
 	private List<Vector3> points;
 	private Vector3 nextPoint;
@@ -15,7 +15,9 @@ public class Enemy : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		target = GameObject.FindGameObjectWithTag ("Cage").transform;
+		target = GameObject.FindGameObjectWithTag ("Cage");
+		if (target == null)
+			target = GameObject.FindGameObjectWithTag ("Player");
 		aStar = gameObject.GetComponent<AStar>();
 		points = aStar.GetPoints();
 		pointEnumerator = points.GetEnumerator();
@@ -25,7 +27,8 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		MoveSimple();
+		//MoveSimple();
+		MoveDirect();
 	}
 	
 	void MoveSimple()
@@ -43,7 +46,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void MoveDirect() {
-		Vector3 direction = target.rigidbody2D.position - this.rigidbody2D.position;
+		Vector3 direction = target.transform.rigidbody2D.position - this.rigidbody2D.position;
 		Vector3 velocity = direction.normalized * movementSpeed;
 		rigidbody2D.velocity = velocity;
 	}
