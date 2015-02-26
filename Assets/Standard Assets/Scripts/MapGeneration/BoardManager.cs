@@ -56,17 +56,29 @@ public class BoardManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Gets or sets the blockability of the specified tile
+    /// </summary>
+    /// <param name="x">The grid's x coordinate to check</param>
+    /// <param name="y">The grid's y coordinate to check</param>
+    /// <returns>True if the specified grid location is passable, false otherwise</returns>
     public bool this[int x, int y]
     {
         get { return map[x, y]; }
         set { map[x, y] = value; }
     }
 
+    /// <summary>
+    /// Gets the width of the entire map (in tiles)
+    /// </summary>
     public int MapWidth
     {
         get { return numLevels * levelWidth; }
     }
 
+    /// <summary>
+    /// Gets the height of the entire map (in tiles)
+    /// </summary>
     public int MapHeight
     {
         get { return levelHeight; }

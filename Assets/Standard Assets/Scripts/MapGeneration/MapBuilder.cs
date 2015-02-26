@@ -17,17 +17,6 @@ public class MapBuilder
         this.LevelHeight = LevelHeight;
     }
 
-    public string RenderAsString()
-    {
-        string[][] LevelStrs =
-        Levels.Select(lvl => lvl.RenderAsStrings()).ToArray();
-        return
-            "\r\n".Combine(
-                Enumerable.Range(0, LevelHeight)
-                    .Select(i => "".Combine(LevelStrs.Select(lvl_str => lvl_str[i]).ToArray()))
-                    .ToArray());
-    }
-
     public bool this[int x, int y]
     {
         get
@@ -42,11 +31,5 @@ public class MapBuilder
             x = x % LevelWidth;
             Levels[lvl][y, x] = value;
         }
-    }
-
-    public void PrintToConsole()
-    {
-        //Console.SetCursorPosition(0, 0);
-        Console.WriteLine(RenderAsString());
     }
 }
