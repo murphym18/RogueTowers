@@ -177,7 +177,7 @@ GameObject:
   - 50: {fileID: 320009853}
   - 212: {fileID: 320009852}
   - 61: {fileID: 320009851}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestTower
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8fd7049d3f54c4a77baa37c4963eb4eb, type: 3}
   m_Color: {r: .426470578, g: .0564446375, b: .0564446375, a: 1}
@@ -226,7 +226,7 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 340482413}
   m_GameObject: {fileID: 320009850}
-  m_Mass: 1
+  m_Mass: 100000
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
@@ -346,7 +346,7 @@ GameObject:
   - 50: {fileID: 439109113}
   - 212: {fileID: 439109112}
   - 61: {fileID: 439109111}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestTower
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8fd7049d3f54c4a77baa37c4963eb4eb, type: 3}
   m_Color: {r: .426470578, g: .0564446375, b: .0564446375, a: 1}
@@ -395,7 +395,7 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 692016601}
   m_GameObject: {fileID: 439109110}
-  m_Mass: 1
+  m_Mass: 100000
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
@@ -428,7 +428,6 @@ GameObject:
   - 50: {fileID: 631986717}
   - 61: {fileID: 631986716}
   - 114: {fileID: 631986715}
-  - 114: {fileID: 631986720}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -449,6 +448,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 1
+  aStar: {fileID: 0}
+  spawnPoint: {fileID: 0}
 --- !u!61 &631986716
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -496,7 +497,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7b3ff1c6090944167b1937d7e2beb7c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -512,18 +513,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
---- !u!114 &631986720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11434042, guid: c7af498cde2d64e30ba63402ca4733de,
-    type: 2}
-  m_PrefabInternal: {fileID: 1566329997}
-  m_GameObject: {fileID: 631986714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &634645563
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +550,7 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 1244330947}
   m_GameObject: {fileID: 634645563}
-  m_Mass: 1
+  m_Mass: 300000
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
@@ -589,7 +578,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1d14ffdafb0e74472ab0a666a98acc5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -615,6 +604,7 @@ GameObject:
   - 4: {fileID: 688640439}
   - 212: {fileID: 688640438}
   - 114: {fileID: 688640437}
+  - 114: {fileID: 688640440}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -635,10 +625,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawns:
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  aStarScript: {fileID: 0}
 --- !u!212 &688640438
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -658,7 +649,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4a1d267a0131647ec965c4861b93f566, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -674,6 +665,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &688640440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11421716, guid: 0d64c547403d74feaa72c41330b39a89,
+    type: 2}
+  m_PrefabInternal: {fileID: 1842874314}
+  m_GameObject: {fileID: 688640436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &692016601
 Prefab:
   m_ObjectHideFlags: 0
@@ -729,7 +732,7 @@ GameObject:
   - 50: {fileID: 794492540}
   - 212: {fileID: 794492539}
   - 61: {fileID: 794492538}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestTower
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -767,7 +770,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8fd7049d3f54c4a77baa37c4963eb4eb, type: 3}
   m_Color: {r: .426470578, g: .0564446375, b: .0564446375, a: 1}
@@ -778,7 +781,7 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 920963016}
   m_GameObject: {fileID: 794492537}
-  m_Mass: 1
+  m_Mass: 100000
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
@@ -854,7 +857,7 @@ GameObject:
   - 50: {fileID: 1240350866}
   - 212: {fileID: 1240350865}
   - 61: {fileID: 1240350864}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestTower
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -892,7 +895,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8fd7049d3f54c4a77baa37c4963eb4eb, type: 3}
   m_Color: {r: .426470578, g: .0564446375, b: .0564446375, a: 1}
@@ -903,7 +906,7 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 49772857}
   m_GameObject: {fileID: 1240350863}
-  m_Mass: 1
+  m_Mass: 100000
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
@@ -1028,7 +1031,6 @@ GameObject:
   - 50: {fileID: 1465983075}
   - 61: {fileID: 1465983074}
   - 114: {fileID: 1465983078}
-  - 114: {fileID: 1465983079}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -1083,7 +1085,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7b3ff1c6090944167b1937d7e2beb7c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1112,18 +1114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 1
---- !u!114 &1465983079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11434042, guid: c7af498cde2d64e30ba63402ca4733de,
-    type: 2}
-  m_PrefabInternal: {fileID: 367732593}
-  m_GameObject: {fileID: 1465983073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  aStar: {fileID: 0}
+  spawnPoint: {fileID: 0}
 --- !u!1001 &1566329997
 Prefab:
   m_ObjectHideFlags: 0
@@ -1222,6 +1214,7 @@ GameObject:
   - 4: {fileID: 1962951976}
   - 212: {fileID: 1962951975}
   - 114: {fileID: 1962951974}
+  - 114: {fileID: 1962951977}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -1242,10 +1235,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawns:
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  - {fileID: 6182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  aStarScript: {fileID: 0}
 --- !u!212 &1962951975
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1265,7 +1259,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4a1d267a0131647ec965c4861b93f566, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1281,6 +1275,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &1962951977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11421716, guid: 0d64c547403d74feaa72c41330b39a89,
+    type: 2}
+  m_PrefabInternal: {fileID: 1269003290}
+  m_GameObject: {fileID: 1962951973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2097698742
 GameObject:
   m_ObjectHideFlags: 0

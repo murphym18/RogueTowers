@@ -5,30 +5,49 @@ using System.Collections.Generic;
 public class Enemy : MonoBehaviour {
 	
 	public float movementSpeed;
+	public AStar aStar;
+	public SpawnPoint spawnPoint;
 	
 	private GameObject target;
-	private AStar aStar;
 	private List<Vector3> points;
 	private Vector3 nextPoint;
 	private int pointIndex; // might need this
 	private List<Vector3>.Enumerator pointEnumerator;
+	private bool myActive = false;
 	
 	// Use this for initialization
 	void Start () {
 		target = GameObject.FindGameObjectWithTag ("Cage");
 		if (target == null)
 			target = GameObject.FindGameObjectWithTag ("Player");
-		aStar = gameObject.GetComponent<AStar>();
-		points = aStar.GetPoints();
-		pointEnumerator = points.GetEnumerator();
 
 		pointIndex = 0;
 	}
-	
+
+	void MyActivate()
+	{
+		if (spawnPoint == null)
+		{
+			gameObject.AddComponent("AStar");
+			aStar = gameObject.GetComponent<AStar>();
+			points = aStar.GetPoints();
+		}
+		else
+		{
+			points = spawnPoint.GetPathPoints();
+			Debug.Log("wegot points: " + points[0] + "," + points[1] + "," + points[2] + ",," + points[points.Count - 1]);
+		}
+		
+		pointEnumerator = points.GetEnumerator();
+		myActive = true;
+	}
+
 	// Update is called once per frame
 	void Update () {
-		//MoveSimple();
-		MoveDirect();
+		if (!myActive)
+			return;
+		MoveSimple();
+		//MoveDirect();
 	}
 	
 	void MoveSimple()
@@ -39,6 +58,10 @@ public class Enemy : MonoBehaviour {
 			{
 				pointIndex++;
 				nextPoint = pointEnumerator.Current;
+			}
+			else
+			{
+				// reached end of path
 			}
 		}
 
@@ -60,8 +83,18 @@ public class Enemy : MonoBehaviour {
 
 	bool IsAtNextPoint()
 	{
-		float minDist = 0.5f;
+		float minDist = 0.1f;
 		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
+	}
+
+	public void SetAStarScript(AStar astar)
+	{
+		aStar = astar;
+	}
+
+	public void SetSpawnPoint(SpawnPoint parent)
+	{
+		spawnPoint = parent;
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)
@@ -70,7 +103,7 @@ public class Enemy : MonoBehaviour {
 		{
 			// stop and attack
 			rigidbody2D.velocity = Vector3.zero;
-			//Destroy(gameObject);
+			Destroy(gameObject, 2.0f);
 		}
 	}
 }

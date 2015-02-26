@@ -6,14 +6,15 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
+	public GameObject CageObject;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     private MapBuilder map;
     public int numLevels, levelWidth, levelHeight;
 
-    public Transform boardHolder;
+	public Transform boardHolder;
 
-    void BoardSetup()
+	void BoardSetup()
     {
         boardHolder = new GameObject("Board").transform;
     }
@@ -43,10 +44,15 @@ public class BoardManager : MonoBehaviour
         GenerateMap();
         LayoutMap();
 
+		// Place cage
+		Instantiate(CageObject, new Vector3(2, (int)(levelHeight/2)), Quaternion.identity);
+
 		// Setup enemy spawnpoints
 		gameObject.AddComponent("EnemyLayoutScript");
-		EnemyLayoutScript enemyLayoutScript = GetComponent<EnemyLayoutScript>();
-		enemyLayoutScript.SetupEnemyLayout();
+		GetComponent<EnemyLayoutScript>().SetupEnemyLayout();
+
+		// Setup WaveManger
+		gameObject.AddComponent("WaveManagerScript");
     }
 
     // Use this for initialization

@@ -1,17 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SpawnPoint : MonoBehaviour {
 
-	public Collider2D[] enemySpawns;
+	public GameObject[] enemySpawns;
+	public AStar aStarScript;
+
 	private int spawnInterval = 3;
+	private List<Vector3> pathPoints;
+	private int nextWaveLevel = 1;
 
 	// Use this for initialization
 	void Start () {
 		// Get A* path to Cage
 
+		aStarScript = GetComponent<AStar>();
+		pathPoints = aStarScript.GetPoints();
+
 		// Spawn enemies
-		StartCoroutine(SpawnAtInterval(spawnInterval));
+		StartCoroutine(SpawnAtInterval(spawnInterval, nextWaveLevel++));
 	}
 	
 	// Update is called once per frame
@@ -19,19 +27,37 @@ public class SpawnPoint : MonoBehaviour {
 	
 	}
 
-	IEnumerator SpawnAtInterval(int seconds)
+	IEnumerator SpawnAtInterval(int seconds, int waveLevel)
 	{
-		foreach (Collider2D enemyType in enemySpawns)
+		int maxEnemies = enemySpawns.Length * waveLevel;
+		int enemyCount = 0;
+
+		while (enemyCount < maxEnemies)
 		{
-			SpawnEnemy(enemyType);
-			yield return new WaitForSeconds(seconds);
+			foreach (GameObject enemyType in enemySpawns)
+			{
+				if (enemyCount++ > maxEnemies)
+					break;
+				SpawnEnemy(enemyType);
+				yield return new WaitForSeconds(seconds);
+			}
 		}
 	}
 
-	void SpawnEnemy(Collider2D enemyType)
+	void SpawnEnemy(GameObject enemyType)
 	{
-		Instantiate (enemyType as BoxCollider2D, transform.position, Quaternion.identity);
+		GameObject newEnemy = (GameObject)Instantiate (enemyType, transform.position, Quaternion.identity);
+		newEnemy.SendMessage("SetSpawnPoint", this);
+		newEnemy.SendMessage("MyActivate");
 	}
 
+	public List<Vector3> GetPathPoints()
+	{
+		return pathPoints;
+	}
 
+	public void sendNextWave()
+	{
+		StartCoroutine(SpawnAtInterval(spawnInterval, nextWaveLevel++));
+	}
 }

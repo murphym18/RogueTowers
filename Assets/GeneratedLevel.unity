@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0899ab93e03464b31b30c89ac42fb276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CageObject: {fileID: 184844, guid: 6e283efe4e08649c9a066c6d975e5561, type: 2}
   floorTiles:
   - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
   wallTiles:
