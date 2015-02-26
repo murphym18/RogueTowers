@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour {
 
 	bool IsAtNextPoint()
 	{
-		float minDist = 0.1f;
+		float minDist = 0.3f;
 		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
 	}
 
@@ -104,6 +104,17 @@ public class Enemy : MonoBehaviour {
 			// stop and attack
 			rigidbody2D.velocity = Vector3.zero;
 			Destroy(gameObject, 2.0f);
+		}
+
+	}
+
+	void OnTriggerEnter2D(Collider2D coll)
+	{
+		if (coll.gameObject.tag == "Bullet")
+		{
+			// stop and attack
+			
+			Destroy(gameObject, 0.0f);
 		}
 	}
 }
