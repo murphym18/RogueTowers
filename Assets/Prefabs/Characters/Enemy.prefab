@@ -12,9 +12,10 @@ GameObject:
   - 50: {fileID: 5082496}
   - 61: {fileID: 6182496}
   - 114: {fileID: 11476406}
+  - 114: {fileID: 11434042}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,6 +58,17 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .639999986, y: .639999986}
   m_Center: {x: 0, y: 0}
+--- !u!114 &11434042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11476406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -87,9 +99,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fe9e7a1c95df14fc0b9da0789c6c19aa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b3ff1c6090944167b1937d7e2beb7c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
