@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-
-    public BoardManager BoardScript;
-    private int Level = 3;
+    public GameObject PlayerType;
+    public GameObject PlayerInstance;
+    private BoardManager BoardScript;
 
 
 	// Use this for initialization
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 	{
 	    BoardScript = GetComponent<BoardManager>();
 	    InitGame();
+	    PlayerInstance = (GameObject)Instantiate(PlayerType, new Vector3(0, (int)(BoardScript.levelHeight/2)), Quaternion.identity);
 	}
 
     private void InitGame()
@@ -22,6 +24,6 @@ public class GameManager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    Debug.Log(PlayerInstance.transform.position);
 	}
 }

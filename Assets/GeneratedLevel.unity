@@ -103,7 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60bfbab8b6347549a915ee3e19ba6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoardScript: {fileID: 0}
+  PlayerType: {fileID: 100000, guid: 960dc4f42b00b4fe3b38ee351cf779da, type: 2}
+  PlayerInstance: {fileID: 0}
 --- !u!114 &491985818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,25 +116,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91508c518558c94d89edf2a43569d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columns: 8
-  rows: 8
-  wallCount:
-    min: 5
-    max: 9
-  foodCount:
-    min: 3
-    max: 5
-  exit: {fileID: 0}
   floorTiles:
   - {fileID: 166740, guid: 424ecd5e010e2774ab8d9c5d4e3e4ed6, type: 2}
   wallTiles:
   - {fileID: 180132, guid: 381966a9f6b98fc459888fb0e5a8fa41, type: 2}
-  foodTiles: []
-  enemyTiles: []
-  outerWallTiles: []
-  numLevels: 1
-  levelWidth: 10
-  levelHeight: 10
+  numLevels: 2
+  levelWidth: 50
+  levelHeight: 50
+  boardHolder: {fileID: 0}
 --- !u!4 &491985819
 Transform:
   m_ObjectHideFlags: 0
@@ -158,6 +148,7 @@ GameObject:
   - 92: {fileID: 1433899853}
   - 124: {fileID: 1433899852}
   - 81: {fileID: 1433899851}
+  - 114: {fileID: 1433899856}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -230,3 +221,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1433899856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1433899850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b612f00401b064899d894892f8dd81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameManager: {fileID: 491985816}
+  CameraHeight: -10
