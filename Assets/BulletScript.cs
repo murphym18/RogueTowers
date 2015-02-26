@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 public class BulletScript : MonoBehaviour {
+	public List<string> ThingsToDieOn = new List<string>();
+
 	// Use this for initialization
 	void Start () {
 		Destroy (gameObject, 3);
@@ -20,5 +22,15 @@ public class BulletScript : MonoBehaviour {
 			Destroy(gameObject, 0.0f);
 		}
 		
+	}
+
+	void OnTriggerEnter2D(Collider2D coll)
+	{
+		if (ThingsToDieOn.Contains(coll.gameObject.tag))
+		{
+			// stop and attack
+			
+			Destroy(gameObject, 0.0f);
+		}
 	}
 }

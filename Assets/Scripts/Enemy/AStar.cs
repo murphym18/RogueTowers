@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class AStar : MonoBehaviour {
 
-	public bool useAStar = true;
-	//public bool useAStar = false;
+	//public bool useAStar = true;
+	public bool useAStar = false;
 
 	private GameObject target;
 	private GameObject start;

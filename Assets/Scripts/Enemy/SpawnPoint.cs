@@ -7,9 +7,9 @@ public class SpawnPoint : MonoBehaviour {
 	public GameObject[] enemySpawns;
 	public AStar aStarScript;
 
-	private int spawnInterval = 3;
+	public int spawnInterval = 3;
 	private List<Vector3> pathPoints;
-	private int nextWaveLevel = 1;
+	public int nextWaveLevel = 1;
 
 	// Use this for initialization
 	void Start () {

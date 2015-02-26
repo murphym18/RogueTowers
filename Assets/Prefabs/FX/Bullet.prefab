@@ -45,7 +45,7 @@ Rigidbody2D:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!61 &6100000
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -68,6 +68,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df89c02ccba5345a896c9a65c1e473ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ThingsToDieOn:
+  - Enemy
+  - Wall
+  - Cage
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

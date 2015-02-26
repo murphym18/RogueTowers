@@ -10,8 +10,8 @@ TagManager:
   - GameManager
   - SpawnPoint
   - Bullet
-  - 
-  - 
+  - Wall
+  - Floor
   - 
   - 
   - 

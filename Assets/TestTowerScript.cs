@@ -11,6 +11,7 @@ public class TestTowerScript : MonoBehaviour {
 	public float bulletSpeed = 3.0f;
 	float lastAttack = 0.0f;
 	float attackDelay = 1.0f;
+	int enemyToAttackIndex = 0;
 	// Use this for initialization
 	void Start () {
 		//Destroy(gameObject, 0.7777777f);
@@ -22,16 +23,22 @@ public class TestTowerScript : MonoBehaviour {
 	void FixedUpdate(){
 		//Physics2D.OverlapCircleNonAlloc(rigidbody2D.position, attackRadius, enemies, whatIsTargetable, 0, 0);
 		enemies = Physics2D.OverlapCircleAll(rigidbody2D.position, attackRadius, whatIsTargetable, 0, 0);
-		for (int i = 0; i < enemies.Length; i++) {
+		enemyToAttackIndex = -1;
+		enemyToAttack = attackRadius;
+		for (int i = 0; enemies != null && i < enemies.Length; i++) {
 			if((enemies[i].transform.position - this.transform.position).magnitude < enemyToAttack){
-				enemyToAttack = i;
+				enemyToAttackIndex = i;
+				enemyToAttack = (enemies[i].transform.position - this.transform.position).magnitude;
 			}
 		}
 		if (Time.time > lastAttack + attackDelay) {
 			lastAttack = Time.time;
-			int toAttack = (int)enemyToAttack;
+
 			Rigidbody2D bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-			bulletInstance.velocity = (enemies[toAttack].transform.position - this.transform.position).normalized*bulletSpeed;
+			if(enemyToAttackIndex != -1) {
+				bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized*bulletSpeed;
+			}
+
 		}
 	}
 }
