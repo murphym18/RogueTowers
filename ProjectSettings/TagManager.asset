@@ -4,15 +4,16 @@
 TagManager:
   tags:
   - ground
-  - Crate
+  - Tower
   - Enemy
-  - Wall
-  - Obstacle
-  - Bullet
-  - BombPickup
-  - ExplosionFX
-  - HealthBar
   - Cage
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

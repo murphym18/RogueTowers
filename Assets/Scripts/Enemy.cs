@@ -1,32 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 	
 	public float movementSpeed;
 	
 	private Transform target;
-	private Rigidbody2D rb2D;
+	private AStar aStar;
+	private List<Vector3> points;
+	private Vector3 nextPoint;
+	private int pointIndex; // might need this
+	private List<Vector3>.Enumerator pointEnumerator;
 	
 	// Use this for initialization
 	void Start () {
 		target = GameObject.FindGameObjectWithTag ("Cage").transform;
-		rb2D = GetComponent <Rigidbody2D> (); // can get rid of?
-		MoveSimple();
+		aStar = gameObject.GetComponent<AStar>();
+		points = aStar.GetPoints();
+		pointEnumerator = points.GetEnumerator();
+
+		pointIndex = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//MoveSimple();
+		MoveSimple();
 	}
 	
-	void MoveSimple() {
-//		Vector3 newPostion = Vector3.MoveTowards(rb2D.position, target.position, movementSpeed);
-		//rb2D.MovePosition (newPostion);
-		
+	void MoveSimple()
+	{
+		if (IsAtNextPoint() || pointIndex == 0)
+		{
+			if (pointEnumerator.MoveNext())
+			{
+				pointIndex++;
+				nextPoint = pointEnumerator.Current;
+			}
+		}
+
+		MoveToNextPoint();
+	}
+
+	void MoveDirect() {
 		Vector3 direction = target.rigidbody2D.position - this.rigidbody2D.position;
 		Vector3 velocity = direction.normalized * movementSpeed;
 		rigidbody2D.velocity = velocity;
+	}
+
+	void MoveToNextPoint()
+	{
+		Vector3 direction = nextPoint - this.transform.position;
+		Vector3 velocity = direction.normalized * movementSpeed;
+		rigidbody2D.velocity = velocity;
+	}
+
+	bool IsAtNextPoint()
+	{
+		float minDist = 0.5f;
+		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)
@@ -35,6 +67,7 @@ public class Enemy : MonoBehaviour {
 		{
 			// stop and attack
 			rigidbody2D.velocity = Vector3.zero;
+			//Destroy(gameObject);
 		}
 	}
 }
