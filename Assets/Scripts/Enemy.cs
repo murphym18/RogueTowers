@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour {
 		else
 		{
 			points = spawnPoint.GetPathPoints();
-			Debug.Log("wegot points: " + points[0] + "," + points[1] + "," + points[2] + ",," + points[points.Count - 1]);
+			//Debug.Log("wegot points: " + points[0] + "," + points[1] + "," + points[2] + ",," + points[points.Count - 1]);
 		}
 		
 		pointEnumerator = points.GetEnumerator();

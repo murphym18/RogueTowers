@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class AStar : MonoBehaviour {
 
+	public bool useAStar = true;
+	//public bool useAStar = false;
+
 	private GameObject target;
 	private GameObject start;
 	private GameObject gameScript;
@@ -77,11 +80,17 @@ public class AStar : MonoBehaviour {
 
 	public List<Vector3> GetPoints()
 	{
-		//temp here
-		CalculateAStar();
-		//nodeMap[(int)target.transform.position.x,(int)target.transform.position.y].parent = nodeMap[(int)transform.position.x,(int)transform.position.y];
-		SetPathPoints();
-
+		if (useAStar)
+		{
+			//temp here
+			CalculateAStar();
+			//nodeMap[(int)target.transform.position.x,(int)target.transform.position.y].parent = nodeMap[(int)transform.position.x,(int)transform.position.y];
+			SetPathPoints();
+		}
+		else
+		{
+			SetBasicPathPoints();
+		}
 		return points;
 	}
 
