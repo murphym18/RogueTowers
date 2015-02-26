@@ -7,8 +7,7 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerType;
     public GameObject PlayerInstance;
     private BoardManager BoardScript;
-
-
+	
 	// Use this for initialization
 	void Awake ()
 	{

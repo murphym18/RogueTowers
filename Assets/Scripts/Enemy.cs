@@ -1,32 +1,100 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 	
 	public float movementSpeed;
+	public AStar aStar;
+	public SpawnPoint spawnPoint;
 	
-	private Transform target;
-	private Rigidbody2D rb2D;
+	private GameObject target;
+	private List<Vector3> points;
+	private Vector3 nextPoint;
+	private int pointIndex; // might need this
+	private List<Vector3>.Enumerator pointEnumerator;
+	private bool myActive = false;
 	
 	// Use this for initialization
 	void Start () {
-		target = GameObject.FindGameObjectWithTag ("Cage").transform;
-		rb2D = GetComponent <Rigidbody2D> (); // can get rid of?
-		MoveSimple();
+		target = GameObject.FindGameObjectWithTag ("Cage");
+		if (target == null)
+			target = GameObject.FindGameObjectWithTag ("Player");
+
+		pointIndex = 0;
 	}
-	
+
+	void MyActivate()
+	{
+		if (spawnPoint == null)
+		{
+			gameObject.AddComponent("AStar");
+			aStar = gameObject.GetComponent<AStar>();
+			points = aStar.GetPoints();
+		}
+		else
+		{
+			points = spawnPoint.GetPathPoints();
+			//Debug.Log("wegot points: " + points[0] + "," + points[1] + "," + points[2] + ",," + points[points.Count - 1]);
+		}
+		
+		pointEnumerator = points.GetEnumerator();
+		myActive = true;
+	}
+
 	// Update is called once per frame
 	void Update () {
-		//MoveSimple();
+		if (!myActive)
+			return;
+		MoveSimple();
+		//MoveDirect();
 	}
 	
-	void MoveSimple() {
-//		Vector3 newPostion = Vector3.MoveTowards(rb2D.position, target.position, movementSpeed);
-		//rb2D.MovePosition (newPostion);
-		
-		Vector3 direction = target.rigidbody2D.position - this.rigidbody2D.position;
+	void MoveSimple()
+	{
+		if (IsAtNextPoint() || pointIndex == 0)
+		{
+			if (pointEnumerator.MoveNext())
+			{
+				pointIndex++;
+				nextPoint = pointEnumerator.Current;
+			}
+			else
+			{
+				// reached end of path
+			}
+		}
+
+		MoveToNextPoint();
+	}
+
+	void MoveDirect() {
+		Vector3 direction = target.transform.rigidbody2D.position - this.rigidbody2D.position;
 		Vector3 velocity = direction.normalized * movementSpeed;
 		rigidbody2D.velocity = velocity;
+	}
+
+	void MoveToNextPoint()
+	{
+		Vector3 direction = nextPoint - this.transform.position;
+		Vector3 velocity = direction.normalized * movementSpeed;
+		rigidbody2D.velocity = velocity;
+	}
+
+	bool IsAtNextPoint()
+	{
+		float minDist = 0.1f;
+		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
+	}
+
+	public void SetAStarScript(AStar astar)
+	{
+		aStar = astar;
+	}
+
+	public void SetSpawnPoint(SpawnPoint parent)
+	{
+		spawnPoint = parent;
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)
@@ -35,6 +103,7 @@ public class Enemy : MonoBehaviour {
 		{
 			// stop and attack
 			rigidbody2D.velocity = Vector3.zero;
+			Destroy(gameObject, 2.0f);
 		}
 	}
 }
