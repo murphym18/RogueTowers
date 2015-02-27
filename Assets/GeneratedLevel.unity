@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &491985816
 GameObject:
@@ -99,18 +100,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 491985816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0899ab93e03464b31b30c89ac42fb276, type: 3}
+  m_Script: {fileID: 11500000, guid: d60bfbab8b6347549a915ee3e19ba6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CageObject: {fileID: 184844, guid: 6e283efe4e08649c9a066c6d975e5561, type: 2}
-  floorTiles:
-  - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
-  wallTiles:
-  - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
-  numLevels: 1
-  levelWidth: 30
-  levelHeight: 30
-  boardHolder: {fileID: 0}
+  PlayerType: {fileID: 100000, guid: 960dc4f42b00b4fe3b38ee351cf779da, type: 2}
+  PlayerInstance: {fileID: 0}
 --- !u!114 &491985818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,11 +113,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 491985816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34c28484c14dc49b3a667a80deee44e0, type: 3}
+  m_Script: {fileID: 11500000, guid: f91508c518558c94d89edf2a43569d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerType: {fileID: 100000, guid: 960dc4f42b00b4fe3b38ee351cf779da, type: 2}
-  PlayerInstance: {fileID: 0}
+  CageObject: {fileID: 184844, guid: 9639b8f29beafe848862cc2aefc883b9, type: 2}
+  floorTiles:
+  - {fileID: 166740, guid: 424ecd5e010e2774ab8d9c5d4e3e4ed6, type: 2}
+  wallTiles:
+  - {fileID: 180132, guid: 381966a9f6b98fc459888fb0e5a8fa41, type: 2}
+  numLevels: 2
+  levelWidth: 40
+  levelHeight: 60
+  boardHolder: {fileID: 0}
 --- !u!4 &491985819
 Transform:
   m_ObjectHideFlags: 0
@@ -229,7 +230,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1433899850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ec1021734e7b44758de88d1d221fb15, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b612f00401b064899d894892f8dd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 491985816}
