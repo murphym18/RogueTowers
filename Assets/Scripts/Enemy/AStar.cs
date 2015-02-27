@@ -47,7 +47,7 @@ public class AStar : MonoBehaviour {
 		if (toTarget == null)
 		{
 			// then no target found, so return self
-			Debug.Log("actually setting to start?");
+			//Debug.Log("actually setting to start?");
 			return start;
 		}
 
@@ -60,7 +60,7 @@ public class AStar : MonoBehaviour {
 		//Node node = nodeMap[(int)start.transform.position.x - 1,(int)start.transform.position.y - 1];
 		while(node.parent != null)
 		{
-			Debug.Log("adding path: " + node.x + "," + node.y);
+			//Debug.Log("adding path: " + node.x + "," + node.y);
 
 			points.Add(new Vector3(node.x, node.y, 0));
 			node = node.parent;
@@ -134,7 +134,7 @@ public class AStar : MonoBehaviour {
 
 	void InitializeNodeMap()
 	{
-		Debug.Log("initialzing nodemap");
+		//Debug.Log("initialzing nodemap");
 
 		nodeMap = new Node[boardScript.MapWidth, boardScript.MapHeight];
 		for (int x = 0; x < boardScript.MapWidth; x++)
@@ -145,7 +145,7 @@ public class AStar : MonoBehaviour {
 			}
 		}
 
-		Debug.Log("nodemap initialized");
+		//Debug.Log("nodemap initialized");
 	}
 
 	int ManhattanDistance(int x, int y)
@@ -155,7 +155,7 @@ public class AStar : MonoBehaviour {
 
 	void CalculateAStar()
 	{
-		Debug.Log("starting astar");
+		//Debug.Log("starting astar");
 
 		SortedList openList = new SortedList();
 
@@ -168,7 +168,7 @@ public class AStar : MonoBehaviour {
 		start_n.open = false;
 		openList.Add((float)start_n.f + start_n.k, start_n);
 		openList.RemoveAt(0);
-		Debug.Log("placed starting node");
+		//Debug.Log("placed starting node");
 		//return;
 
 		//for (int x = start_n.x - 1; x <= start_n.x + 1 && x < boardScript.MapWidth ; x++)
@@ -179,7 +179,7 @@ public class AStar : MonoBehaviour {
 
 				if (x >= 0 && y >= 0 && y < boardScript.MapHeight && !boardScript[x,y] && !nodeMap[x,y].closed)
 				{
-					Debug.Log("adding " + x + "," + y);
+					//Debug.Log("adding " + x + "," + y);
 					int g = ((x - start_n.x) * (y - start_n.y)) == 0 ? 10 : 14;
 					Node cur_n = nodeMap[x,y];
 					cur_n.parent = nodeMap[(int)start.transform.position.x,(int)start.transform.position.y];
@@ -201,7 +201,7 @@ public class AStar : MonoBehaviour {
 		//return;
 		//
 
-		Debug.Log("initialized openlist");
+		//Debug.Log("initialized openlist");
 
 		// repeat search
 		while(openList.Count > 0)
@@ -219,7 +219,7 @@ public class AStar : MonoBehaviour {
 						//if (x == (int)start.transform.position.x - 1 && y == (int)start.transform.position.y - 1)
 						if (x == (int)target.transform.position.x && y == (int)target.transform.position.y)
 						{
-							Debug.Log("found target!");
+							//Debug.Log("found target!");
 							nodeMap[x,y].parent = parent_n;
 							return;
 							//break;
@@ -239,7 +239,7 @@ public class AStar : MonoBehaviour {
 						}
 						else
 						{
-							Debug.Log("adding " + x + "," + y);
+							//Debug.Log("adding " + x + "," + y);
 
 							nodeMap[x,y].parent = parent_n;
 							nodeMap[x,y].g = parent_n.g + g;
@@ -256,7 +256,7 @@ public class AStar : MonoBehaviour {
 			openList.RemoveAt(0);
 
 		}
-		Debug.Log("finished repeat loop");
+		//Debug.Log("finished repeat loop");
 		// Form path
 
 	}

@@ -108,8 +108,8 @@ MonoBehaviour:
   wallTiles:
   - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
   numLevels: 1
-  levelWidth: 30
-  levelHeight: 30
+  levelWidth: 25
+  levelHeight: 25
   boardHolder: {fileID: 0}
 --- !u!114 &491985818
 MonoBehaviour:
