@@ -5,35 +5,48 @@ using System.Collections.Generic;
 
 public class AStar : MonoBehaviour {
 
-	//public bool useAStar = true;
-	public bool useAStar = false;
+	public bool useAStar = true;
+	//public bool useAStar = false;
 
 	private GameObject target;
 	private GameObject start;
-	private GameObject gameScript;
-	private BoardManager boardScript;
+	private GameObject gameManager;
+	private BoardManager boardManager;
+	private SpawnPoint attachedSpawnPoint;
 
 	private List<Vector3> points = new List<Vector3>();
 	private Node[,] nodeMap;
-
-	// Use this for initialization
+	
 	void Awake () {
+		gameManager = GameObject.FindGameObjectWithTag("GameManager");
+		boardManager = gameManager.GetComponent<BoardManager>();
+
+		attachedSpawnPoint = GetComponent<SpawnPoint>();
+		if (attachedSpawnPoint)
+		{
+			//Debug.Log("AStar for a spawnpoint");
+		}
+		else
+		{
+			//Debug.Log("AStar not for an enemy or not spawnpoint");
+		}
+	}
+
+	public void Initialize()
+	{
 		start = this.gameObject;
 		target = GetTarget();
-
-		gameScript = GameObject.FindGameObjectWithTag("GameManager");
-		boardScript = gameScript.GetComponent<BoardManager>();
-
 		InitializeNodeMap();
-		//CalculateAStar();
 
-		//SetPathPoints();
-		//SetBasicPathPoints();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		if (useAStar)
+		{
+			CalculateAStar();
+			SetPathPoints();
+		}
+		else
+		{
+			SetBasicPathPoints();
+		}
 	}
 
 	GameObject GetTarget()
@@ -56,17 +69,18 @@ public class AStar : MonoBehaviour {
 
 	void SetPathPoints()
 	{
+		// start at target
 		Node node = nodeMap[(int)target.transform.position.x,(int)target.transform.position.y];
-		//Node node = nodeMap[(int)start.transform.position.x - 1,(int)start.transform.position.y - 1];
+
+		// then work backwards
 		while(node.parent != null)
 		{
-			//Debug.Log("adding path: " + node.x + "," + node.y);
-
 			points.Add(new Vector3(node.x, node.y, 0));
 			node = node.parent;
 		}
-		points.Reverse();
 
+		// Reverse the list so the target is last
+		points.Reverse();
 	}
 
 	void SetBasicPathPoints()
@@ -80,17 +94,6 @@ public class AStar : MonoBehaviour {
 
 	public List<Vector3> GetPoints()
 	{
-		if (useAStar)
-		{
-			//temp here
-			CalculateAStar();
-			//nodeMap[(int)target.transform.position.x,(int)target.transform.position.y].parent = nodeMap[(int)transform.position.x,(int)transform.position.y];
-			SetPathPoints();
-		}
-		else
-		{
-			SetBasicPathPoints();
-		}
 		return points;
 	}
 
@@ -122,35 +125,33 @@ public class AStar : MonoBehaviour {
 			return (f < n2.f) ? 1 : -1;
 		}
 	}
-	/*
-	public class NodeCompare<Node> : IComparer<Node>
-	{
-		int Compare(Node x, Node y)
-		{
-			return (((Node)x).f < ((Node)y).f) ? 1 : -1; 
-		}
-	}
-	*/
 
 	void InitializeNodeMap()
 	{
-		//Debug.Log("initialzing nodemap");
-
-		nodeMap = new Node[boardScript.MapWidth, boardScript.MapHeight];
-		for (int x = 0; x < boardScript.MapWidth; x++)
+		// Create a node for each square on the map
+		nodeMap = new Node[boardManager.MapWidth, boardManager.MapHeight];
+		for (int x = 0; x < boardManager.MapWidth; x++)
 		{
-			for (int y = 0; y < boardScript.MapHeight; y++)
+			for (int y = 0; y < boardManager.MapHeight; y++)
 			{
-				nodeMap[x,y] = new Node(x, y, !boardScript[x,y]);
+				nodeMap[x,y] = new Node(x, y, !boardManager[x,y]);
 			}
 		}
-
-		//Debug.Log("nodemap initialized");
 	}
 
 	int ManhattanDistance(int x, int y)
 	{
 		return 10 * (int)(System.Math.Abs(target.transform.position.x - x) + System.Math.Abs(target.transform.position.y - y));
+	}
+
+	public class myReverserClass : IComparer  {
+		
+		// Calls CaseInsensitiveComparer.Compare with the parameters reversed. 
+		int IComparer.Compare( System.Object x, System.Object y )  {
+
+			return( (new Node(-1,-1,false)).Compare( (Node)x, (Node)y ) );
+		}
+		
 	}
 
 	void CalculateAStar()
@@ -167,17 +168,16 @@ public class AStar : MonoBehaviour {
 		start_n.closed = true;
 		start_n.open = false;
 		openList.Add((float)start_n.f + start_n.k, start_n);
+		//openList.Add(start_n, start_n);
 		openList.RemoveAt(0);
 		//Debug.Log("placed starting node");
-		//return;
 
-		//for (int x = start_n.x - 1; x <= start_n.x + 1 && x < boardScript.MapWidth ; x++)
-		for (int x = start_n.x - 1; x <= start_n.x + 1 && x < boardScript.MapWidth ; x++)
+		for (int x = start_n.x - 1; x <= start_n.x + 1 && x < boardManager.MapWidth ; x++)
 		{
 			for (int y = start_n.y - 1; y <= start_n.y + 1; y++)
 			{
 
-				if (x >= 0 && y >= 0 && y < boardScript.MapHeight && !boardScript[x,y] && !nodeMap[x,y].closed)
+				if (x >= 0 && y >= 0 && y < boardManager.MapHeight && nodeMap[x,y].walkable && !nodeMap[x,y].closed)
 				{
 					//Debug.Log("adding " + x + "," + y);
 					int g = ((x - start_n.x) * (y - start_n.y)) == 0 ? 10 : 14;
@@ -188,35 +188,27 @@ public class AStar : MonoBehaviour {
 					cur_n.f = cur_n.g + cur_n.h;
 					cur_n.open = true;
 					openList.Add((double)cur_n.f + cur_n.k, cur_n);
+					//openList.Add(start_n, start_n);
 				}
 
 			}
 		}
-		//return;
-		//openList.Remove((double)start_n.f + start_n.k);
-
-		// temp
-		//Node mid = openList.GetByIndex(0) as Node;
-		//nodeMap[(int)target.transform.position.x,(int)target.transform.position.y].parent = mid;
-		//return;
-		//
-
 		//Debug.Log("initialized openlist");
 
 		// repeat search
 		while(openList.Count > 0)
 		{
 			Node parent_n = openList.GetByIndex(0) as Node;
+			openList.RemoveAt(0);
 			// check surroundings
-			for (int x = parent_n.x - 1; x <= parent_n.x + 1 && x < boardScript.MapWidth ; x++)
+			for (int x = parent_n.x - 1; x <= parent_n.x + 1 && x < boardManager.MapWidth ; x++)
 			{
 				for (int y = parent_n.y - 1; y <= parent_n.y + 1; y++)
 				{
 					// if node exists and is valid
-					if (x >= 0 && y >= 0 && y < boardScript.MapHeight && !boardScript[x,y] && !nodeMap[x,y].closed)
+					if (x >= 0 && y >= 0 && y < boardManager.MapHeight && nodeMap[x,y].walkable && !nodeMap[x,y].closed)
 					{
 						// reached target
-						//if (x == (int)start.transform.position.x - 1 && y == (int)start.transform.position.y - 1)
 						if (x == (int)target.transform.position.x && y == (int)target.transform.position.y)
 						{
 							//Debug.Log("found target!");
@@ -229,12 +221,14 @@ public class AStar : MonoBehaviour {
 						if (nodeMap[x,y].open)
 						{
 							if (nodeMap[x,y].g > parent_n.g + g)
-							{
+							{	
 								openList.Remove((double)nodeMap[x,y].f + nodeMap[x,y].k);
+
 								nodeMap[x,y].parent = parent_n;
 								nodeMap[x,y].g = parent_n.g + g;
 								nodeMap[x,y].f = nodeMap[x,y].g + nodeMap[x,y].h;
 								openList.Add((double)nodeMap[x,y].f + nodeMap[x,y].k, nodeMap[x,y]);
+								//openList.Add(nodeMap[x,y], nodeMap[x,y]);
 							}
 						}
 						else
@@ -247,17 +241,16 @@ public class AStar : MonoBehaviour {
 							nodeMap[x,y].f = nodeMap[x,y].g + nodeMap[x,y].h;
 							nodeMap[x,y].open = true;
 							openList.Add((double)nodeMap[x,y].f + nodeMap[x,y].k, nodeMap[x,y]);
+							//openList.Add(nodeMap[x,y], nodeMap[x,y]);
 						}
 					}
 				}
 			}
 			parent_n.closed = true;
 			parent_n.open = false;
-			openList.RemoveAt(0);
+			//openList.RemoveAt(0);
 
 		}
-		//Debug.Log("finished repeat loop");
-		// Form path
-
+		Debug.Log("finished repeat loop");
 	}
 }

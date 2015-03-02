@@ -5,18 +5,18 @@ using Random = UnityEngine.Random;
 public class EnemyLayoutScript : MonoBehaviour {
 
 	public GameObject spawnPoint;
+	public int spawnPointCount = 1;
+	public int enemyPocketCount = 3;
+	public int enemyPocketSize = 5;
 
 	private GameObject gameScript;
 	private BoardManager boardScript;
 	private int mapWidth, mapHeight;
-	private int spawnPointCount = 1;
-	private int enemyPocketCount = 3;
-	private int enemyPocketSize = 5;
 
 	// main function to set up enemies and spawnpoints in existing map
 	public void SetupEnemyLayout()
 	{
-		gameScript = GameObject.FindGameObjectWithTag("GameManager");
+		gameScript = GameObject.Find("GameManager");
 		boardScript = gameScript.GetComponent<BoardManager>();
 		mapWidth = boardScript.MapWidth;
 		mapHeight = boardScript.MapHeight;
@@ -34,8 +34,12 @@ public class EnemyLayoutScript : MonoBehaviour {
 			int y = Random.Range (1, mapHeight);
 			if (!boardScript[x, y])
 			{
-				UnityEngine.Object instance = Instantiate(spawnPoint, new Vector3(x, y), Quaternion.identity);
-				((GameObject)instance).transform.SetParent(boardScript.boardHolder);
+				GameObject instance = Instantiate(spawnPoint, new Vector3(x, y), Quaternion.identity) as GameObject;
+				instance.transform.SetParent(boardScript.boardHolder);
+
+				// initialize the spawn point
+				instance.GetComponent<SpawnPoint>().Initialize();
+
 				spawnPointCount--;
 			}
 		}

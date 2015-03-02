@@ -5,49 +5,42 @@ using System.Collections.Generic;
 public class Enemy : MonoBehaviour {
 	
 	public float movementSpeed;
-	public AStar aStar;
-	public SpawnPoint spawnPoint;
-	
+
+	private AStar aStar;
 	private GameObject target;
+	private SpawnPoint spawnPoint;
 	private List<Vector3> points;
 	private Vector3 nextPoint;
-	private int pointIndex; // might need this
+	private int pointIndex = 0; // might need this
 	private List<Vector3>.Enumerator pointEnumerator;
-	private bool myActive = false;
-	
-	// Use this for initialization
-	void Start () {
+
+	void Awake()
+	{
 		target = GameObject.FindGameObjectWithTag ("Cage");
 		if (target == null)
 			target = GameObject.FindGameObjectWithTag ("Player");
-
-		pointIndex = 0;
 	}
 
-	void MyActivate()
+	public void Initialize(SpawnPoint spawnPoint)
 	{
+		this.spawnPoint = spawnPoint;
 		if (spawnPoint == null)
 		{
-			gameObject.AddComponent("AStar");
+			Debug.Log("activating without spawn point");
 			aStar = gameObject.GetComponent<AStar>();
 			points = aStar.GetPoints();
 		}
 		else
 		{
+			//Debug.Log("activating with spawn point");
 			points = spawnPoint.GetPathPoints();
-			//Debug.Log("wegot points: " + points[0] + "," + points[1] + "," + points[2] + ",," + points[points.Count - 1]);
 		}
 		
 		pointEnumerator = points.GetEnumerator();
-		myActive = true;
 	}
-
-	// Update is called once per frame
+	
 	void Update () {
-		if (!myActive)
-			return;
 		MoveSimple();
-		//MoveDirect();
 	}
 	
 	void MoveSimple()

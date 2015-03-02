@@ -58,7 +58,6 @@ MonoBehaviour:
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  aStarScript: {fileID: 0}
   spawnInterval: 3
   nextWaveLevel: 1
 --- !u!212 &21248762

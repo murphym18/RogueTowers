@@ -48,11 +48,10 @@ public class BoardManager : MonoBehaviour
 		Instantiate(CageObject, new Vector3(2, (int)(levelHeight/2)), Quaternion.identity);
 
 		// Setup enemy spawnpoints
-		gameObject.AddComponent("EnemyLayoutScript");
 		GetComponent<EnemyLayoutScript>().SetupEnemyLayout();
 
-		// Setup WaveManger
-		gameObject.AddComponent("WaveManagerScript");
+		// tell WaveManger to start
+		GetComponent<WaveManagerScript>().InitializeWaves();
     }
 
     // Use this for initialization
