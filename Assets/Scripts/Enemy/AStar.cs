@@ -56,6 +56,7 @@ public class AStar : MonoBehaviour {
 		{
 			// then cage was already destroyed, target player
 			toTarget = GameObject.FindGameObjectWithTag ("Player");
+			Debug.Log(toTarget);
 		}
 		if (toTarget == null)
 		{
@@ -154,6 +155,20 @@ public class AStar : MonoBehaviour {
 		
 	}
 
+	bool notCornering(int start_x, int start_y, int x, int y)
+	{
+		if ((x - start_x) * (y - start_y) == 0)
+			return true;
+		else
+		{
+			int x_check = (start_x > x ? -1 : 1);
+			int y_check = (start_y > y ? -1 : 1);
+			return boardManager[start_x,y] || boardManager[x,start_y];
+		}
+
+		return true;
+	}
+
 	void CalculateAStar()
 	{
 		//Debug.Log("starting astar");
@@ -206,7 +221,8 @@ public class AStar : MonoBehaviour {
 				for (int y = parent_n.y - 1; y <= parent_n.y + 1; y++)
 				{
 					// if node exists and is valid
-					if (x >= 0 && y >= 0 && y < boardManager.MapHeight && nodeMap[x,y].walkable && !nodeMap[x,y].closed)
+					if (x >= 0 && y >= 0 && y < boardManager.MapHeight && nodeMap[x,y].walkable && !nodeMap[x,y].closed &&
+					    !(boardManager[parent_n.x,y] || boardManager[x,parent_n.y]))
 					{
 						// reached target
 						if (x == (int)target.transform.position.x && y == (int)target.transform.position.y)
