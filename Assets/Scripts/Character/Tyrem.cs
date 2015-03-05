@@ -12,13 +12,16 @@ public class Tyrem : Character {
 	
 	// Use this for initialization
 	void Start () {
+
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float h = Input.GetAxis ("Horizontal");
-		float v = Input.GetAxis ("Vertical");
+		float h = Input.GetAxis ("MovePlayerHorizontal");
+		float v = Input.GetAxis ("MovePlayerVertical");
 		rigidbody2D.velocity = (new Vector2 (h, v)).normalized * maxSeed;
+
+		;
 	}
 }
