@@ -13,6 +13,7 @@ public class Chest : MonoBehaviour {
 	
 	}
 
+	/*
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.gameObject.tag == "Bullet")
@@ -24,4 +25,5 @@ public class Chest : MonoBehaviour {
                 Destroy(gameObject, 0.0f);
         }
     }
+    */
 }
