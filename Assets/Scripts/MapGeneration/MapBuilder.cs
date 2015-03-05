@@ -21,6 +21,8 @@ public class MapBuilder
     {
         get
         {
+            if (x < 0 || x >= LevelWidth*Levels.Length || y < 0 || y >= LevelHeight)
+                return true;
             int lvl = x / LevelWidth;
             x = x % LevelWidth;
             return Levels[lvl][y, x];
