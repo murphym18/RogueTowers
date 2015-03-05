@@ -3,23 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class WaveManagerScript : MonoBehaviour {
+	
+	public int cooldownTime = 2;
 
 	private List<GameObject> spawnPoints = new List<GameObject>();
 	private bool inCooldown = true;
-	public int cooldownTime = 2;
+	private GameManager gameManager;
+	private GameObject cage;
+	private GameObject player;
 	
 	// Finds all spawnpoints then immediately sends a wave
 	public void InitializeWaves()
 	{
+		gameManager = this.GetComponent<GameManager>();
+		cage = GameObject.FindGameObjectWithTag ("Cage");
+
 		spawnPoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPoint"));
 		inCooldown = false;
-		sendWave ();
+		sendWave();
 	}
 
 	// If in cooldown, do nothing
 	// if not in cooldown, check if enemies all gone,
 	//		if they are, cooldown then send next wave
 	void Update () {
+		if (player == null)
+			player = gameManager.PlayerInstance;
+
+		//if (player && !inCooldown)
 		if (!inCooldown)
 		{
 			GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");

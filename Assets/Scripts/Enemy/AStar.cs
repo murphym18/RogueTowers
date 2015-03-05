@@ -55,8 +55,8 @@ public class AStar : MonoBehaviour {
 		if (toTarget == null)
 		{
 			// then cage was already destroyed, target player
-			toTarget = GameObject.FindGameObjectWithTag ("Player");
-			Debug.Log(toTarget);
+			toTarget = gameManager.GetComponent<GameManager>().PlayerInstance;
+			Debug.Log("targetting player as " + toTarget + " at " + toTarget.transform.position);
 		}
 		if (toTarget == null)
 		{
@@ -64,7 +64,7 @@ public class AStar : MonoBehaviour {
 			//Debug.Log("actually setting to start?");
 			return start;
 		}
-
+		//Debug.Log("targetting cage as " + toTarget + " at " + toTarget.transform.position);
 		return toTarget;
 	}
 

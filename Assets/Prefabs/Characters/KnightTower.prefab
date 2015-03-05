@@ -8,15 +8,13 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 212: {fileID: 21200000}
-  - 114: {fileID: 11400000}
   - 50: {fileID: 5000000}
+  - 212: {fileID: 21200000}
   - 61: {fileID: 6100000}
-  - 95: {fileID: 9540920}
-  - 114: {fileID: 11427768}
+  - 114: {fileID: 11437302}
   m_Layer: 9
-  m_Name: Test
-  m_TagString: Player
+  m_Name: KnightTower
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .977125585, y: 1.12564862, z: 0}
+  m_LocalPosition: {x: 1.00999999, y: 1.01999998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -39,12 +37,12 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mass: 1
+  m_Mass: 100000
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
-  m_FixedAngle: 1
-  m_IsKinematic: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -57,24 +55,9 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: .639999986, y: .639999986}
-  m_Center: {x: 0, y: .50999999}
---- !u!95 &9540920
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ac7650acef2b04b9d9371c8dee0349b5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11400000
+  m_Size: {x: .49000001, y: 1.02999997}
+  m_Center: {x: 0, y: 0}
+--- !u!114 &11437302
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -82,23 +65,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aec35885612c4323b96da0f16ab3b48, type: 3}
+  m_Script: {fileID: 11500000, guid: 90ca2ebd8eaa143448deace80c263ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestSpawn: {fileID: 6100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
-  movementSpeed: 5
---- !u!114 &11427768
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f55e2280b24a444a5a508804ef6ac573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PawnTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
+  attackRadius: 10
+  whatIsTargetable:
+    serializedVersion: 2
+    m_Bits: 1024
+  Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
+  bulletSpeed: 6
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -118,9 +93,9 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2511236001
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 15e535b1dbed1435cb38dabaf459cf98, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: f5b88c7458be64a9ab649322f948bf9f, type: 3}
+  m_Color: {r: .210586071, g: .496621728, b: .698529422, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

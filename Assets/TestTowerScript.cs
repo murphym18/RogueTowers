@@ -34,8 +34,8 @@ public class TestTowerScript : MonoBehaviour {
 		if (Time.time > lastAttack + attackDelay) {
 			lastAttack = Time.time;
 
-			Rigidbody2D bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
 			if(enemyToAttackIndex != -1) {
+				Rigidbody2D bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
 				bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized*bulletSpeed;
 			}
 

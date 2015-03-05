@@ -18,8 +18,8 @@ public class SpawnPoint : MonoBehaviour {
 
 	public void Initialize()
 	{
-		pathPoints = aStarScript.GetPoints();
 		aStarScript.Initialize();
+		pathPoints = aStarScript.GetPoints();
 	}
 
 	IEnumerator SpawnAtInterval(int seconds, int waveLevel)
@@ -33,7 +33,7 @@ public class SpawnPoint : MonoBehaviour {
 			{
 				if (enemyCount++ > maxEnemies)
 					break;
-
+				
 				if (enabled)
 					SpawnEnemy(enemyType);
 
