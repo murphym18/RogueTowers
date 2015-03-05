@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PawnTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
-  KnightTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
+  KnightTower: {fileID: 100000, guid: ba179dc7626f548ec9d01cd340d713ec, type: 2}
   BishopTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
   RookTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
   KingTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
