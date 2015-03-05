@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Chest : MonoBehaviour
+public class LevelTrigger : MonoBehaviour
 {
 
-    public Sprite OpenSprite;
+    public int Level { get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +20,7 @@ public class Chest : MonoBehaviour
     {
         if (coll.gameObject.tag == "Player")
         {
-            GetComponent<SpriteRenderer>().sprite = OpenSprite;
+            this.GetComponentInParent<WaveManagerScript>().TriggerNextLevel(this.Level);
         }
     }
 }

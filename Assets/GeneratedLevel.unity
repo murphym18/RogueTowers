@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1001 &443415629
 Prefab:
@@ -154,6 +155,7 @@ MonoBehaviour:
   wallTiles:
   - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
   borderTile: {fileID: 130410, guid: 384f041fcc9e5dc41a91b4c2fab60e53, type: 2}
+  levelTriggerTile: {fileID: 0}
   chestTile: {fileID: 194354, guid: c642aa043e159324fbbb9775e513cc3d, type: 2}
   numLevels: 2
   levelWidth: 25
@@ -248,8 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295

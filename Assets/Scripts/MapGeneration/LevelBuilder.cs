@@ -16,6 +16,8 @@ public class LevelBuilder
     private const int FILL_NEGATIVE_THRESH = 1;
     private const int MIN_ENT_EXIT_WIDTH = 3;
     private const double ENT_EXIT_WIDTH_PERCENTAGE = 0.05;
+    private const int CAGE_ROOM_DIM = 6;
+    private const int CAGE_ROOM_OFFSET = 2;
 
     public LevelBuilder(int Width, int Height)
     {
@@ -173,6 +175,22 @@ public class LevelBuilder
         return retMap;
     }
 
+    private bool[][] _CageRoom(bool[][] startingMap)
+    {
+        // Clone the map
+        var retMap = startingMap.Select(bs => bs.Select(val => val).ToArray()).ToArray();
+
+        int top = Height/2 - CAGE_ROOM_DIM/2;
+        int bot = top + CAGE_ROOM_DIM;
+        int left = CAGE_ROOM_OFFSET;
+        int right = CAGE_ROOM_OFFSET + CAGE_ROOM_DIM;
+        for(int row = top; row < bot; row++)
+            for (int col = left; col < right; col++)
+                retMap[row][col] = false;
+
+        return retMap;
+    }
+
     private void Update()
     {
         foreach (var editor in mapEditors)
@@ -207,7 +225,8 @@ public class LevelBuilder
                 //Console.WriteLine("Killing orphans");
                 //Console.WriteLine("Generating entrance and exits");
                 //Console.WriteLine("Refining final map");
-                ApplyIterations(1, _KillOrphans, _EntranceExit, _ApplyKernel2);
+                ApplyIterations(1, _KillOrphans, _EntranceExit, _CageRoom);
+                ApplyIterations(1, _ApplyKernel2);
                 // Confirm that the room is suitable for use
             }
             catch (Exception ex)
