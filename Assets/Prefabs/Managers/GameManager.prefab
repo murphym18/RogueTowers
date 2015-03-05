@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c28484c14dc49b3a667a80deee44e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerType: {fileID: 100000, guid: 960dc4f42b00b4fe3b38ee351cf779da, type: 2}
+  PlayerType: {fileID: 173760, guid: a6865244a2d28c94b8d1c914c9457290, type: 2}
   PlayerInstance: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
