@@ -8,7 +8,7 @@ using System.Collections.Generic;
 [RequireComponent (typeof (BoxCollider2D))]
 public class Tyrem : Character {
 	
-	public float maxSeed = 5f;
+	public float maxSpeed = 5f;
 	
 	// Use this for initialization
 	void Start () {
@@ -20,7 +20,7 @@ public class Tyrem : Character {
 	void Update () {
 		float h = Input.GetAxis ("MovePlayerHorizontal");
 		float v = Input.GetAxis ("MovePlayerVertical");
-		rigidbody2D.velocity = (new Vector2 (h, v)).normalized * maxSeed;
+		rigidbody2D.velocity = (new Vector2 (h, v)).normalized * maxSpeed;
 
 		;
 	}

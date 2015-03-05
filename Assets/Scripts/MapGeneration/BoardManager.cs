@@ -10,6 +10,7 @@ public class BoardManager : MonoBehaviour
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject borderTile;
+    public GameObject levelTriggerTile;
     public GameObject chestTile;
     private MapBuilder map;
     public int numLevels, levelWidth, levelHeight;
@@ -45,15 +46,27 @@ public class BoardManager : MonoBehaviour
             {
                 UnityEngine.Object instance = null;
                 if (useFloorEverywhere || !map[x, y])
+                {
                     instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
+                    ((GameObject) instance).transform.SetParent(boardHolder);
+                }
                 if (map[x, y])
+                {
                     instance = Instantiate(wallTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
+                    ((GameObject)instance).transform.SetParent(boardHolder);
+                }
                 else if (x%levelWidth == levelWidth - 1)
                 {
                     instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity);
+                    ((GameObject)instance).transform.SetParent(boardHolder);
                     map[x, y] = true;
                 }
-                //((GameObject)instance).transform.SetParent(boardHolder);
+                if (x%levelWidth == 1 && !map[x-1,y])
+                {
+                    instance = Instantiate(levelTriggerTile, new Vector3(x, y), Quaternion.identity);
+                    ((GameObject)instance).transform.SetParent(boardHolder);
+                    ((GameObject) instance).GetComponent<LevelTrigger>().Level = (int) ((x - 1)/levelWidth);
+                }
             }
     }
 
