@@ -9,10 +9,24 @@ public class BoardManager : MonoBehaviour
 	public GameObject CageObject;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
+    public GameObject borderTile;
+    public GameObject chestTile;
     private MapBuilder map;
     public int numLevels, levelWidth, levelHeight;
+    public int minChestsPerLevel, maxChestsPerLevel;
+    public bool useFloorEverywhere = false;
+
+    private static Func<int, int, bool> chestPlacement;
 
 	public Transform boardHolder;
+
+    public BoardManager()
+    {
+        chestPlacement = (x, y) =>
+        {
+            return map[x - 1, y] || map[x + 1, y] || map[x, y - 1] || map[x, y + 1];
+        };
+    }
 
 	void BoardSetup()
     {
@@ -29,13 +43,42 @@ public class BoardManager : MonoBehaviour
         for (int y = 0; y < levelHeight; y++)
             for (int x = 0; x < numLevels * levelWidth; x++)
             {
-                UnityEngine.Object instance;
+                UnityEngine.Object instance = null;
                 if (map[x, y])
                     instance = Instantiate(wallTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
-                else
+                else if (x%levelWidth == levelWidth - 1)
+                    instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity);
+                if (useFloorEverywhere || !map[x, y])
                     instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
-                ((GameObject)instance).transform.SetParent(boardHolder);
+                //((GameObject)instance).transform.SetParent(boardHolder);
             }
+    }
+
+    private void ScatterObjects(int Count, GameObject ToGenerate, int XMin = 0, int XMax = -1, Func<int, int, bool> Condition = null)
+    {
+        XMax = XMax == -1 ? numLevels*levelWidth : XMax;
+        Condition = Condition ?? new Func<int, int, bool>((x, y) => true);
+        while (Count > 0)
+        {
+            int x = Random.Range(XMin, XMax);
+            int y = Random.Range(0, levelHeight);
+            if (!map[x, y] && Condition(x, y))
+            {
+                map[x, y] = true;
+                Instantiate(ToGenerate, new Vector3(x, y), Quaternion.identity);
+                Count--;
+            }
+        }
+    }
+
+    private void CreateForeground()
+    {
+        for (int lvl = 0; lvl < numLevels; lvl++)
+        {
+            int left = lvl*levelWidth;
+            int right = left + levelWidth;
+            ScatterObjects(Random.Range(minChestsPerLevel, maxChestsPerLevel), chestTile, left, right, chestPlacement);
+        }
     }
 
     public void SetupScene()
@@ -43,6 +86,7 @@ public class BoardManager : MonoBehaviour
         BoardSetup();
         GenerateMap();
         LayoutMap();
+        CreateForeground();
 
 		// Place cage
 		Instantiate(CageObject, new Vector3(2, (int)(levelHeight/2)), Quaternion.identity);
