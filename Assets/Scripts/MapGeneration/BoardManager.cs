@@ -44,12 +44,15 @@ public class BoardManager : MonoBehaviour
             for (int x = 0; x < numLevels * levelWidth; x++)
             {
                 UnityEngine.Object instance = null;
+                if (useFloorEverywhere || !map[x, y])
+                    instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
                 if (map[x, y])
                     instance = Instantiate(wallTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
                 else if (x%levelWidth == levelWidth - 1)
+                {
                     instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity);
-                if (useFloorEverywhere || !map[x, y])
-                    instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
+                    map[x, y] = true;
+                }
                 //((GameObject)instance).transform.SetParent(boardHolder);
             }
     }
