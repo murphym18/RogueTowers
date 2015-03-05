@@ -20,9 +20,17 @@ public class Enemy : MonoBehaviour {
 	private float lastPathUpdate = 0f;
 	private LayerMask obstructionMask;
 
+	private GameObject gameManager;
+	private BoardManager boardManager;
+	private int curLevel;
+
 	void Awake()
 	{
-		target = GameObject.FindGameObjectWithTag ("Cage");
+		gameManager = GameObject.Find("GameManager");
+		boardManager = gameManager.GetComponent<BoardManager>();
+		curLevel = 1; // TODO: should be boardManager.curLevel
+
+		target = boardManager.LevelCages[curLevel - 1];
 		if (target == null)
 			target = GameObject.FindGameObjectWithTag ("Player");
 

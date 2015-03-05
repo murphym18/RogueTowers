@@ -64,4 +64,20 @@ public class WaveManagerScript : MonoBehaviour {
 			spawnPoint.GetComponent<SpawnPoint>().sendNextWave();
 		}
 	}
+	
+	// When players steps on the trigger tile for the next level
+	void TriggerNextLevel(int nextLevel)
+	{
+		// Start next level
+	}
+
+	void TriggerCageDestroyed()
+	{
+
+	}
+
+	void TriggerCageUnlocked()
+	{
+
+	}
 }

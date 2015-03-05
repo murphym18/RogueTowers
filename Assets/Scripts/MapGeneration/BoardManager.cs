@@ -6,8 +6,7 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
-	public GameObject CageObject;
-    public GameObject[] floorTiles;
+	public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject borderTile;
     public GameObject chestTile;
@@ -15,6 +14,9 @@ public class BoardManager : MonoBehaviour
     public int numLevels, levelWidth, levelHeight;
     public int minChestsPerLevel, maxChestsPerLevel;
     public bool useFloorEverywhere = false;
+
+	public GameObject[] LevelCages;
+	public List<GameObject>[] LevelSpawnPoints;
 
     private static Func<int, int, bool> chestPlacement;
 
@@ -91,13 +93,11 @@ public class BoardManager : MonoBehaviour
         LayoutMap();
         CreateForeground();
 
-		// Place cage
-		Instantiate(CageObject, new Vector3(2, (int)(levelHeight/2)), Quaternion.identity);
-
-		// Setup enemy spawnpoints
+		// Setup enemy spawnpoints and also cages
 		GetComponent<EnemyLayoutScript>().SetupEnemyLayout();
 
 		// tell WaveManger to start
+		GetComponent<WaveManagerScript>().enabled = true;
 		GetComponent<WaveManagerScript>().InitializeWaves();
     }
 

@@ -2,7 +2,11 @@ fileFormatVersion: 2
 guid: 0899ab93e03464b31b30c89ac42fb276
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CageObject: {fileID: 184844, guid: 6e283efe4e08649c9a066c6d975e5561, type: 2}
+  - borderTile: {fileID: 130410, guid: 384f041fcc9e5dc41a91b4c2fab60e53, type: 2}
+  - chestTile: {instanceID: 0}
+  - boardHolder: {fileID: 494354, guid: c642aa043e159324fbbb9775e513cc3d, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
