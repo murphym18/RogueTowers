@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Chest : MonoBehaviour {
+public class Chest : MonoBehaviour
+{
+
+    public Sprite OpenSprite;
 
 	// Use this for initialization
 	void Start () {
@@ -15,13 +18,9 @@ public class Chest : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Bullet")
+        if (coll.gameObject.tag == "Player")
         {
-            // stop and attack
-            int tempBulletDamage = 1;
-            this.health -= tempBulletDamage;
-            if (this.health <= 0)
-                Destroy(gameObject, 0.0f);
+            GetComponent<SpriteRenderer>().sprite = OpenSprite;
         }
     }
 }
