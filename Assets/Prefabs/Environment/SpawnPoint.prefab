@@ -56,8 +56,9 @@ MonoBehaviour:
   enemySpawns:
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: 2498145d229324b029d701f9a391d443, type: 2}
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
-  - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
+  - {fileID: 182496, guid: 2498145d229324b029d701f9a391d443, type: 2}
   spawnInterval: 3
   nextWaveLevel: 1
 --- !u!212 &21248762
