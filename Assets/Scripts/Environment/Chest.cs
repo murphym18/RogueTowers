@@ -16,6 +16,7 @@ public class Chest : MonoBehaviour
 	
 	}
 
+	/*
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.gameObject.tag == "Player")
@@ -23,4 +24,5 @@ public class Chest : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = OpenSprite;
         }
     }
+    */
 }
