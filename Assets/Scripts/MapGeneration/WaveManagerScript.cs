@@ -13,6 +13,7 @@ public class WaveManagerScript : MonoBehaviour {
 	private GameObject cage; //TODO: use somehow
 	private GameObject player;
 	private int curLevel = -1;
+	private bool stopWave = false;
 
 	void Awake()
 	{
@@ -43,8 +44,15 @@ public class WaveManagerScript : MonoBehaviour {
 	IEnumerator waitForCooldown(int seconds)
 	{
 		yield return new WaitForSeconds(seconds);
-		sendWave ();
-		inCooldown = false;
+		if (!stopWave)
+		{
+			sendWave ();
+			inCooldown = false;
+		}
+		else
+		{
+			stopWave = false;
+		}
 	}
 
 	// Tells each spawnPoint to call the function sendNextWave
@@ -82,11 +90,17 @@ public class WaveManagerScript : MonoBehaviour {
 
 	public void TriggerCageDestroyed()
 	{
-
+		stopWave = true;
+		inCooldown = true;
+		curLevelSpawnPoints = new List<GameObject>();
+		Debug.Log("Cage Destroyed!");
 	}
 
 	public void TriggerCageUnlocked()
 	{
-
+		stopWave = true;
+		inCooldown = true;
+		curLevelSpawnPoints = new List<GameObject>();
+		Debug.Log("Cage Unlocked!");
 	}
 }

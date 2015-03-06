@@ -31,7 +31,7 @@ public class Cage : MonoBehaviour {
 					progress += Time.deltaTime;
 					if (unlockTime < progress) {
 						isUnlocked = true;
-						waveManager.TriggerCageDestroyed();
+						waveManager.TriggerCageUnlocked();
 
 					}
 				}
