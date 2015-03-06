@@ -9,6 +9,7 @@ public class Cage : MonoBehaviour {
 	public float unlockTime;
 
 	private GameObject gameManager;
+	private WaveManagerScript waveManager;
 	private GameObject player;
 	private float progress = 0F;
 	private bool isUnlocked = false;
@@ -17,6 +18,7 @@ public class Cage : MonoBehaviour {
 	void Start () {
 		gameManager = GameObject.Find("GameManager");
 		player = GameObject.FindWithTag("Player");
+		waveManager = gameManager.GetComponent<WaveManagerScript>();
 	}
 	
 	// Update is called once per frame
@@ -29,7 +31,7 @@ public class Cage : MonoBehaviour {
 					progress += Time.deltaTime;
 					if (unlockTime < progress) {
 						isUnlocked = true;
-						Destroy(gameObject, 0);
+						waveManager.TriggerCageDestroyed();
 
 					}
 				}
@@ -38,10 +40,13 @@ public class Cage : MonoBehaviour {
 	}
 
 	public void damage() {
-		if (hp > 0) {
-			hp -= 1;
-		} else {
-
+		if (!isUnlocked) {
+			if (hp > 0) {
+				hp -= 1;
+				if (hp == 0) {
+					waveManager.TriggerCageDestroyed();
+				}
+			}
 		}
 	}
 }
