@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 408552}
   - 212: {fileID: 21208552}
   - 61: {fileID: 6199512}
+  - 114: {fileID: 11446208}
   m_Layer: 0
   m_Name: TriggerTile
   m_TagString: Untagged
@@ -40,6 +41,17 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}
+--- !u!114 &11446208
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4044b4f0c70ef1f4eadad65f78c4af97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21208552
 SpriteRenderer:
   m_ObjectHideFlags: 1

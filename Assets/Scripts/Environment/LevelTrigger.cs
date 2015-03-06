@@ -20,7 +20,7 @@ public class LevelTrigger : MonoBehaviour
     {
         if (coll.gameObject.tag == "Player")
         {
-            this.GetComponentInParent<WaveManagerScript>().TriggerNextLevel(this.Level);
+			GameObject.Find("GameManager").GetComponent<WaveManagerScript>().TriggerNextLevel(this.Level);
         }
     }
 }

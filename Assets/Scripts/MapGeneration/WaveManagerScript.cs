@@ -66,17 +66,18 @@ public class WaveManagerScript : MonoBehaviour {
 	}
 	
 	// When players steps on the trigger tile for the next level
-	void TriggerNextLevel(int nextLevel)
+	public void TriggerNextLevel(int nextLevel)
 	{
 		// Start next level
+		//throw new UnityException("trigerrrred" + nextLevel.ToString());
 	}
 
-	void TriggerCageDestroyed()
+	public void TriggerCageDestroyed()
 	{
 
 	}
 
-	void TriggerCageUnlocked()
+	public void TriggerCageUnlocked()
 	{
 
 	}
