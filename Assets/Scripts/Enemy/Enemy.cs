@@ -28,9 +28,9 @@ public class Enemy : MonoBehaviour {
 	{
 		gameManager = GameObject.Find("GameManager");
 		boardManager = gameManager.GetComponent<BoardManager>();
-		curLevel = 1; // TODO: should be boardManager.curLevel
+		curLevel = 0; // TODO: should be boardManager.curLevel
 
-		target = boardManager.LevelCages[curLevel - 1];
+		target = boardManager.LevelCages[curLevel];
 		if (target == null)
 			target = GameObject.FindGameObjectWithTag ("Player");
 

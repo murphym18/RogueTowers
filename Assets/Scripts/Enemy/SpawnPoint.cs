@@ -10,14 +10,19 @@ public class SpawnPoint : MonoBehaviour {
 
 	private AStar aStarScript;
 	private List<Vector3> pathPoints;
+	private GameObject gameManager;
+	private BoardManager boardManager;
 
 	void Awake()
 	{
+		gameManager = GameObject.Find("GameManager");
+		boardManager = gameManager.GetComponent<BoardManager>();
 		aStarScript = GetComponent<AStar>();
 	}
 
-	public void Initialize()
+	public void Initialize(int level)
 	{
+		aStarScript.SetTarget(boardManager.LevelCages[level]);
 		aStarScript.Initialize();
 		pathPoints = aStarScript.GetPoints();
 	}

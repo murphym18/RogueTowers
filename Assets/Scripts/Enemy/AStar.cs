@@ -35,7 +35,8 @@ public class AStar : MonoBehaviour {
 	public void Initialize()
 	{
 		start = this.gameObject;
-		target = GetTarget();
+		if (target == null)
+			target = GetTarget();
 		InitializeNodeMap();
 
 		if (useAStar)
@@ -66,6 +67,11 @@ public class AStar : MonoBehaviour {
 		}
 		//Debug.Log("targetting cage as " + toTarget + " at " + toTarget.transform.position);
 		return toTarget;
+	}
+
+	public void SetTarget(GameObject target)
+	{
+		this.target = target;
 	}
 
 	void SetPathPoints()

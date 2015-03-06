@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 public class EnemyLayoutScript : MonoBehaviour {
@@ -31,39 +32,47 @@ public class EnemyLayoutScript : MonoBehaviour {
 		cageOffset_y = (int)(mapHeight/2);
 
 		boardScript.LevelCages = new GameObject[numLevels];
+		boardScript.LevelSpawnPoints = new List<GameObject>[numLevels];
 
-		SetupCages(numLevels); // TODO: will be numLevels
-		SetupEnemySpawnPoints(spawnPointCount);
+		SetupCages(numLevels);
+		SetupEnemySpawnPoints(numLevels, spawnPointCount); // TODO: will be numLevels
 		SetupEnemyPockets(enemyPocketCount, enemyPocketSize);
-		Debug.Log(boardScript.LevelCages[0]);
 	}
 
 	void SetupCages(int levels)
 	{
 		for (int curLevel = 0; curLevel < levels; curLevel++)
 		{
-			int levelOffset = levelWidth * curLevel;
-			GameObject instance = Instantiate(CageObject, new Vector3(levelOffset + cageOffset_x, cageOffset_y), Quaternion.identity) as GameObject;
+			int levelOffset_x = levelWidth * curLevel;
+			GameObject instance = Instantiate(CageObject, new Vector3(levelOffset_x + cageOffset_x, cageOffset_y), Quaternion.identity) as GameObject;
 			boardScript.LevelCages[curLevel] = instance;
 		}
 	}
 
 	// TODO: don't spawn multiple on same tile
-	void SetupEnemySpawnPoints(int spawnPointCount)
+	void SetupEnemySpawnPoints(int levels, int spawnPointCount)
 	{
-		while (spawnPointCount > 0)
+		for (int curLevel = 0; curLevel < levels; curLevel++)
 		{
-			int x = Random.Range (1, mapWidth);
-			int y = Random.Range (1, mapHeight);
-			if (!boardScript[x, y])
+			int levelOffset_x = levelWidth * curLevel;
+			boardScript.LevelSpawnPoints[curLevel] = new List<GameObject>();
+
+			for (int spawned = 0; spawned < spawnPointCount;)
 			{
-				GameObject instance = Instantiate(SpawnPointObject, new Vector3(x, y), Quaternion.identity) as GameObject;
-				instance.transform.SetParent(boardScript.boardHolder);
+				int x = Random.Range (levelOffset_x, levelOffset_x + levelWidth);
+				int y = Random.Range (1, mapHeight);
 
-				// initialize the spawn point
-				instance.GetComponent<SpawnPoint>().Initialize();
+				if (!boardScript[x, y])
+				{
+					GameObject instance = Instantiate(SpawnPointObject, new Vector3(x, y), Quaternion.identity) as GameObject;
+					instance.transform.SetParent(boardScript.boardHolder);
+					boardScript.LevelSpawnPoints[curLevel].Add(instance);
 
-				spawnPointCount--;
+					// initialize the spawn point
+					//instance.GetComponent<SpawnPoint>().Initialize();
+
+					spawned++;
+				}
 			}
 		}
 	}
@@ -73,4 +82,5 @@ public class EnemyLayoutScript : MonoBehaviour {
 	{
 
 	}
+	
 }
