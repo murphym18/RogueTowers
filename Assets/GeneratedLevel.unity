@@ -194,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerType: {fileID: 173760, guid: a6865244a2d28c94b8d1c914c9457290, type: 2}
   PlayerInstance: {fileID: 0}
+  currentLevel: 0
 --- !u!4 &491985819
 Transform:
   m_ObjectHideFlags: 0

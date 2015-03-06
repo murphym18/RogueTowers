@@ -111,7 +111,6 @@ public class BoardManager : MonoBehaviour
 
 		// tell WaveManger to start
 		GetComponent<WaveManagerScript>().enabled = true;
-		GetComponent<WaveManagerScript>().InitializeWaves();
     }
 
     // Use this for initialization

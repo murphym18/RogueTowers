@@ -63,4 +63,5 @@ public class SpawnPoint : MonoBehaviour {
 	{
 		StartCoroutine(SpawnAtInterval(spawnInterval, nextWaveLevel++));
 	}
+
 }

@@ -10,8 +10,10 @@ public class TowerPlacement : MonoBehaviour {
 	public GameObject KingTower;
 	public GameObject QueenTower;
 
-	private GameObject gameManager;
+	private GameObject gameManagerObject;
+	private GameManager gameManager;
 	private BoardManager boardManager;
+	private int mapWidth, mapHeight, levelWidth, numLevels;
 	private GameObject curTower = null;
 	private TowerInput[] TowerInputKeys;
 
@@ -34,8 +36,13 @@ public class TowerPlacement : MonoBehaviour {
 
 	void Awake()
 	{
-		gameManager = GameObject.Find("GameManager");
-		boardManager = gameManager.GetComponent<BoardManager>();
+		gameManagerObject = GameObject.Find("GameManager");
+		gameManager = gameManagerObject.GetComponent<GameManager>();
+		boardManager = gameManagerObject.GetComponent<BoardManager>();
+		mapWidth = boardManager.MapWidth;
+		mapHeight = boardManager.MapHeight;
+		numLevels = boardManager.numLevels;
+		levelWidth = mapWidth / numLevels;
 	}
 
 	void Update () {
@@ -86,7 +93,12 @@ public class TowerPlacement : MonoBehaviour {
 	// Check if a tower can legally be placed at given x,y position.
 	bool isValidTowerPosition(Vector3 locationVector)
 	{
-		return !boardManager[(int)locationVector.x,(int)locationVector.y];
+		int levelStart_x = levelWidth * gameManager.currentLevel;
+		int levelEnd_x = levelStart_x + levelWidth;
+		if (locationVector.x > levelStart_x && locationVector.x < levelEnd_x)
+			return !boardManager[(int)locationVector.x,(int)locationVector.y];
+		else
+			return false;
 	}
 
 	GameObject instantiateTowerPointer(GameObject towerType)
