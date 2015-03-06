@@ -6,21 +6,28 @@ public class WaveManagerScript : MonoBehaviour {
 	
 	public int cooldownTime = 2;
 
-	private List<GameObject> spawnPoints = new List<GameObject>();
+	private List<GameObject> curSpawnPoints = new List<GameObject>();
 	private bool inCooldown = true;
 	private GameManager gameManager;
-	private GameObject cage;
+	private BoardManager boardManager;
+	private GameObject cage; //TODO: use somehow
 	private GameObject player;
-	
+	private int curLevel = -1;
+
+	void Awake()
+	{
+		gameManager = this.GetComponent<GameManager>();
+		boardManager = gameManager.GetComponent<BoardManager>();
+	}
+
 	// Finds all spawnpoints then immediately sends a wave
 	public void InitializeWaves()
 	{
-		gameManager = this.GetComponent<GameManager>();
-		cage = GameObject.FindGameObjectWithTag ("Cage");
+		//cage = GameObject.FindGameObjectWithTag ("Cage");
 
-		spawnPoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPoint"));
-		inCooldown = false;
-		sendWave();
+		//curSpawnPoints = new List<GameObject>();
+		//inCooldown = false;
+		//sendWave();
 	}
 
 	// If in cooldown, do nothing
@@ -42,12 +49,6 @@ public class WaveManagerScript : MonoBehaviour {
 		}
 	}
 
-	// add a new spawnpoint to the list
-	public void AddToWaveManagerList(GameObject newSpawnPoint)
-	{
-		spawnPoints.Add(newSpawnPoint);
-	}
-
 	// Waits the cooldown period, then sends next wave
 	IEnumerator waitForCooldown(int seconds)
 	{
@@ -59,17 +60,37 @@ public class WaveManagerScript : MonoBehaviour {
 	// Tells each spawnPoint to call the function sendNextWave
 	void sendWave()
 	{
-		foreach(GameObject spawnPoint in spawnPoints)
+		foreach(GameObject spawnPoint in curSpawnPoints)
 		{
 			spawnPoint.GetComponent<SpawnPoint>().sendNextWave();
 		}
 	}
-	
+
+
+	void InitializeSpawnPoints(int level)
+	{
+		curSpawnPoints = boardManager.LevelSpawnPoints[level];
+		foreach (GameObject spawnPoint in boardManager.LevelSpawnPoints[level])
+		{
+			spawnPoint.GetComponent<SpawnPoint>().Initialize(level);
+		}
+	}
+
+
+
 	// When players steps on the trigger tile for the next level
 	public void TriggerNextLevel(int nextLevel)
 	{
 		// Start next level
-		//throw new UnityException("trigerrrred" + nextLevel.ToString());
+		if (nextLevel > curLevel && nextLevel < boardManager.numLevels)
+		{
+			Debug.Log("triggered" + nextLevel.ToString());
+
+			curLevel = nextLevel;
+			InitializeSpawnPoints(nextLevel);
+			inCooldown = false;
+			sendWave();
+		}
 	}
 
 	public void TriggerCageDestroyed()

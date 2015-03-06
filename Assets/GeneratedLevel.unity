@@ -113,6 +113,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11407222, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: spawnPointCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: numLevels
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: levelWidth
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: levelHeight
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 799280d65a0d247fab2a66169b091293, type: 2}
   m_RootGameObject: {fileID: 491985816}
@@ -217,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPointObject: {fileID: 148762, guid: 0d64c547403d74feaa72c41330b39a89, type: 2}
   CageObject: {fileID: 184844, guid: 6e283efe4e08649c9a066c6d975e5561, type: 2}
-  spawnPointCount: 1
+  spawnPointCount: 3
   enemyPocketCount: 3
   enemyPocketSize: 5
 --- !u!1 &978271717
