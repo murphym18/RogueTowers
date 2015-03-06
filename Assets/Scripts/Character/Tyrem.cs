@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 // The GameObject requires a RigidBody component
@@ -9,6 +10,24 @@ using System.Collections.Generic;
 public class Tyrem : Character {
 	
 	public float maxSpeed = 5f;
+
+    public int upgradePoints { get; private set; }
+
+    public void addUpgradePoints(int points)
+    {
+        upgradePoints += points;
+    }
+
+    public bool deductUpgradePoints(int points)
+    {
+        if (points > upgradePoints)
+            return false;
+        else
+        {
+            upgradePoints -= points;
+            return true;
+        }
+    }
 	
 	// Use this for initialization
 	void Start () {

@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OpenSprite: {fileID: 21300002, guid: bbd9e1ad8db35c6458375958ecfebedb, type: 3}
+  PointsPerChest: 5
 --- !u!212 &21294354
 SpriteRenderer:
   m_ObjectHideFlags: 1
