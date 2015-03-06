@@ -31,8 +31,8 @@ public class EnemyLayoutScript : MonoBehaviour {
 		cageOffset_x = 4;
 		cageOffset_y = (int)(mapHeight/2);
 
-		boardScript.LevelCages = new GameObject[numLevels];
-		boardScript.LevelSpawnPoints = new List<GameObject>[numLevels];
+		boardScript.levelCages = new GameObject[numLevels];
+		boardScript.levelSpawnPoints = new List<GameObject>[numLevels];
 
 		SetupCages(numLevels);
 		SetupEnemySpawnPoints(numLevels, spawnPointCount); // TODO: will be numLevels
@@ -45,7 +45,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 		{
 			int levelOffset_x = levelWidth * curLevel;
 			GameObject instance = Instantiate(CageObject, new Vector3(levelOffset_x + cageOffset_x, cageOffset_y), Quaternion.identity) as GameObject;
-			boardScript.LevelCages[curLevel] = instance;
+			boardScript.levelCages[curLevel] = instance;
 		}
 	}
 
@@ -55,7 +55,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 		for (int curLevel = 0; curLevel < levels; curLevel++)
 		{
 			int levelOffset_x = levelWidth * curLevel;
-			boardScript.LevelSpawnPoints[curLevel] = new List<GameObject>();
+			boardScript.levelSpawnPoints[curLevel] = new List<GameObject>();
 
 			for (int spawned = 0; spawned < spawnPointCount;)
 			{
@@ -66,7 +66,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 				{
 					GameObject instance = Instantiate(SpawnPointObject, new Vector3(x, y), Quaternion.identity) as GameObject;
 					instance.transform.SetParent(boardScript.boardHolder);
-					boardScript.LevelSpawnPoints[curLevel].Add(instance);
+					boardScript.levelSpawnPoints[curLevel].Add(instance);
 
 					// initialize the spawn point
 					//instance.GetComponent<SpawnPoint>().Initialize();

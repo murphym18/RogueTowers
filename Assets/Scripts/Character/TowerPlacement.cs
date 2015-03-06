@@ -9,17 +9,23 @@ public class TowerPlacement : MonoBehaviour {
 	public GameObject RookTower;
 	public GameObject KingTower;
 	public GameObject QueenTower;
-
-	private GameObject gameManagerObject;
+	
 	private GameManager gameManager;
 	private BoardManager boardManager;
-	private int mapWidth, mapHeight, levelWidth, numLevels;
+	private int levelWidth;
 	private GameObject curTower = null;
 	private TowerInput[] TowerInputKeys;
 
 	private Color goodPlaceColor;
 	private Color badPlaceColor;
 	private Color colorBackup;
+	
+	void Awake()
+	{
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		boardManager = gameManager.GetComponentInParent<BoardManager>();
+		levelWidth = boardManager.MapWidth / boardManager.numLevels;
+	}
 
 	void Start() {
 		goodPlaceColor = new Color(0F, 1F, 0F, 0.25F);
@@ -34,19 +40,7 @@ public class TowerPlacement : MonoBehaviour {
 		};
 	}
 
-	void Awake()
-	{
-		gameManagerObject = GameObject.Find("GameManager");
-		gameManager = gameManagerObject.GetComponent<GameManager>();
-		boardManager = gameManagerObject.GetComponent<BoardManager>();
-		mapWidth = boardManager.MapWidth;
-		mapHeight = boardManager.MapHeight;
-		numLevels = boardManager.numLevels;
-		levelWidth = mapWidth / numLevels;
-	}
-
 	void Update () {
-
 
 		for (int i = 0; i < TowerInputKeys.Length && curTower == null; ++i) {
 			if (Input.GetButtonDown(TowerInputKeys[i].input)) {
@@ -85,18 +79,18 @@ public class TowerPlacement : MonoBehaviour {
 				//curTower.SetActive(false);
 			}
 
-
-
 		}
 	}
 
 	// Check if a tower can legally be placed at given x,y position.
 	bool isValidTowerPosition(Vector3 locationVector)
 	{
-		int levelStart_x = levelWidth * gameManager.currentLevel;
-		int levelEnd_x = levelStart_x + levelWidth;
-		if (locationVector.x > levelStart_x && locationVector.x < levelEnd_x)
-			return !boardManager[(int)locationVector.x,(int)locationVector.y];
+		if (!boardManager[(int)locationVector.x,(int)locationVector.y])
+		{
+			int levelStart_x = levelWidth * gameManager.currentLevel;
+			int levelEnd_x = levelStart_x + levelWidth;
+			return (locationVector.x > levelStart_x && locationVector.x < levelEnd_x);
+		}
 		else
 			return false;
 	}

@@ -69,12 +69,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a238f5553a9de4b8b452d7bb5653ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PawnTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
+  PawnTower: {fileID: 100000, guid: 3408e9cee91b24b1da5f8a441be7eb66, type: 2}
   KnightTower: {fileID: 100000, guid: ba179dc7626f548ec9d01cd340d713ec, type: 2}
-  BishopTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
-  RookTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
-  KingTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
-  QueenTower: {fileID: 100000, guid: c9469098b2fd947d29e45adb9dbddb94, type: 2}
+  BishopTower: {fileID: 100000, guid: 225862ef04ff34898bab8c7a41b27733, type: 2}
+  RookTower: {fileID: 100000, guid: 3a8e25a2337fd4f05a4b257e45b93c62, type: 2}
+  KingTower: {fileID: 100000, guid: 1bf797cf62420486886eb6db9d36f0e1, type: 2}
+  QueenTower: {fileID: 100000, guid: f3e302cabb5184cb3aa0c9438fe26773, type: 2}
 --- !u!114 &11473760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d78d97d4a90ad24ca24c9dde5b05ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSeed: 5
+  maxSpeed: 5
 --- !u!212 &21273760
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -56,7 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPointObject: {fileID: 148762, guid: 0d64c547403d74feaa72c41330b39a89, type: 2}
   CageObject: {fileID: 184844, guid: 6e283efe4e08649c9a066c6d975e5561, type: 2}
-  spawnPointCount: 1
+  spawnPointCount: 3
   enemyPocketCount: 3
   enemyPocketSize: 5
 --- !u!114 &11466950
@@ -78,12 +78,12 @@ MonoBehaviour:
   levelTriggerTile: {fileID: 108552, guid: 0c5dc22f72f64a2439ffd91f13a33a03, type: 2}
   chestTile: {fileID: 194354, guid: c642aa043e159324fbbb9775e513cc3d, type: 2}
   numLevels: 2
-  levelWidth: 30
-  levelHeight: 60
+  levelWidth: 25
+  levelHeight: 25
   minChestsPerLevel: 5
   maxChestsPerLevel: 5
   useFloorEverywhere: 0
-  LevelCages: []
+  levelCages: []
   boardHolder: {fileID: 0}
 --- !u!114 &11466952
 MonoBehaviour:
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerType: {fileID: 173760, guid: a6865244a2d28c94b8d1c914c9457290, type: 2}
   PlayerInstance: {fileID: 0}
+  currentLevel: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

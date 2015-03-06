@@ -25,10 +25,6 @@ public class WaveManagerScript : MonoBehaviour {
 	// if not in cooldown, check if enemies all gone,
 	//		if they are, cooldown then send next wave
 	void Update () {
-		if (player == null)
-			player = gameManager.PlayerInstance;
-
-		//if (player && !inCooldown)
 		if (!inCooldown)
 		{
 			GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
@@ -67,8 +63,8 @@ public class WaveManagerScript : MonoBehaviour {
 
 	void InitializeSpawnPoints(int level)
 	{
-		curLevelSpawnPoints = boardManager.LevelSpawnPoints[level];
-		foreach (GameObject spawnPoint in boardManager.LevelSpawnPoints[level])
+		curLevelSpawnPoints = boardManager.levelSpawnPoints[level];
+		foreach (GameObject spawnPoint in boardManager.levelSpawnPoints[level])
 		{
 			spawnPoint.GetComponent<SpawnPoint>().Initialize(level);
 		}

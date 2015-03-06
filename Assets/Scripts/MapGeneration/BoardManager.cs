@@ -16,8 +16,8 @@ public class BoardManager : MonoBehaviour
     public int minChestsPerLevel, maxChestsPerLevel;
     public bool useFloorEverywhere = false;
 
-	public GameObject[] LevelCages;
-	public List<GameObject>[] LevelSpawnPoints;
+	public GameObject[] levelCages;
+	public List<GameObject>[] levelSpawnPoints;
 
     private static Func<int, int, bool> chestPlacement;
 
@@ -43,7 +43,7 @@ public class BoardManager : MonoBehaviour
 
     private void LayoutMap()
     {
-        for (int y = 0; y < levelHeight; y++)
+		for (int y = 0; y < levelHeight; y++)
             for (int x = 0; x < numLevels * levelWidth; x++)
             {
                 UnityEngine.Object instance = null;

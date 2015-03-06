@@ -4,13 +4,15 @@ public class TestTowerScript : MonoBehaviour {
 	// bool attackEnemy = false;
 	public float attackRadius = 10.0f;
 	public LayerMask whatIsTargetable;
+	public float damage = 1.0f;
+	public float attackDelay = 1.0f;
+
 	GameObject target;
 	Collider2D[] enemies;
 	float enemyToAttack = 10.0f;
 	public Rigidbody2D Bullet;
 	public float bulletSpeed = 3.0f;
 	float lastAttack = 0.0f;
-	float attackDelay = 1.0f;
 	int enemyToAttackIndex = 0;
 	// Use this for initialization
 	void Start () {
@@ -36,6 +38,7 @@ public class TestTowerScript : MonoBehaviour {
 
 			if(enemyToAttackIndex != -1) {
 				Rigidbody2D bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
+				bulletInstance.GetComponentInParent<BulletScript>().damage = damage;
 				bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized*bulletSpeed;
 			}
 

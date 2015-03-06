@@ -28,9 +28,9 @@ public class Enemy : MonoBehaviour {
 	{
 		gameManager = GameObject.Find("GameManager");
 		boardManager = gameManager.GetComponent<BoardManager>();
-		curLevel = 0; // TODO: should be boardManager.curLevel
+		curLevel = gameManager.GetComponent<GameManager>().currentLevel;
 
-		target = boardManager.LevelCages[curLevel];
+		target = boardManager.levelCages[curLevel];
 		if (target == null)
 			target = GameObject.FindGameObjectWithTag ("Player");
 
@@ -134,8 +134,8 @@ public class Enemy : MonoBehaviour {
 		if (coll.gameObject.tag == "Bullet")
 		{
 			// stop and attack
-			int tempBulletDamage = 1;
-			this.health -= tempBulletDamage;
+			float bulletDamage = coll.GetComponentInParent<BulletScript>().damage;
+			this.health -= bulletDamage;
 			if (this.health <= 0)
 				Destroy(gameObject, 0.0f);
 		}

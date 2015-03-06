@@ -22,7 +22,7 @@ public class SpawnPoint : MonoBehaviour {
 
 	public void Initialize(int level)
 	{
-		aStarScript.SetTarget(boardManager.LevelCages[level]);
+		aStarScript.SetTarget(boardManager.levelCages[level]);
 		aStarScript.Initialize();
 		pathPoints = aStarScript.GetPoints();
 	}

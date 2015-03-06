@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 public class BulletScript : MonoBehaviour {
 	public List<string> ThingsToDieOn = new List<string>();
+	public float damage = 1.0f;
 
 	// Use this for initialization
 	void Start () {
