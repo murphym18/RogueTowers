@@ -71,6 +71,8 @@ public class TowerPlacement : MonoBehaviour {
 					curTower.GetComponent<BoxCollider2D>().enabled = true;
 					curTower.GetComponent<TestTowerScript>().enabled = true;
 					curTower = null;
+
+					gameManager.GetComponentInParent<AStar>().PlacedObstacleAt((int)worldLocation.x, (int)worldLocation.y);
 				}
 			}
 			else {

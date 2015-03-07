@@ -12,7 +12,7 @@ GameObject:
   - 50: {fileID: 5084844}
   - 61: {fileID: 6184844}
   - 114: {fileID: 11403586}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cage
   m_TagString: Cage
   m_Icon: {fileID: 0}

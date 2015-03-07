@@ -70,12 +70,24 @@ public class WaveManagerScript : MonoBehaviour {
 		}
 	}
 
+	public void RecalculatePaths()
+	{
+		int level = gameManager.currentLevel;
+		curLevelSpawnPoints = boardManager.levelSpawnPoints[level];
+		foreach (GameObject spawnPoint in boardManager.levelSpawnPoints[level])
+		{
+			spawnPoint.GetComponent<SpawnPoint>().Initialize(level);
+		}
+	}
+
 	// When players steps on the trigger tile for the next level
 	public void TriggerNextLevel(int nextLevel)
 	{
 		// Start next level
 		if (nextLevel > curLevel && nextLevel < boardManager.numLevels)
 		{
+			GetComponent<AStar>().PrintNodeMesh(0);
+
 			gameManager.currentLevel = nextLevel;
 			curLevel = nextLevel;
 			InitializeSpawnPoints(nextLevel);

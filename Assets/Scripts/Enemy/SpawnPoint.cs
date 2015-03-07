@@ -22,9 +22,21 @@ public class SpawnPoint : MonoBehaviour {
 
 	public void Initialize(int level)
 	{
+		/*
 		aStarScript.SetTarget(boardManager.levelCages[level]);
 		aStarScript.Initialize();
 		pathPoints = aStarScript.GetPoints();
+		*/
+		float t1, t2, t3;
+		t1 = Time.realtimeSinceStartup;
+		Debug.Log ("Clearing node mesh " + t1);
+		gameManager.GetComponent<AStar>().ClearNodeMesh();
+		t2 = Time.realtimeSinceStartup;
+		Debug.Log ("Done: Cleared node mesh " + t2);
+		gameManager.GetComponent<AStar>().CalculateAStar2(this.gameObject, boardManager.levelCages[gameManager.GetComponent<GameManager>().currentLevel]);
+		t3 = Time.realtimeSinceStartup;
+		Debug.Log ("Done: Calculated AStar2 " + t3);
+		pathPoints = new List<Vector3>(gameManager.GetComponent<AStar>().GetPoints());
 	}
 
 	IEnumerator SpawnAtInterval(int seconds, int waveLevel)

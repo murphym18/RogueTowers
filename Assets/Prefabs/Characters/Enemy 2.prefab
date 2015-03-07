@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useAStar: 1
+  spawnPoint: {fileID: 0}
 --- !u!114 &11476406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
-  movementSpeed: 1.5
+  movementSpeed: 3
   attackPower: .200000003
   attackRate: 3
   level: 1

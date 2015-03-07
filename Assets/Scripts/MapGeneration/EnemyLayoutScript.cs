@@ -46,6 +46,9 @@ public class EnemyLayoutScript : MonoBehaviour {
 			int levelOffset_x = levelWidth * curLevel;
 			GameObject instance = Instantiate(CageObject, new Vector3(levelOffset_x + cageOffset_x, cageOffset_y), Quaternion.identity) as GameObject;
 			boardScript.levelCages[curLevel] = instance;
+			for (int x = -1; x < 2; x++)
+				for (int y = -1; y < 2; y++)
+					boardScript[levelOffset_x + cageOffset_x + x, cageOffset_y + y] = true;
 		}
 	}
 

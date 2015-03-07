@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	    BoardScript = GetComponent<BoardManager>();
 	    InitGame();
 	    PlayerInstance = (GameObject)Instantiate(PlayerType, new Vector3(0, (int)(BoardScript.levelHeight/2)), Quaternion.identity);
+		//GetComponent<AStar>().PrintNodeMesh(0);
 	}
 
     private void InitGame()
