@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 448762}
   - 212: {fileID: 21248762}
   - 114: {fileID: 11490088}
-  - 114: {fileID: 11421716}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: SpawnPoint
@@ -30,18 +29,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11421716
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useAStar: 1
 --- !u!114 &11490088
 MonoBehaviour:
   m_ObjectHideFlags: 1

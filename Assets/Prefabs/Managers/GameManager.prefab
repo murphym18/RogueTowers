@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11466950}
   - 114: {fileID: 11405094}
   - 114: {fileID: 11407222}
+  - 114: {fileID: 11460288}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -42,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c67afa201f0143b5887fa7fa8eaf696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 2
+  cooldownTime: 5
 --- !u!114 &11407222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,6 +60,18 @@ MonoBehaviour:
   spawnPointCount: 3
   enemyPocketCount: 3
   enemyPocketSize: 5
+  spawnPointOffsetX: 6
+--- !u!114 &11460288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166950}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11466950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,8 +91,8 @@ MonoBehaviour:
   levelTriggerTile: {fileID: 108552, guid: 0c5dc22f72f64a2439ffd91f13a33a03, type: 2}
   chestTile: {fileID: 194354, guid: c642aa043e159324fbbb9775e513cc3d, type: 2}
   numLevels: 2
-  levelWidth: 25
-  levelHeight: 25
+  levelWidth: 40
+  levelHeight: 40
   minChestsPerLevel: 5
   maxChestsPerLevel: 5
   useFloorEverywhere: 0

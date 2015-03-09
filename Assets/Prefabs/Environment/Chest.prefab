@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21294354}
   - 61: {fileID: 6193336}
   - 114: {fileID: 11409548}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Chest
   m_TagString: GroundTrigger
   m_Icon: {fileID: 0}

@@ -45,6 +45,7 @@ public class Cage : MonoBehaviour {
 				hp -= 1;
 				if (hp == 0) {
 					waveManager.TriggerCageDestroyed();
+					Destroy(gameObject);
 				}
 			}
 		}

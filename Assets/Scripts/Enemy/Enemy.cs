@@ -9,126 +9,79 @@ public class Enemy : MonoBehaviour {
 	public float attackPower = 1;
 	public float attackRate = 1;
 	public float level = 1;
-
-	private AStar aStarScript;
+	
 	private GameObject target;
 	private SpawnPoint spawnPoint;
-	private List<Vector3> points;
+	private int pointIndex = 0;
 	private Vector3 nextPoint;
-	private int pointIndex = 0; // might need this
+	private List<Vector3> points = null;
 	private List<Vector3>.Enumerator pointEnumerator;
-	private float lastPathUpdate = 0f;
-	private LayerMask obstructionMask;
+	private RaycastHit2D[] oneArray = new RaycastHit2D[1];
 
-	private GameObject gameManager;
+	private GameManager gameManager;
 	private BoardManager boardManager;
-	private int curLevel;
+	private AStar aStarScript;
+	private LayerMask obstructionMask;
 
 	void Awake()
 	{
-		gameManager = GameObject.Find("GameManager");
-		boardManager = gameManager.GetComponent<BoardManager>();
-		curLevel = gameManager.GetComponent<GameManager>().currentLevel;
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		boardManager = gameManager.GetComponentInParent<BoardManager>();
+		aStarScript = gameManager.GetComponentInParent<AStar>();
 
-		target = boardManager.levelCages[curLevel];
-		if (target == null)
-			target = GameObject.FindGameObjectWithTag ("Player");
-
-		obstructionMask = LayerMask.GetMask("Default");
+		obstructionMask = LayerMask.GetMask("Walls", "Towers", "Chests");
 	}
-
-	public void Initialize(SpawnPoint spawnPoint)
+	
+	// Initializes a spawnpoint by giving it a target and a path.
+	// If enemy came from a spawnpoint, take spawnpoint's target and path.
+	// Otherwise, get a target and form a path.
+	public void Initialize(SpawnPoint givenSpawnPoint)
 	{
-		this.spawnPoint = spawnPoint;
-		if (this.spawnPoint == null)
+		spawnPoint = givenSpawnPoint;
+
+		if (spawnPoint != null)
 		{
-			Debug.Log("activating without spawn point");
-			aStarScript = gameObject.GetComponent<AStar>();
-			aStarScript.Initialize();
-			points = aStarScript.GetPoints();
+			target = spawnPoint.GetTarget();
+			points = spawnPoint.GetPathPoints();
 		}
 		else
 		{
-			//Debug.Log("activating with spawn point");
-			points = spawnPoint.GetPathPoints();
+			target = GetInitialTarget();
+			points = new List<Vector3>(GetInitialPath());
 		}
 		
 		pointEnumerator = points.GetEnumerator();
 	}
-	
-	void Update () {
-		/*
-		Vector2 toTarget = new Vector2(target.transform.position.x - this.transform.position.x, target.transform.position.y - this.transform.position.y);
-		float distanceToTarget = toTarget.magnitude;
 
-		RaycastHit2D hit = Physics2D.Raycast(this.transform.position, toTarget.normalized, distanceToTarget);
-		if (hit.collider == null) {
-			MoveDirect();
-			return;
-		}
-		*/
-
-		MoveSimple();
+	// If enemy can see target, just move to the target
+	// otherwise, follow the path points.
+	void FixedUpdate()
+	{
+		if (CanSeePoint(target.transform.position))
+			MoveDirectlyToTarget();
+		else if (points != null)
+			MoveToFollowPath();
 	}
 	
-	void MoveSimple()
+	// Give the enemy a new target. i.e. cage to player
+	public void SetTarget(GameObject newTarget)
 	{
-		if (IsAtNextPoint() || pointIndex == 0)
-		{
-			if (pointEnumerator.MoveNext())
-			{
-				pointIndex++;
-				nextPoint = pointEnumerator.Current;
-			}
-			else
-			{
-				// reached end of path
-			}
-		}
-
-		MoveToNextPoint();
+		this.target = newTarget;
 	}
 
-	void MoveDirect() {
-		Vector3 direction = target.transform.rigidbody2D.position - this.rigidbody2D.position;
-		Vector3 velocity = direction.normalized * movementSpeed;
-		rigidbody2D.velocity = velocity;
-	}
-
-	void MoveToNextPoint()
-	{
-		Vector3 direction = nextPoint - this.transform.position;
-		Vector3 velocity = direction.normalized * movementSpeed;
-		rigidbody2D.velocity = velocity;
-	}
-
-	bool IsAtNextPoint()
-	{
-		float minDist = 0.3f;
-		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
-	}
-
-	public void SetAStarScript(AStar astar)
-	{
-		aStarScript = astar;
-	}
-
-	public void SetSpawnPoint(SpawnPoint parent)
-	{
-		spawnPoint = parent;
-	}
-
+	// Collissions
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if (coll.gameObject.tag == "Cage")
 		{
 			// stop and attack
 			rigidbody2D.velocity = Vector3.zero;
+			coll.gameObject.GetComponentInParent<Cage>().damage();
 			Destroy(gameObject, 2.0f);
 		}
-
 	}
 
+	// Triggers
 	void OnTriggerEnter2D(Collider2D coll)
 	{
 		if (coll.gameObject.tag == "Bullet")
@@ -140,4 +93,117 @@ public class Enemy : MonoBehaviour {
 				Destroy(gameObject, 0.0f);
 		}
 	}
+
+	// Follows the pathpoints.
+	// if the following point is in sight, skips the current point.
+	private void MoveToFollowPath()
+	{
+		if (IsAtNextPoint() || pointIndex == 0)
+		{
+			if (pointEnumerator.MoveNext())
+			{
+				pointIndex++;
+				while (pointIndex < points.Count && CanSeePoint(points[pointIndex]))
+				{
+					pointIndex++;
+					pointEnumerator.MoveNext();
+				}
+				nextPoint = pointEnumerator.Current;
+			}
+		}
+		MoveToNextPoint();
+	}
+
+	// move directly towards the target
+	private void MoveDirectlyToTarget() {
+		Vector3 direction = target.transform.rigidbody2D.position - this.rigidbody2D.position;
+		Vector3 velocity = direction.normalized * movementSpeed;
+		rigidbody2D.velocity = velocity;
+	}
+	
+	// move to the next path point
+	private void MoveToNextPoint()
+	{
+		//Vector3 direction = nextPoint - this.transform.position;
+		Vector3 direction = nextPoint - new Vector3(this.rigidbody2D.position.x, this.rigidbody2D.position.y);
+		Vector3 velocity = direction.normalized * movementSpeed;
+		rigidbody2D.velocity = velocity;
+	}
+	
+	// Checks if at the next path point
+	private bool IsAtNextPoint()
+	{
+		float minDist = 0.05f;
+		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
+	}
+
+	// Checks if has unobstructed direct path line to the given point
+	private bool CanSeePoint(Vector3 point)
+	{
+		Vector2 start = new Vector2(this.transform.position.x, this.transform.position.y);
+		Vector2 dest = new Vector2(point.x, point.y);
+		float thickness = 0.2f;
+		Physics2D.raycastsStartInColliders = false;
+		int hit1, hit2;
+		
+		if ((dest.x < start.x && dest.y > start.y) || (dest.x > start.x && dest.y < start.y))
+		{
+			hit1 = Physics2D.LinecastNonAlloc(new Vector2(start.x-thickness, start.y-thickness), new Vector2(dest.x, dest.y), oneArray, obstructionMask.value);
+			hit2 = Physics2D.LinecastNonAlloc(new Vector2(start.x+thickness, start.y+thickness), new Vector2(dest.x, dest.y), oneArray, obstructionMask.value);
+		}
+		else if ((dest.x < start.x && dest.y < start.y) || (dest.x > start.x && dest.y > start.y))
+		{
+			hit1 = Physics2D.LinecastNonAlloc(new Vector2(start.x-thickness, start.y+thickness), new Vector2(dest.x, dest.y), oneArray, obstructionMask.value);
+			hit2 = Physics2D.LinecastNonAlloc(new Vector2(start.x+thickness, start.y-thickness), new Vector2(dest.x, dest.y), oneArray, obstructionMask.value);
+		}
+		else
+		{
+			hit1 = hit2 = Physics2D.LinecastNonAlloc(new Vector2(start.x, start.y), new Vector2(dest.x, dest.y), oneArray, obstructionMask.value);
+		}
+		
+		return hit1 == 0 && hit2 == 0;
+	}
+	
+	// Called by AStar when AStar sees the target move. Just request a new path.
+	// Astar will callback with SetPathPointsCallback when the new path is calculated.
+	public void TellTargetMoved()
+	{
+		RequestNewPath();
+	}
+
+	// Sends a path calculation job to AStar.
+	private void RequestNewPath()
+	{
+		aStarScript.AStarEnqueue(this.transform.position, this.gameObject);
+	}
+
+	// Called by AStar when a new path is calculated.
+	// Set the new path and reset the pointIndex to 0.
+	public void SetPathPointsCallback(List<Vector3> newPath)
+	{
+		points = new List<Vector3>(newPath);
+		pointEnumerator = points.GetEnumerator();
+		pointIndex = 0;
+		//Debug.Log ("enemy given new path");
+	}
+
+	// Calculates an initial path to AStar's target
+	private List<Vector3> GetInitialPath()
+	{
+		aStarScript.CalculateAStar(this.transform.position);
+		return aStarScript.GetPoints();
+	}
+
+	// Gets a target if it exists. Cage -> Player -> Self.
+	private GameObject GetInitialTarget()
+	{
+		GameObject initialTarget = boardManager.levelCages[gameManager.currentLevel];
+		if (initialTarget == null)
+			initialTarget = gameManager.PlayerInstance;
+		if (initialTarget == null)
+			initialTarget = this.gameObject;
+		
+		return initialTarget;
+	}
+
 }

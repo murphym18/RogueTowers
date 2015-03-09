@@ -8,72 +8,113 @@ public class SpawnPoint : MonoBehaviour {
 	public int spawnInterval = 3;
 	public int nextWaveLevel = 1;
 
-	private AStar aStarScript;
-	private List<Vector3> pathPoints;
-	private GameObject gameManager;
+	private GameObject target;
+	private List<Vector3> pathPoints = null;
+
+	private GameManager gameManager;
 	private BoardManager boardManager;
+	private AStar aStarScript;
 
 	void Awake()
 	{
-		gameManager = GameObject.Find("GameManager");
-		boardManager = gameManager.GetComponent<BoardManager>();
-		aStarScript = GetComponent<AStar>();
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		boardManager = gameManager.GetComponentInParent<BoardManager>();
+		aStarScript = gameManager.GetComponentInParent<AStar>();
 	}
 
+	// Initializes a spawnpoint with a target and an initial path to target
 	public void Initialize(int level)
 	{
-		/*
-		aStarScript.SetTarget(boardManager.levelCages[level]);
-		aStarScript.Initialize();
-		pathPoints = aStarScript.GetPoints();
-		*/
-		float t1, t2, t3;
-		t1 = Time.realtimeSinceStartup;
-		Debug.Log ("Clearing node mesh " + t1);
-		gameManager.GetComponent<AStar>().ClearNodeMesh();
-		t2 = Time.realtimeSinceStartup;
-		Debug.Log ("Done: Cleared node mesh " + t2);
-		gameManager.GetComponent<AStar>().CalculateAStar2(this.gameObject, boardManager.levelCages[gameManager.GetComponent<GameManager>().currentLevel]);
-		t3 = Time.realtimeSinceStartup;
-		Debug.Log ("Done: Calculated AStar2 " + t3);
-		pathPoints = new List<Vector3>(gameManager.GetComponent<AStar>().GetPoints());
+		target = GetInitialTarget();
+		pathPoints = new List<Vector3>(GetInitialPath());
 	}
 
-	IEnumerator SpawnAtInterval(int seconds, int waveLevel)
+	// Called by WaveManagerScript
+	// Starts a coroutine to spawn enemies at given interval.
+	public void SendNextWave()
+	{
+		StartCoroutine(SpawnAtInterval(spawnInterval, nextWaveLevel++));
+	}
+
+	// Spawns the enemySpawns list of enemies, waveLevel times (enemySpawns * waveLevel).
+	// Waits the given seconds between enemy spawns.
+	private IEnumerator SpawnAtInterval(int seconds, int waveLevel)
 	{
 		int maxEnemies = enemySpawns.Length * waveLevel;
 		int enemyCount = 0;
-
+		
 		while (enemyCount < maxEnemies)
 		{
 			foreach (GameObject enemyType in enemySpawns)
 			{
 				if (enemyCount++ > maxEnemies)
 					break;
-				
+
+				// Checks if spawnPoint is enabled, should not be neccessary, need to test.
 				if (enabled)
 					SpawnEnemy(enemyType);
-
+				
 				yield return new WaitForSeconds(seconds);
 			}
 		}
 	}
 
-	void SpawnEnemy(GameObject enemyType)
+	private void SpawnEnemy(GameObject enemyType)
 	{
 		GameObject newEnemy = (GameObject)Instantiate (enemyType, transform.position, Quaternion.identity);
 		newEnemy.GetComponent<Enemy>().Initialize(this);
 		newEnemy.GetComponent<Enemy>().enabled = true;
 	}
 
+	// Give the spawnpoint a new target. i.e. cage to player
+	public void SetTarget(GameObject newTarget)
+	{
+		this.target = newTarget;
+		RequestNewPath();
+	}
+
+	// Called by an Enemy to get path to target.
 	public List<Vector3> GetPathPoints()
 	{
 		return pathPoints;
 	}
 
-	public void sendNextWave()
+	// Called by an Enemy to initialize with a target.
+	public GameObject GetTarget()
 	{
-		StartCoroutine(SpawnAtInterval(spawnInterval, nextWaveLevel++));
+		return target;
+	}
+
+	// Sends a path calculation job to AStar.
+	private void RequestNewPath()
+	{
+		aStarScript.AStarEnqueue(this.transform.position, this.gameObject);
+	}
+
+	// Called by AStar when a new path is calculated.
+	// Set the new path and reset the pointIndex to 0.
+	public void SetPathPointsCallback(List<Vector3> newPath)
+	{
+		pathPoints = new List<Vector3>(newPath);
+	}
+
+	// Gets a target if it exists. Cage -> Player -> Self.
+	private GameObject GetInitialTarget()
+	{
+		GameObject initialTarget = boardManager.levelCages[gameManager.currentLevel];
+		if (initialTarget == null)
+			initialTarget = gameManager.PlayerInstance;
+		if (initialTarget == null)
+			initialTarget = this.gameObject;
+		
+		return initialTarget;
+	}
+	
+	// Calculates an initial path to AStar's target
+	private List<Vector3> GetInitialPath()
+	{
+		aStarScript.CalculateAStar(transform.position);
+		return aStarScript.GetPoints();
 	}
 
 }

@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd10c1dec8a2b754d80462bcc2aed2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 50
+  hp: 15
   unlockDistance: 3
   unlockTime: 10
 --- !u!212 &21284844

@@ -10,6 +10,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 	public int spawnPointCount = 1;
 	public int enemyPocketCount = 3;
 	public int enemyPocketSize = 5;
+	public int spawnPointOffsetX = 6;
 
 	private GameObject gameScript;
 	private BoardManager boardScript;
@@ -62,7 +63,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 
 			for (int spawned = 0; spawned < spawnPointCount;)
 			{
-				int x = Random.Range (levelOffset_x, levelOffset_x + levelWidth);
+				int x = Random.Range (levelOffset_x + spawnPointOffsetX, levelOffset_x + levelWidth);
 				int y = Random.Range (1, mapHeight);
 
 				if (!boardScript[x, y])
@@ -70,9 +71,6 @@ public class EnemyLayoutScript : MonoBehaviour {
 					GameObject instance = Instantiate(SpawnPointObject, new Vector3(x, y), Quaternion.identity) as GameObject;
 					instance.transform.SetParent(boardScript.boardHolder);
 					boardScript.levelSpawnPoints[curLevel].Add(instance);
-
-					// initialize the spawn point
-					//instance.GetComponent<SpawnPoint>().Initialize();
 
 					spawned++;
 				}

@@ -109,7 +109,8 @@ public class BoardManager : MonoBehaviour
 		// Setup enemy spawnpoints and also cages
 		GetComponent<EnemyLayoutScript>().SetupEnemyLayout();
 
-		// tell WaveManger to start
+		// tell AStar and WaveManger to start
+		GetComponent<AStar>().enabled = true;
 		GetComponent<WaveManagerScript>().enabled = true;
     }
 

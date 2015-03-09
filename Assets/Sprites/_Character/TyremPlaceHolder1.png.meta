@@ -52,8 +52,8 @@ TextureImporter:
         y: 0
         width: 48
         height: 96
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 9
+      pivot: {x: .5, y: .100000001}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: TyremPlaceHolder1_1
       rect:
