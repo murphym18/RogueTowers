@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour {
 	private List<Vector3> points = null;
 	private List<Vector3>.Enumerator pointEnumerator;
 	private RaycastHit2D[] oneArray = new RaycastHit2D[1];
+	private const float attackTimeout = 1;
+	private float attackTimer = 0;
 
 	private GameManager gameManager;
 	private BoardManager boardManager;
@@ -57,7 +59,9 @@ public class Enemy : MonoBehaviour {
 	// otherwise, follow the path points.
 	void FixedUpdate()
 	{
-		if (CanSeePoint(target.transform.position))
+		if (attackTimer > 0)
+			attackTimer -= Time.fixedDeltaTime;
+		else if (CanSeePoint(target.transform.position))
 			MoveDirectlyToTarget();
 		else if (points != null)
 			MoveToFollowPath();
@@ -78,6 +82,11 @@ public class Enemy : MonoBehaviour {
 			rigidbody2D.velocity = Vector3.zero;
 			coll.gameObject.GetComponentInParent<Cage>().damage();
 			Destroy(gameObject, 2.0f);
+		}
+		else if (coll.gameObject.tag == "Player")
+		{
+			rigidbody2D.velocity = Vector3.zero;
+			attackTimer = attackTimeout;
 		}
 	}
 
