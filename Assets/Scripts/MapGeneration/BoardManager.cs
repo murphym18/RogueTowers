@@ -18,6 +18,7 @@ public class BoardManager : MonoBehaviour
 
 	public GameObject[] levelCages;
 	public List<GameObject>[] levelSpawnPoints;
+	public List<GameObject>[] levelBorderTiles;
 
     private static Func<int, int, bool> chestPlacement;
 
@@ -43,6 +44,10 @@ public class BoardManager : MonoBehaviour
 
     private void LayoutMap()
     {
+		levelBorderTiles = new List<GameObject>[numLevels];
+		for (int level = 0; level < numLevels; level++)
+			levelBorderTiles[level] = new List<GameObject>();
+
 		for (int y = 0; y < levelHeight; y++)
             for (int x = 0; x < numLevels * levelWidth; x++)
             {
@@ -62,6 +67,7 @@ public class BoardManager : MonoBehaviour
                     instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity);
                     ((GameObject)instance).transform.SetParent(boardHolder);
                     map[x, y] = true;
+					levelBorderTiles[x / levelWidth].Add((GameObject)instance);
                 }
                 if (x%levelWidth == 1 && !map[x-1,y])
                 {

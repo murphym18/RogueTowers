@@ -10,6 +10,7 @@ public class WaveManagerScript : MonoBehaviour {
 	private bool inCooldown = true;
 	private bool stopWave = false;
 	private bool inCooldownTimer = false;
+	private bool levelComplete = false;
 	private List<GameObject> curLevelSpawnPoints = new List<GameObject>();
 	
 	private GameManager gameManager;
@@ -39,12 +40,33 @@ public class WaveManagerScript : MonoBehaviour {
 	void Update () {
 		if (!inCooldown)
 		{
-			GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-			if (enemy == null)
+			if (EnemiesCleared())
 			{
 				inCooldown = true;
 				StartCoroutine( waitForCooldown(cooldownTime) );
 			}
+		}
+		else if (levelComplete)
+		{
+			if (EnemiesCleared())
+			{
+				ToggleBorderTiles(false, curLevel);
+				levelComplete = false;
+			}
+		}
+	}
+
+	private bool EnemiesCleared()
+	{
+		GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+		return enemy == null;
+	}
+
+	private void ToggleBorderTiles(bool isEnabled, int level)
+	{
+		foreach (GameObject borderTile in boardManager.levelBorderTiles[level])
+		{
+			borderTile.SetActive(isEnabled);
 		}
 	}
 
@@ -60,6 +82,8 @@ public class WaveManagerScript : MonoBehaviour {
 		}
 		else
 		{
+			ToggleBorderTiles(false, curLevel);
+			levelComplete = false;
 			stopWave = false;
 		}
 		inCooldownTimer = false;
@@ -116,12 +140,13 @@ public class WaveManagerScript : MonoBehaviour {
 		// Start next level
 		if (nextLevel > curLevel && nextLevel < boardManager.numLevels)
 		{
-			//GetComponent<AStar>().PrintNodeMesh(nextLevel);
-
+			if (curLevel >= 0)
+				ToggleBorderTiles(true, curLevel);
 			gameManager.currentLevel = nextLevel;
 			curLevel = nextLevel;
 			ChangeTarget(boardManager.levelCages[curLevel]);
 			InitializeSpawnPoints(nextLevel);
+			levelComplete = false;
 			sendWave();
 			inCooldown = false;
 		}
@@ -131,6 +156,7 @@ public class WaveManagerScript : MonoBehaviour {
 	{
 		stopWave = inCooldownTimer;
 		inCooldown = true;
+		levelComplete = true;
 		curLevelSpawnPoints = new List<GameObject>();
 		Debug.Log("Cage Destroyed!");
 		ChangeTarget(player);
@@ -140,6 +166,7 @@ public class WaveManagerScript : MonoBehaviour {
 	{
 		stopWave = inCooldownTimer;
 		inCooldown = true;
+		levelComplete = true;
 		curLevelSpawnPoints = new List<GameObject>();
 		Debug.Log("Cage Unlocked!");
 		ChangeTarget(player);

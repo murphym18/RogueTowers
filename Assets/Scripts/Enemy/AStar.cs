@@ -41,7 +41,8 @@ public class AStar : MonoBehaviour {
 		if (aStarQueue.Count > 0)
 		{
 			AStarJob curJob = aStarQueue.Dequeue();
-			CalculateAStar(curJob.start);
+			if (curJob.callback != null)
+				CalculateAStar(curJob.start);
 			if (curJob.callback != null)
 				curJob.callback.SendMessage("SetPathPointsCallback", points);
 		}
