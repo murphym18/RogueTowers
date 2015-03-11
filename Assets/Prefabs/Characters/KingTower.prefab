@@ -72,10 +72,9 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
-  damage: 1
   attackDelay: 1
   Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
-  bulletSpeed: 12
+  towerType: 4
 --- !u!212 &21201218
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -96,7 +95,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2511236001
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1adb01ee250384b7d923542cff5f90a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cb6e838b5b0e4488a7af975301bc7ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
