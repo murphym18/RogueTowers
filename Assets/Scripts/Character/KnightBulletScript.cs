@@ -9,6 +9,9 @@ public class KnightBulletScript : BulletScript {
 	public LayerMask whatIsTargetable;
 	int hitsLeft = 3;
 	GameObject lastHitEnemy = null;
+	float attackLifeSpan = 0.5f;
+	float attackRefreshedLife = 0.0f;
+	bool hitFirstTarget = false;
 
 	KnightBulletScript() {
 		damage = 5.0f;
@@ -26,10 +29,23 @@ public class KnightBulletScript : BulletScript {
 		
 	}
 
+	void FixedUpdate() {
+		if(hitFirstTarget && Time.time < attackRefreshedLife + attackLifeSpan) {
+			Destroy(gameObject, 0.5f);
+		}
+	}
+
 	void OnTriggerEnter2D(Collider2D coll)
 	{
+
+
 		if (ThingsToDieOn.Contains(coll.gameObject.tag) && coll.gameObject.tag == "Enemy")
 		{
+
+			if (!hitFirstTarget) {
+				hitFirstTarget = true;
+			}
+			attackRefreshedLife = Time.time;
 			// stop and attack
 			
 			if(hitsLeft > 0) {
@@ -37,14 +53,13 @@ public class KnightBulletScript : BulletScript {
 				enemyToAttackIndex = -1;
 				enemyToAttackDistance = attackRadius;
 				for (int i = 0; enemies != null && i < enemies.Length; i++) {
-					if((enemies[i].transform.position - this.transform.position).magnitude < enemyToAttackDistance && enemies[i].gameObject != lastHitEnemy){
+					if((enemies[i].transform.position - this.transform.position).magnitude < enemyToAttackDistance && enemies[i].gameObject != coll.gameObject){
 						enemyToAttackIndex = i;
 						enemyToAttackDistance = (enemies[i].transform.position - this.transform.position).magnitude;
 					}
 				}
 
 				if(enemyToAttackIndex != -1) {
-					lastHitEnemy = enemies[enemyToAttackIndex].gameObject;
 					rigidbody2D.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized*speed;
 					hitsLeft--;
 				}
