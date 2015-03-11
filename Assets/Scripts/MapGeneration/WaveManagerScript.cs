@@ -5,78 +5,134 @@ using System.Collections.Generic;
 public class WaveManagerScript : MonoBehaviour {
 	
 	public int cooldownTime = 2;
-
-	private List<GameObject> curSpawnPoints = new List<GameObject>();
+	
+	private int curLevel = -1;
 	private bool inCooldown = true;
+	private bool stopWave = false;
+	private bool inCooldownTimer = false;
+	private bool levelComplete = false;
+	private List<GameObject> curLevelSpawnPoints = new List<GameObject>();
+	
 	private GameManager gameManager;
 	private BoardManager boardManager;
-	private GameObject cage; //TODO: use somehow
+	private AStar aStarScript;
 	private GameObject player;
-	private int curLevel = -1;
 
 	void Awake()
 	{
 		gameManager = this.GetComponent<GameManager>();
-		boardManager = gameManager.GetComponent<BoardManager>();
+		boardManager = this.GetComponent<BoardManager>();
+		aStarScript = this.GetComponent<AStar>();
 	}
 
-	// Finds all spawnpoints then immediately sends a wave
-	public void InitializeWaves()
+	void Start()
 	{
-		//cage = GameObject.FindGameObjectWithTag ("Cage");
-
-		//curSpawnPoints = new List<GameObject>();
-		//inCooldown = false;
-		//sendWave();
+		player = gameManager.PlayerInstance;
+		for (int level = 0; level < boardManager.numLevels; level++)
+		{
+			GetComponent<AStar>().Initialize(level);
+		}
 	}
 
 	// If in cooldown, do nothing
 	// if not in cooldown, check if enemies all gone,
 	//		if they are, cooldown then send next wave
 	void Update () {
-		if (player == null)
-			player = gameManager.PlayerInstance;
-
-		//if (player && !inCooldown)
 		if (!inCooldown)
 		{
-			GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-			if (enemy == null)
+			if (EnemiesCleared())
 			{
 				inCooldown = true;
 				StartCoroutine( waitForCooldown(cooldownTime) );
 			}
+		}
+		else if (levelComplete)
+		{
+			if (EnemiesCleared())
+			{
+				ToggleBorderTiles(false, curLevel);
+				levelComplete = false;
+			}
+		}
+	}
+
+	private bool EnemiesCleared()
+	{
+		GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+		return enemy == null;
+	}
+
+	private void ToggleBorderTiles(bool isEnabled, int level)
+	{
+		foreach (GameObject borderTile in boardManager.levelBorderTiles[level])
+		{
+			borderTile.SetActive(isEnabled);
 		}
 	}
 
 	// Waits the cooldown period, then sends next wave
 	IEnumerator waitForCooldown(int seconds)
 	{
+		inCooldownTimer = true;
 		yield return new WaitForSeconds(seconds);
-		sendWave ();
-		inCooldown = false;
+		if (!stopWave)
+		{
+			sendWave ();
+			inCooldown = false;
+		}
+		else
+		{
+			ToggleBorderTiles(false, curLevel);
+			levelComplete = false;
+			stopWave = false;
+		}
+		inCooldownTimer = false;
 	}
 
-	// Tells each spawnPoint to call the function sendNextWave
+	// Tells each spawnPoint to call the function SendNextWave
 	void sendWave()
 	{
-		foreach(GameObject spawnPoint in curSpawnPoints)
+		foreach(GameObject spawnPoint in curLevelSpawnPoints)
 		{
-			spawnPoint.GetComponent<SpawnPoint>().sendNextWave();
+			spawnPoint.GetComponent<SpawnPoint>().SendNextWave();
 		}
 	}
 
-
-	void InitializeSpawnPoints(int level)
+	// Calls each spawn point in given level to initialize
+	public void InitializeSpawnPoints(int level)
 	{
-		curSpawnPoints = boardManager.LevelSpawnPoints[level];
-		foreach (GameObject spawnPoint in boardManager.LevelSpawnPoints[level])
+		curLevelSpawnPoints = boardManager.levelSpawnPoints[level];
+		foreach (GameObject spawnPoint in boardManager.levelSpawnPoints[level])
 		{
 			spawnPoint.GetComponent<SpawnPoint>().Initialize(level);
 		}
 	}
 
+	// Calls each spawnpoint in the current level to reinitialize
+	public void RecalculatePaths()
+	{
+		curLevelSpawnPoints = boardManager.levelSpawnPoints[gameManager.currentLevel];
+		foreach (GameObject spawnPoint in boardManager.levelSpawnPoints[gameManager.currentLevel])
+		{
+			spawnPoint.GetComponent<SpawnPoint>().Initialize(gameManager.currentLevel);
+		}
+	}
 
+	// Calls AStar, Spawnpoints, and Enemies to change targets
+	private void ChangeTarget(GameObject newTarget)
+	{
+		aStarScript.SetTarget(newTarget);
+
+		foreach (GameObject spawnPoint in boardManager.levelSpawnPoints[gameManager.currentLevel])
+		{
+			spawnPoint.GetComponent<SpawnPoint>().SetTarget(newTarget);
+		}
+
+		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+		{
+			enemy.GetComponent<Enemy>().SetTarget(newTarget);
+		}
+	}
 
 	// When players steps on the trigger tile for the next level
 	public void TriggerNextLevel(int nextLevel)
@@ -84,20 +140,36 @@ public class WaveManagerScript : MonoBehaviour {
 		// Start next level
 		if (nextLevel > curLevel && nextLevel < boardManager.numLevels)
 		{
+			if (curLevel >= 0)
+				ToggleBorderTiles(true, curLevel);
+			gameManager.currentLevel = nextLevel;
 			curLevel = nextLevel;
+			ChangeTarget(boardManager.levelCages[curLevel]);
 			InitializeSpawnPoints(nextLevel);
-			inCooldown = false;
+			levelComplete = false;
 			sendWave();
+			inCooldown = false;
 		}
 	}
 
 	public void TriggerCageDestroyed()
 	{
-
+		stopWave = inCooldownTimer;
+		inCooldown = true;
+		levelComplete = true;
+		curLevelSpawnPoints = new List<GameObject>();
+		Debug.Log("Cage Destroyed!");
+		ChangeTarget(player);
 	}
 
 	public void TriggerCageUnlocked()
 	{
-
+		stopWave = inCooldownTimer;
+		inCooldown = true;
+		levelComplete = true;
+		curLevelSpawnPoints = new List<GameObject>();
+		Debug.Log("Cage Unlocked!");
+		ChangeTarget(player);
 	}
+
 }
