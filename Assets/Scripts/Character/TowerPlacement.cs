@@ -1,8 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class TowerPlacement : MonoBehaviour {
+
+    public static Dictionary<TestTowerScript.TowerType, int> ExtraTowers = new Dictionary<TestTowerScript.TowerType, int>();
+
+    static TowerPlacement()
+    {
+        Initialize(); // Also needs to be called when the game starts each time
+    }
+    private static void Initialize() { foreach (TestTowerScript.TowerType towerType in Enum.GetValues(typeof(TestTowerScript.TowerType))) ExtraTowers.Add(towerType, 0); }
 
 	public GameObject PawnTower;
 	public GameObject KnightTower;
