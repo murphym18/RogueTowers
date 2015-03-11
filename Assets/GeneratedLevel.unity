@@ -448,12 +448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c28484c14dc49b3a667a80deee44e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PawnSprite: {fileID: 21300000, guid: 605ee4a910b1541909d3786d300288f9, type: 3}
-  KnightSprite: {fileID: 21300000, guid: bc8b4e3a4196f40088db6d78c89b6caf, type: 3}
-  RookSprite: {fileID: 21300000, guid: d390a9df65b6f453293ca93639cfb1d7, type: 3}
-  BishopSprite: {fileID: 21300000, guid: 029b350c4392142eca4f81eaedc79517, type: 3}
-  KingSprite: {fileID: 21300000, guid: 1cb6e838b5b0e4488a7af975301bc7ca, type: 3}
-  QueenSprite: {fileID: 21300000, guid: cdca46458167a4b0591008eec26e34e5, type: 3}
   PlayerType: {fileID: 173760, guid: a6865244a2d28c94b8d1c914c9457290, type: 2}
   PlayerInstance: {fileID: 0}
   currentLevel: 0
@@ -612,7 +606,7 @@ RectTransform:
   - {fileID: 1696303263}
   - {fileID: 1379270876}
   - {fileID: 2046825317}
-  m_Father: {fileID: 1616331105}
+  m_Father: {fileID: 1302691228}
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
@@ -740,6 +734,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OpenUpgradeScreen: {fileID: 7479735}
   UpgradeScreen: {fileID: 1616331101}
+--- !u!1 &1302691227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1302691228}
+  - 222: {fileID: 1302691230}
+  - 114: {fileID: 1302691229}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1302691228
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1302691227}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1741298903}
+  - {fileID: 749738583}
+  - {fileID: 1846955640}
+  m_Father: {fileID: 1616331105}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &1302691229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1302691227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: .39199999}
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1302691230
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1302691227}
 --- !u!1 &1379270875
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,9 +1040,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1741298903}
-  - {fileID: 749738583}
-  - {fileID: 1846955640}
+  - {fileID: 1302691228}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
@@ -1003,8 +1059,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aeaa273006b228448b617e819c3b50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HUD: {fileID: 1055854360}
-  CloseUpgradeScreen: {fileID: 1741298902}
+  hud: {fileID: 1055854360}
+  closeUpgradeScreen: {fileID: 1741298902}
+  upgradePointLabel: {fileID: 1846955639}
+  gameManager: {fileID: 491985816}
 --- !u!1 &1696303262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,7 +1153,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 260197998}
-  m_Father: {fileID: 1616331105}
+  m_Father: {fileID: 1302691228}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: .0636359304, y: .117801122}
@@ -1181,7 +1239,7 @@ GameObject:
   - 222: {fileID: 1846955642}
   - 114: {fileID: 1846955641}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Upgrade Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1197,12 +1255,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1616331105}
+  m_Father: {fileID: 1302691228}
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123, y: -30}
-  m_SizeDelta: {x: 222.699997, y: 43.4499969}
+  m_AnchoredPosition: {x: 178, y: -32}
+  m_SizeDelta: {x: 327.630005, y: 43.4499969}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1846955641
 MonoBehaviour:
