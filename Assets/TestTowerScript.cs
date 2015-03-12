@@ -6,20 +6,6 @@ using System.Collections.Generic;
 public class TestTowerScript : MonoBehaviour {
     public enum TowerType { Pawn, Knight, Bishop, Rook, King, Queen }
 
-    public static readonly Dictionary<TowerType, int> UpgradeLevels = new Dictionary<TowerType, int>();
-    static TestTowerScript()
-    {
-        Initialize();
-    }
-    private static void Initialize()
-    {foreach (TowerType towerType in Enum.GetValues(typeof (TowerType))) UpgradeLevels.Add(towerType, 0);}
-
-    // bool attackEnemy = false;
-	public float attackRadius = 10.0f;
-	public LayerMask whatIsTargetable;
-	//public float damage = 1.0f;
-	public float attackDelay = 1.0f;
-
 	GameObject target;
 	Collider2D[] enemies;
 	float enemyToAttackDistance = 10.0f;
@@ -28,7 +14,41 @@ public class TestTowerScript : MonoBehaviour {
 	float lastAttack = 0.0f;
 	int enemyToAttackIndex = 0;
 
+    // bool attackEnemy = false;
+	public LayerMask whatIsTargetable;
+	//public float damage = 1.0f;
+
+    public float damageUpgradeMultiplier = 0.25f;
+    public float speedUpgradeMultiplier = 0.2f;
+    public float rangeUpgradeMultiplier = 0.25f;
+	public float _attackDelay = 1.0f;
+
 	public TowerType towerType;
+
+    public static readonly Dictionary<TowerType, int> UpgradeLevels = new Dictionary<TowerType, int>();
+    static TestTowerScript()
+    {
+        Initialize();
+    }
+
+    private static void Initialize()
+    {
+        foreach (TowerType towerType in Enum.GetValues(typeof (TowerType))) UpgradeLevels.Add(towerType, 0);
+    }
+
+    private float attackDelay
+    {
+        get { return _attackDelay / (1 + speedUpgradeMultiplier*UpgradeLevels[this.towerType]); }
+        set { _attackDelay = value; }
+    }
+
+    public float _attackRadius = 10.0f;
+
+    private float attackRadius
+    {
+        get { return _attackRadius*(1 + rangeUpgradeMultiplier*UpgradeLevels[towerType]); }
+        set { _attackRadius = value; }
+    }
 //	private BulletType[] TowerInputKeys;
 //	private class BulletType {
 //		public string input;
@@ -97,38 +117,11 @@ public class TestTowerScript : MonoBehaviour {
 			lastAttack = Time.time;
 
 			if(enemyToAttackIndex != -1) {
-				Rigidbody2D bulletInstance;
-				switch(towerType){
-					case TowerType.Pawn :
-						bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-						bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-						break;
-					case TowerType.Knight :
-						bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-						bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-						break;
-					case TowerType.Bishop :
-						bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-						bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-						break;
-					case TowerType.Rook :
-						bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-						bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-						break;
-					case TowerType.King :
-						bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-						//bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized*bulletSpeed;
-						break;
-					case TowerType.Queen :
-						bulletInstance = Instantiate (Bullet, transform.position, Quaternion.Euler (new Vector3 (0, 0, 0))) as Rigidbody2D;
-						bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-						break;
+                Rigidbody2D bulletInstance;
 
-				}
-
-
-
-
+                bulletInstance = Instantiate(Bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
+                bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
+			    bulletInstance.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier*UpgradeLevels[towerType];
 			}
 
 		}
