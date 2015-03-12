@@ -10,7 +10,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 	public int spawnPointCount = 1;
 	public int enemyPocketCount = 3;
 	public int enemyPocketSize = 5;
-	public int spawnPointOffsetX = 6;
+	public int spawnPointOffsetX = 12;
 
 	private GameObject gameScript;
 	private BoardManager boardScript;

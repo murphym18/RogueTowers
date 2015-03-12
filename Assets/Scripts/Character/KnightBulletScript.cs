@@ -65,7 +65,7 @@ public class KnightBulletScript : BulletScript {
 				}
 			} else {
 				Destroy(gameObject, 0.0f);
-				Debug.Log("Bullet gone\n");
+				// Debug.Log("Bullet gone\n");
 			}
 		} else if (ThingsToDieOn.Contains(coll.gameObject.tag) && coll.gameObject.tag != "Enemy") {
 			Destroy(gameObject, 0.0f);

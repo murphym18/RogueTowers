@@ -151,7 +151,7 @@ public class Enemy : IsometricObject {
 	{
 		Vector2 start = new Vector2(this.transform.position.x, this.transform.position.y);
 		Vector2 dest = new Vector2(point.x, point.y);
-		float thickness = 0.2f;
+		float thickness = 0.32f;
 		Physics2D.raycastsStartInColliders = false;
 		int hit1, hit2;
 		

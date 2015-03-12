@@ -10,7 +10,7 @@ public class FloorTileScript : MonoBehaviour {
 	void Start () {
 		anim = GetComponent<Animator> ();
 		floorTileVersion = Random.Range (1, 4);
-		anim.SetInteger ("FloorTileVersion", floorTileVersion);
+		//anim.SetInteger ("FloorTileVersion", floorTileVersion);
 	}
 	
 	// Update is called once per frame

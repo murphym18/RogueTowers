@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -166,22 +167,24 @@ public class WaveManagerScript : MonoBehaviour {
 	}
 
 	public void TriggerCageDestroyed()
-	{
+    {
+        Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;
 		levelComplete = true;
 		curLevelSpawnPoints = new List<GameObject>();
-		Debug.Log("Cage Destroyed!");
+		// Debug.Log("Cage Destroyed!");
 		ChangeTarget(player);
 	}
 
 	public void TriggerCageUnlocked()
 	{
+	    Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;
 		levelComplete = true;
 		curLevelSpawnPoints = new List<GameObject>();
-		Debug.Log("Cage Unlocked!");
+		// Debug.Log("Cage Unlocked!");
 		ChangeTarget(player);
 	}
 

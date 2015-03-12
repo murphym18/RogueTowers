@@ -123,8 +123,9 @@ MonoBehaviour:
   damageUpgradeMultiplier: .25
   speedUpgradeMultiplier: .200000003
   rangeUpgradeMultiplier: .25
-  _attackDelay: 1
+  _attackDelay: 2
   towerType: 0
+  targetPriority: 0
   _attackRadius: 10
 --- !u!212 &21273760
 SpriteRenderer:
