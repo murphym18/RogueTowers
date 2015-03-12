@@ -377,7 +377,7 @@ public class AStar : MonoBehaviour {
 
 			if (cutoff-- < 0)
 			{
-				Debug.Log("GOT CUTOFF");
+				// Debug.Log("GOT CUTOFF");
 				SetPathPoints();
 				return true;
 			}
@@ -394,8 +394,8 @@ public class AStar : MonoBehaviour {
 					{
 						if (!curNode.open || curNode.g > parent_n.g + g)
 						{
-							if (curNode.open)
-								Debug.Log("replacing best path with a " + curNode.g + " | " + (parent_n.g + g));
+							//if (curNode.open)
+								// Debug.Log("replacing best path with a " + curNode.g + " | " + (parent_n.g + g));
 							curNode.open = true;
 							curNode.parent = parent_n;
 							curNode.g = parent_n.g + g;

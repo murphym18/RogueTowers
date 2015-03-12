@@ -9,10 +9,9 @@ public class RookBulletScript : BulletScript {
 	public LayerMask whatIsTargetable;
 	Vector2 distanceVector;
 
-
 	RookBulletScript() {
-		damage = 3.0f;
-		speed = 3.0f;
+		//damage = 3.0f;
+		//speed = 3.0f;
 	}
 
 	void Start() {
@@ -24,17 +23,18 @@ public class RookBulletScript : BulletScript {
 		for(int i = 0; Towers != null && i < Towers.Length; i++) {
 			Physics2D.IgnoreCollision(collider2D, Towers[i].collider2D);
 		}
-		Debug.Log ("distanceVector: " + distanceVector*speed);
-		gameObject.GetComponent<RectTransform> ().sizeDelta = distanceVector*speed*100;
-		gameObject.GetComponent<RectTransform> ().rotation = new Quaternion(distanceVector.x, distanceVector.y, 0, 1);
+		// Debug.Log ("distanceVector: " + distanceVector*speed);
+        var r = gameObject.GetComponent<RectTransform>();
+        r.pivot = new Vector2(0, r.rect.height / 2);
+	    //r.rect.width = distanceVector.magnitude;
+		//r.sizeDelta = new Vector2(distanceVector*speed*100, 1);
+		r.rotation = new Quaternion(distanceVector.x, distanceVector.y, 0, 1);
 			
 	}
 
 	void Update() {
 		transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
 	}
-
-
 
 
 }

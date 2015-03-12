@@ -61,7 +61,7 @@ MonoBehaviour:
   - Cage
   - Wall
   damage: 7
-  speed: 9
+  speed: 2
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
