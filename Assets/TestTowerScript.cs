@@ -53,7 +53,7 @@ public class TestTowerScript : MonoBehaviour {
 			attackRadius = 10.0f;
 			break;
 		case TowerType.Bishop :
-			attackDelay = 1.5f;
+			attackDelay = .3f;
 			attackRadius = 20.0f;
 			break;
 		case TowerType.Rook :

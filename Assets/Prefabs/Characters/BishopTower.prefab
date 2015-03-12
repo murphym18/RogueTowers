@@ -73,7 +73,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   attackDelay: 1
-  Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
+  Bullet: {fileID: 5081792, guid: 343ff041e8c744c98b8320b3956744a0, type: 2}
   towerType: 2
 --- !u!212 &21201218
 SpriteRenderer:

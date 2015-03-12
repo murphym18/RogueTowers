@@ -14,6 +14,15 @@ public class BishopBulletScript : BulletScript {
 		speed = 9.0f;
 	}
 
+	void Start() {
+		rigidbody2D.velocity *= speed;
+		//Destroy (gameObject, 6);
+		GameObject[] Towers = GameObject.FindGameObjectsWithTag("Tower");
+		for(int i = 0; Towers != null && i < Towers.Length; i++) {
+			Physics2D.IgnoreCollision(collider2D, Towers[i].collider2D);
+		}
+	}
+
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if (coll.gameObject.tag == "Enemy")
@@ -39,13 +48,13 @@ public class BishopBulletScript : BulletScript {
 
 	void Bounce(Transform coll){
 		Debug.Log ("BOUNCE!");
-		if(coll.position.x > transform.position.x)
+		if(Mathf.FloorToInt(coll.position.x) > Mathf.FloorToInt(transform.position.x))
 			rigidbody2D.velocity = new Vector3(-rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
-		else if(coll.position.y > transform.position.y)
+		else if(Mathf.FloorToInt(coll.position.y) > Mathf.FloorToInt(transform.position.y))
 			rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, -rigidbody2D.velocity.y, 0);
-		else if(coll.position.x < transform.position.x)
+		if(Mathf.FloorToInt(coll.position.x) < Mathf.FloorToInt(transform.position.x))
 			rigidbody2D.velocity = new Vector3(-rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
-		else if(coll.position.y < transform.position.y)
+		else if(Mathf.FloorToInt(coll.position.y) < Mathf.FloorToInt(transform.position.y))
 			rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, -rigidbody2D.velocity.y, 0);
 	}
 }

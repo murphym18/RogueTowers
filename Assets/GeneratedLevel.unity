@@ -82,6 +82,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -114,6 +118,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 199902, guid: 31e0e8a8bcc8944c1832894ef961d3c9, type: 2}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.data[2]
+      value: 
+      objectReference: {fileID: 127498, guid: 47cacd2950e494427a5e7634019d3cb9, type: 2}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.data[3]
+      value: 
+      objectReference: {fileID: 196488, guid: 0779e9f0d67d44f7286dc1cd10e5f971, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 799280d65a0d247fab2a66169b091293, type: 2}
   m_RootGameObject: {fileID: 491985816}
@@ -153,6 +169,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorTiles:
   - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
+  - {fileID: 199902, guid: 31e0e8a8bcc8944c1832894ef961d3c9, type: 2}
+  - {fileID: 127498, guid: 47cacd2950e494427a5e7634019d3cb9, type: 2}
+  - {fileID: 196488, guid: 0779e9f0d67d44f7286dc1cd10e5f971, type: 2}
   wallTiles:
   - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
   borderTile: {fileID: 130410, guid: 384f041fcc9e5dc41a91b4c2fab60e53, type: 2}
@@ -192,7 +211,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!114 &491985820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +339,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!114 &1433899856
 MonoBehaviour:
   m_ObjectHideFlags: 0
