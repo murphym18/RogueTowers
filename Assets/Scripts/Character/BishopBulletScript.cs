@@ -47,7 +47,7 @@ public class BishopBulletScript : BulletScript {
 	}
 
 	void Bounce(Transform coll){
-		Debug.Log ("BOUNCE!");
+		//Debug.Log ("BOUNCE!");
 		if(Mathf.FloorToInt(coll.position.x) > Mathf.FloorToInt(transform.position.x))
 			rigidbody2D.velocity = new Vector3(-rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
 		else if(Mathf.FloorToInt(coll.position.y) > Mathf.FloorToInt(transform.position.y))
