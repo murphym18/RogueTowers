@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject PlayerType;
     public GameObject PlayerInstance;
-	public int currentLevel = 0;
+	public int currentLevel = -1;
     private BoardManager BoardScript;
 	
 	// Use this for initialization

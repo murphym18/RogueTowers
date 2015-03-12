@@ -1,22 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class TestTowerScript : MonoBehaviour {
-	
-	
-	public static Dictionary<TowerType, int> UpgradeLevels = new Dictionary<TowerType, int>();
-	static TestTowerScript()
-	{
-		UpgradeLevels [TowerType.Pawn] = 0;
-		UpgradeLevels [TowerType.Knight] = 0;
-		UpgradeLevels [TowerType.Bishop] = 0;
-		UpgradeLevels [TowerType.Rook] = 0;
-		UpgradeLevels [TowerType.King] = 0;
-		UpgradeLevels [TowerType.Queen] = 0;
-	}
+    public enum TowerType { Pawn, Knight, Bishop, Rook, King, Queen }
 
-	// bool attackEnemy = false;
+    public static readonly Dictionary<TowerType, int> UpgradeLevels = new Dictionary<TowerType, int>();
+    static TestTowerScript()
+    {
+        Initialize();
+    }
+    private static void Initialize()
+    {foreach (TowerType towerType in Enum.GetValues(typeof (TowerType))) UpgradeLevels.Add(towerType, 0);}
+
+    // bool attackEnemy = false;
 	public float attackRadius = 10.0f;
 	public LayerMask whatIsTargetable;
 	//public float damage = 1.0f;
@@ -30,9 +28,6 @@ public class TestTowerScript : MonoBehaviour {
 	float lastAttack = 0.0f;
 	int enemyToAttackIndex = 0;
 
-	public enum TowerType {
-		Pawn, Knight, Bishop, Rook, King, Queen
-	}
 	public TowerType towerType;
 //	private BulletType[] TowerInputKeys;
 //	private class BulletType {
