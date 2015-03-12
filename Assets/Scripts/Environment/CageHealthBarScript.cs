@@ -15,11 +15,12 @@ public class CageHealthBarScript : MonoBehaviour {
 	void Start () {
 		//owner = gameManager.GetComponent<GameManager> ().PlayerInstance;
 		cages = gameManager.GetComponent<BoardManager> ().levelCages;
-		currentCage = cages [currentLevel]; 
 	}	
 	
 	// Update is called once per frame
-	void Update () {
+    void Update()
+    {
+        currentCage = cages[currentLevel]; 
 		transform.localScale = new Vector3 (Math.Max(health, 0), 1, 1); 
 		transform.position = new Vector3 (currentCage.transform.position.x, currentCage.transform.position.y - 1.5f, 0f);
 		//Debug.Log (health);
