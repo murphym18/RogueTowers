@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 public class BulletScript : MonoBehaviour {
+
+
 	public List<string> ThingsToDieOn = new List<string>();
 	public float damage = 1.0f;
+	public float speed = 3.0f;
 
 	// Use this for initialization
 	void Start () {
-		Destroy (gameObject, 3);
+		rigidbody2D.velocity *= speed;
+		Destroy (gameObject, 6);
 	}
 	
 	// Update is called once per frame
@@ -20,7 +24,6 @@ public class BulletScript : MonoBehaviour {
 		{
 			// stop and attack
 			//rigidbody2D.velocity = Vector3.zero;
-			Destroy(gameObject, 0.0f);
 		}
 		
 	}

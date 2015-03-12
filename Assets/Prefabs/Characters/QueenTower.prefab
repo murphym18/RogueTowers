@@ -72,10 +72,9 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
-  damage: 1
   attackDelay: 1
   Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
-  bulletSpeed: 12
+  towerType: 5
 --- !u!212 &21201218
 SpriteRenderer:
   m_ObjectHideFlags: 1
