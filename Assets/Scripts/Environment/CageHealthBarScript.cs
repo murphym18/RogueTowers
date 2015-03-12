@@ -21,7 +21,7 @@ public class CageHealthBarScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		transform.localScale = new Vector3 (Math.Max(health, 0), 1, 1); 
-		transform.position = new Vector3 (currentCage.transform.position.x, currentCage.transform.position.y - 0.5f, 0f);
+		transform.position = new Vector3 (currentCage.transform.position.x, currentCage.transform.position.y - 1.5f, 0f);
 		//Debug.Log (health);
 	}
 }
