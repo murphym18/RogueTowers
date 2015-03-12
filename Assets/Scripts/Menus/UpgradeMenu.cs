@@ -10,11 +10,24 @@ public class UpgradeMenu : MonoBehaviour
     public GameObject upgradePointLabel;
     public GameObject gameManager;
 
+    private Tyrem player;
+
+    private int lastKnownUpgradePoints = -1;
+
 	// Use this for initialization
 	void Start () {
 	    this.gameObject.SetActive(false);
         closeUpgradeScreen.GetComponent<Button>().onClick.AddListener(this.OnClick_CloseUpgradeScreen);
+	    player = gameManager.GetComponent<GameManager>().PlayerInstance.GetComponent<Tyrem>();
+        lastKnownUpgradePoints = player.upgradePoints;
 	}
+
+    void Update()
+    {
+        if(lastKnownUpgradePoints != player.upgradePoints)
+            Prepare();
+        lastKnownUpgradePoints = player.upgradePoints;
+    }
 
     private void OnClick_CloseUpgradeScreen()
     {

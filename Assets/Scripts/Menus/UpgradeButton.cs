@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEditor;
 
@@ -12,6 +13,7 @@ public class UpgradeButton : MonoBehaviour
     public UpgradeType upgradeType;
     public TestTowerScript.TowerType towerType;
 
+    public GameObject levelLabel;
     public GameObject costLabel;
     public GameObject gameManagerObject;
     private Tyrem player;
@@ -31,32 +33,83 @@ public class UpgradeButton : MonoBehaviour
         cost = CalculateUpgradeCost();
         isBuyable = player.upgradePoints >= cost;
 
+        levelLabel.GetComponent<Text>().text = Table[towerType].ToString();
+
         costLabel.GetComponent<Text>().text = cost.ToString();
         costLabel.GetComponent<Text>().color = isBuyable ? sufficientUpgradePoints : insufficientUpgradePoints;
         this.GetComponent<Button>().interactable = isBuyable;
+
+        if(TowerPlacement.ExtraTowers[towerType] == -1)
+            this.gameObject.SetActive(false);
+        else
+            this.gameObject.SetActive(true);
     }
 
     int CalculateUpgradeCost()
     {
-        return 1;
+        var curVal = Table[towerType] + 1;
+        switch (upgradeType)
+        {
+            case UpgradeType.AddExtras:
+                switch (towerType)
+                {
+                    case TestTowerScript.TowerType.Pawn:
+                        return 5 * curVal;
+                    case TestTowerScript.TowerType.Knight:
+                        return 10 * curVal;
+                    case TestTowerScript.TowerType.Bishop:
+                        return 10 * curVal;
+                    case TestTowerScript.TowerType.Rook:
+                        return 10 * curVal;
+                    case TestTowerScript.TowerType.King:
+                        return 20 * curVal;
+                    case TestTowerScript.TowerType.Queen:
+                        return 20 * curVal;
+                }
+                break;
+
+            case UpgradeType.IncreaseStats:
+                switch (towerType)
+                {
+                    case TestTowerScript.TowerType.Pawn:
+                        return 2 * curVal;
+                    case TestTowerScript.TowerType.Knight:
+                        return 3 * curVal;
+                    case TestTowerScript.TowerType.Bishop:
+                        return 3 * curVal;
+                    case TestTowerScript.TowerType.Rook:
+                        return 3 * curVal;
+                    case TestTowerScript.TowerType.King:
+                        return 5 * curVal;
+                    case TestTowerScript.TowerType.Queen:
+                        return 5 * curVal;
+                }
+                break;
+        }
+        throw new InvalidOperationException("Invalid type of upgrade");
+    }
+
+    private Dictionary<TestTowerScript.TowerType, int> Table
+    {
+        get
+        {
+            switch (upgradeType)
+            {
+                case UpgradeType.AddExtras:
+                    return TowerPlacement.ExtraTowers;
+                case UpgradeType.IncreaseStats:
+                    return TestTowerScript.UpgradeLevels;
+                default:
+                    throw new InvalidOperationException("Unknown upgrade type: " + upgradeType);
+            }
+        }
     }
 
     void OnClick()
     {
         if (isBuyable)
         {
-            switch (upgradeType)
-            {
-                case UpgradeType.AddExtras:
-                    TowerPlacement.ExtraTowers[towerType] += 1;
-                    Debug.Log("" + Enum.GetName(typeof(TestTowerScript.TowerType), towerType) + " just got more plentiful!");
-                    break;
-
-                case UpgradeType.IncreaseStats:
-                    TestTowerScript.UpgradeLevels[towerType] += 1;
-                    Debug.Log("" + Enum.GetName(typeof(TestTowerScript.TowerType), towerType) + " just got more powerful!");
-                    break;
-            }
+            Table[towerType] += 1;
             player.deductUpgradePoints(cost);
             GameObject.Find("UpgradeMenu").GetComponent<UpgradeMenu>().Prepare();
         }
