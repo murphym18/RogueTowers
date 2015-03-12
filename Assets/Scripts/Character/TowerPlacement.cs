@@ -11,7 +11,16 @@ public class TowerPlacement : MonoBehaviour {
     {
         Initialize(); // Also needs to be called when the game starts each time
     }
-    private static void Initialize() { foreach (TestTowerScript.TowerType towerType in Enum.GetValues(typeof(TestTowerScript.TowerType))) ExtraTowers.Add(towerType, 0); }
+	
+    private static void Initialize()
+	{
+		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Pawn"), 4);
+		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Knight"), 2);
+		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Bishop"), -1);
+		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Rook"), -1);
+		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "King"), 1);
+		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Queen"), -1);
+	}
 
 	public GameObject PawnTower;
 	public GameObject KnightTower;
