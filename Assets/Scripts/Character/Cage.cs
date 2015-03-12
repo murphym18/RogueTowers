@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class Cage : MonoBehaviour {
+public class Cage : IsometricObject {
 
 	public int hp;
 	public float unlockDistance;
@@ -22,7 +22,8 @@ public class Cage : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		if (!isUnlocked) {
 			if (Input.GetButton ("UnlockCage")) {
 				Vector3 d = this.transform.position - player.transform.position;

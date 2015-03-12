@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpawnPoint : MonoBehaviour {
+public class SpawnPoint : IsometricObject {
 
 	public GameObject[] enemySpawns;
 	public int spawnInterval = 3;

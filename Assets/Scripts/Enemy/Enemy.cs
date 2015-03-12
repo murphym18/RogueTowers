@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : IsometricObject {
 
 	public float health = 10;
 	public float movementSpeed = 1;
