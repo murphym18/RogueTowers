@@ -283,40 +283,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11460288, guid: 799280d65a0d247fab2a66169b091293, type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11466952, guid: 799280d65a0d247fab2a66169b091293, type: 2}
-      propertyPath: PawnSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 605ee4a910b1541909d3786d300288f9,
-        type: 3}
-    - target: {fileID: 11466952, guid: 799280d65a0d247fab2a66169b091293, type: 2}
-      propertyPath: KnightSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: bc8b4e3a4196f40088db6d78c89b6caf,
-        type: 3}
-    - target: {fileID: 11466952, guid: 799280d65a0d247fab2a66169b091293, type: 2}
-      propertyPath: RookSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d390a9df65b6f453293ca93639cfb1d7,
-        type: 3}
-    - target: {fileID: 11466952, guid: 799280d65a0d247fab2a66169b091293, type: 2}
-      propertyPath: BishopSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 029b350c4392142eca4f81eaedc79517,
-        type: 3}
-    - target: {fileID: 11466952, guid: 799280d65a0d247fab2a66169b091293, type: 2}
-      propertyPath: KingSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 1cb6e838b5b0e4488a7af975301bc7ca,
-        type: 3}
-    - target: {fileID: 11466952, guid: 799280d65a0d247fab2a66169b091293, type: 2}
-      propertyPath: QueenSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: cdca46458167a4b0591008eec26e34e5,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 799280d65a0d247fab2a66169b091293, type: 2}
   m_RootGameObject: {fileID: 491985816}

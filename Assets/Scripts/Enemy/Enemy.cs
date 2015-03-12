@@ -190,10 +190,12 @@ public class Enemy : MonoBehaviour {
 	// Set the new path and reset the pointIndex to 0.
 	public void SetPathPointsCallback(List<Vector3> newPath)
 	{
-		points = new List<Vector3>(newPath);
-		pointEnumerator = points.GetEnumerator();
-		pointIndex = 0;
-		//Debug.Log ("enemy given new path");
+		if (newPath.Count > 0)
+		{
+			points = new List<Vector3>(newPath);
+			pointEnumerator = points.GetEnumerator();
+			pointIndex = 0;
+		}
 	}
 
 	// Calculates an initial path to AStar's target
