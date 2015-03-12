@@ -16,7 +16,7 @@ public class BishopBulletScript : BulletScript {
 
 	void Start() {
 		rigidbody2D.velocity *= speed;
-		//Destroy (gameObject, 6);
+		Destroy (gameObject, 6);
 		GameObject[] Towers = GameObject.FindGameObjectsWithTag("Tower");
 		for(int i = 0; Towers != null && i < Towers.Length; i++) {
 			Physics2D.IgnoreCollision(collider2D, Towers[i].collider2D);
