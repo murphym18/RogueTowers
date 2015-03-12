@@ -59,8 +59,8 @@ public class Tyrem : Character {
 	public void damage(float power)
 	{
 		hp -= power;
-		if (hp <=0)
-			Debug.Log("Player health is 0");
+		//if (hp <=0)
+			// Debug.Log("Player health is 0");
 	}
 
 	// Collissions

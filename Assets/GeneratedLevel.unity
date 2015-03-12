@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &7479735
 GameObject:
@@ -1356,6 +1357,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1422,6 +1427,22 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: cdca46458167a4b0591008eec26e34e5,
         type: 3}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 196488, guid: 0779e9f0d67d44f7286dc1cd10e5f971, type: 2}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 199902, guid: 31e0e8a8bcc8944c1832894ef961d3c9, type: 2}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.data[2]
+      value: 
+      objectReference: {fileID: 127498, guid: 47cacd2950e494427a5e7634019d3cb9, type: 2}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorTiles.Array.data[3]
+      value: 
+      objectReference: {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 799280d65a0d247fab2a66169b091293, type: 2}
   m_RootGameObject: {fileID: 491985816}
@@ -2380,6 +2401,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorTiles:
+  - {fileID: 196488, guid: 0779e9f0d67d44f7286dc1cd10e5f971, type: 2}
+  - {fileID: 199902, guid: 31e0e8a8bcc8944c1832894ef961d3c9, type: 2}
+  - {fileID: 127498, guid: 47cacd2950e494427a5e7634019d3cb9, type: 2}
   - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
   wallTiles:
   - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
@@ -4510,8 +4534,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -4590,13 +4614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OpenUpgradeScreen: {fileID: 7479735}
   UpgradeScreen: {fileID: 1616331101}
-  towerButtons:
-  - {fileID: 1333993781}
-  - {fileID: 201982184}
-  - {fileID: 1569173267}
-  - {fileID: 2040245163}
-  - {fileID: 762193982}
-  - {fileID: 1374264499}
+  towerButtons: []
 --- !u!1 &1121741894
 GameObject:
   m_ObjectHideFlags: 0
@@ -6634,8 +6652,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
