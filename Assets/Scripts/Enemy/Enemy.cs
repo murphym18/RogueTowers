@@ -33,7 +33,13 @@ public class Enemy : IsometricObject {
 
 		obstructionMask = LayerMask.GetMask("Walls", "Towers", "Chests");
 	}
-	
+
+	public void Initialize(SpawnPoint givenSpawnPoint, int level)
+	{
+		SetLevel(level);
+		Initialize(givenSpawnPoint);
+	}
+
 	// Initializes a spawnpoint by giving it a target and a path.
 	// If enemy came from a spawnpoint, take spawnpoint's target and path.
 	// Otherwise, get a target and form a path.
@@ -101,6 +107,15 @@ public class Enemy : IsometricObject {
 			if (this.health <= 0)
 				Destroy(gameObject, 0.0f);
 		}
+	}
+
+	void SetLevel(int level)
+	{
+		this.level = level;
+		health += health * level / 10;
+		movementSpeed += movementSpeed * level / 10;
+		attackPower += attackPower * level / 10;
+		attackRate += attackRate * level / 10;
 	}
 
 	// Follows the pathpoints.

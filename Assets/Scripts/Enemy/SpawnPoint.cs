@@ -10,6 +10,7 @@ public class SpawnPoint : IsometricObject {
 
 	private GameObject target;
 	private List<Vector3> pathPoints = null;
+	private int level = 0;
 
 	private GameManager gameManager;
 	private BoardManager boardManager;
@@ -25,6 +26,7 @@ public class SpawnPoint : IsometricObject {
 	// Initializes a spawnpoint with a target and an initial path to target
 	public void Initialize(int level)
 	{
+		this.level = level;
 		target = GetInitialTarget();
 		pathPoints = new List<Vector3>(GetInitialPath());
 	}
@@ -62,7 +64,7 @@ public class SpawnPoint : IsometricObject {
 	private void SpawnEnemy(GameObject enemyType)
 	{
 		GameObject newEnemy = (GameObject)Instantiate (enemyType, transform.position, Quaternion.identity);
-		newEnemy.GetComponent<Enemy>().Initialize(this);
+		newEnemy.GetComponent<Enemy>().Initialize(this, level);
 		newEnemy.GetComponent<Enemy>().enabled = true;
 	}
 
