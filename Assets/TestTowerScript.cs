@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class TestTowerScript : MonoBehaviour {
     public enum TowerType { Pawn, Knight, Bishop, Rook, King, Queen }
+    public enum TargetPriority { Closest, Furthest }
 
 	GameObject target;
 	Collider2D[] enemies;
@@ -24,6 +25,7 @@ public class TestTowerScript : MonoBehaviour {
 	public float _attackDelay = 1.0f;
 
 	public TowerType towerType;
+    public TargetPriority targetPriority = TargetPriority.Closest;
 
     public static readonly Dictionary<TowerType, int> UpgradeLevels = new Dictionary<TowerType, int>();
     static TestTowerScript()
@@ -100,20 +102,11 @@ public class TestTowerScript : MonoBehaviour {
 	}//
 	
 	// Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Physics2D.OverlapCircleNonAlloc(rigidbody2D.position, attackRadius, enemies, whatIsTargetable, 0, 0);
         enemies = Physics2D.OverlapCircleAll(rigidbody2D.position, attackRadius, whatIsTargetable, 0, 0);
-        enemyToAttackIndex = -1;
-        enemyToAttackDistance = attackRadius;
-        for (int i = 0; enemies != null && i < enemies.Length; i++)
-        {
-            if ((enemies[i].transform.position - this.transform.position).magnitude < enemyToAttackDistance)
-            {
-                enemyToAttackIndex = i;
-                enemyToAttackDistance = (enemies[i].transform.position - this.transform.position).magnitude;
-            }
-        }
+        enemyToAttackIndex = TargetingPriority(this.transform, enemies);
         if (Time.time > lastAttack + attackDelay)
         {
             lastAttack = Time.time;
@@ -122,15 +115,63 @@ public class TestTowerScript : MonoBehaviour {
             {
                 Rigidbody2D bulletInstance;
 
-                bulletInstance = Instantiate(Bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
-                bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-                bulletInstance.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier * UpgradeLevels[towerType];
+                bulletInstance =
+                    Instantiate(Bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
+                bulletInstance.velocity =
+                    (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
+                bulletInstance.GetComponent<BulletScript>().damage *= 1 +
+                                                                      damageUpgradeMultiplier*UpgradeLevels[towerType];
             }
 
         }
+    }
+
+    void FixedUpdate(){
 	}
-	void FixedUpdate(){
-	}
+
+    int TargetingPriority(Transform tower, Collider2D[] enemies)
+    {
+        switch (this.targetPriority)
+        {
+            case TargetPriority.Closest:
+                return Closest(tower, enemies);
+            case TargetPriority.Furthest:
+                return Furthest(tower, enemies);
+
+            default:
+                return Closest(tower, enemies);
+        }
+    }
+
+    static int Closest(Transform tower, Collider2D[] enemies)
+    {
+        var idx = -1;
+        var dist = float.MaxValue;
+        for (int i = 0; enemies != null && i < enemies.Length; i++)
+        {
+            if ((enemies[i].transform.position - tower.position).magnitude < dist)
+            {
+                idx = i;
+                dist = (enemies[i].transform.position - tower.position).magnitude;
+            }
+        }
+        return idx;
+    }
+
+    static int Furthest(Transform tower, Collider2D[] enemies)
+    {
+        var idx = -1;
+        var dist = float.MinValue;
+        for (int i = 0; enemies != null && i < enemies.Length; i++)
+        {
+            if ((enemies[i].transform.position - tower.position).magnitude > dist)
+            {
+                idx = i;
+                dist = (enemies[i].transform.position - tower.position).magnitude;
+            }
+        }
+        return idx;
+    }
 //	private BulletType createBulletType(string s, GameObject g) {
 //		BulletType b = new BulletType ();
 //		b.input = s;
