@@ -12,9 +12,14 @@ public class TowerPlacement : MonoBehaviour {
 	
 	private GameManager gameManager;
 	private BoardManager boardManager;
+	private AStar aStarScript;
 	private int levelWidth;
 	private GameObject curTower = null;
 	private TowerInput[] TowerInputKeys;
+	private Hashtable TowerMap = new Hashtable();
+	private bool recall = false;
+	private int oldLocX = 0, oldLocY = 0;
+	private bool oldValid = false;
 
 	private Color goodPlaceColor;
 	private Color badPlaceColor;
@@ -24,6 +29,7 @@ public class TowerPlacement : MonoBehaviour {
 	{
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		boardManager = gameManager.GetComponentInParent<BoardManager>();
+		aStarScript = gameManager.GetComponentInParent<AStar>();
 		levelWidth = boardManager.MapWidth / boardManager.numLevels;
 	}
 
@@ -47,54 +53,153 @@ public class TowerPlacement : MonoBehaviour {
 				curTower = instantiateTowerPointer(TowerInputKeys[i].Tower);
 				curTower.SetActive(true);
 				colorBackup = curTower.GetComponent<SpriteRenderer>().color;
+				recall = false;
 			}
 		}
 
-		if (curTower != null && Input.GetButtonDown("Cancel")) {
-			Destroy(curTower);
-			curTower = null;
+		if (Input.GetButtonDown("Cancel")) {
+			if (curTower != null)
+			{
+				Destroy(curTower);
+				curTower = null;
+			}
+			recall = false;
 		}
 
-		if (curTower != null) {
-			Vector3 worldLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			worldLocation.x = (int) Mathf.Round(worldLocation.x);
-			worldLocation.y = (int) Mathf.Round(worldLocation.y);
-			worldLocation.z = 0;
-
-			if (isValidTowerPosition(worldLocation))
+		if (Input.GetButtonDown("RecallTower")) {
+			if (curTower != null)
 			{
-				curTower.transform.position = new Vector2(worldLocation.x, worldLocation.y);
-				curTower.GetComponent<SpriteRenderer>().color = goodPlaceColor;
-				if (Input.GetMouseButtonDown(0)) {
-					curTower.SetActive(true);
-					curTower.GetComponent<SpriteRenderer>().color = colorBackup;
-					curTower.GetComponent<BoxCollider2D>().enabled = true;
-					curTower.GetComponent<TestTowerScript>().enabled = true;
-					curTower = null;
+				Destroy(curTower);
+				curTower = null;
+			}
+			recall = true;
+		}
 
-					gameManager.GetComponentInParent<AStar>().PlacedObstacleAt((int)worldLocation.x, (int)worldLocation.y);
+		if (recall)
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				Vector3 worldLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				worldLocation.x = (int) Mathf.Round(worldLocation.x);
+				worldLocation.y = (int) Mathf.Round(worldLocation.y);
+				worldLocation.z = 0;
+
+				string locationKey = ((int)worldLocation.x).ToString() + '_' + ((int)worldLocation.y).ToString();
+				if (TowerMap.ContainsKey(locationKey))
+				{
+					RecallTower(locationKey);
+					recall = false;
+				}
+			}
+		}
+		else if (curTower != null) {
+			Vector3 worldLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			int x = (int) Mathf.Round(worldLocation.x);
+			int y = (int) Mathf.Round(worldLocation.y);
+			bool useOldValid = false;
+
+			if (oldLocX == x && oldLocY == y)
+			{
+				useOldValid = true;
+			}
+			else {	
+				oldLocX = x;
+				oldLocY = y;
+			}
+
+			curTower.transform.position = new Vector2(x, y);
+			if (useOldValid ? oldValid : isValidTowerPosition(x, y))
+			{
+				curTower.GetComponent<SpriteRenderer>().color = goodPlaceColor;
+				oldValid = true;
+				if (Input.GetMouseButtonDown(0)) {
+					PlaceTower(x, y);
+					oldValid = false;
 				}
 			}
 			else {
-				curTower.transform.position = new Vector2(worldLocation.x, worldLocation.y);
 				curTower.GetComponent<SpriteRenderer>().color = badPlaceColor;
-				//curTower.SetActive(false);
+				oldValid = false;
 			}
-
 		}
 	}
 
-	// Check if a tower can legally be placed at given x,y position.
-	bool isValidTowerPosition(Vector3 locationVector)
+	private void PlaceTower(int x, int y)
 	{
-		if (!boardManager[(int)locationVector.x,(int)locationVector.y])
+		curTower.SetActive(true);
+		curTower.GetComponent<SpriteRenderer>().color = colorBackup;
+		curTower.GetComponent<BoxCollider2D>().enabled = true;
+		curTower.GetComponent<TestTowerScript>().enabled = true;
+
+		TowerMap.Add(x.ToString() + '_' + y.ToString(), curTower);
+		aStarScript.PlacedObstacleAt(x, y);
+		curTower = null;
+	}
+
+	private void RecallTower(string locationKey)
+	{
+		GameObject tower = TowerMap[locationKey] as GameObject;
+		boardManager[(int)tower.transform.position.x, (int)tower.transform.position.y] = false;
+		Destroy(tower);
+		TowerMap.Remove(locationKey);
+	}
+
+	public void RecallAllTowers()
+	{
+		IEnumerator towerEnumerator = TowerMap.Values.GetEnumerator();
+		while (towerEnumerator.MoveNext())
+		{
+			GameObject tower = towerEnumerator.Current as GameObject;
+			boardManager[(int)tower.transform.position.x, (int)tower.transform.position.y] = false;
+			Destroy(tower);
+		}
+		TowerMap.Clear();
+	}
+
+	// TODO
+	private bool CanRemoveTowers()
+	{
+		return true;
+	}
+
+	// Check if a tower can legally be placed at given x,y position.
+	// can optimize with a hashtable
+	bool isValidTowerPosition(int x, int y)
+	{
+		if (!boardManager[x, y] &&
+		    !(x == (int)Mathf.Round(transform.position.x) &&
+		  	  y == (int)Mathf.Round(transform.position.y)))
 		{
 			int levelStart_x = levelWidth * gameManager.currentLevel;
 			int levelEnd_x = levelStart_x + levelWidth;
-			return (locationVector.x > levelStart_x && locationVector.x < levelEnd_x);
+			if (x > levelStart_x && x < levelEnd_x)
+			{
+				if (!isPotentialBlock(x,y))
+					return true;
+				curTower.GetComponent<BoxCollider2D>().enabled = true;
+				bool reached = aStarScript.TestObstacleAt(x, y);
+				curTower.GetComponent<BoxCollider2D>().enabled = false;
+				aStarScript.ReformAdjNodeMesh();
+				return reached;
+			}
 		}
-		else
-			return false;
+		return false;
+	}
+
+	private bool isPotentialBlock(int x, int y)
+	{
+		int[] checks = new int[16]{x-1,y-1, x-1,y, x-1,y+1, x,y+1, x+1,y+1, x+1,y, x+1,y-1, x,y-1};
+		int changes = 0;
+
+		for (int cur_x=0, cur_y=1; cur_x < checks.Length-2; cur_x+=2,cur_y+=2)
+		{
+			if (boardManager[checks[cur_x],checks[cur_y]] != boardManager[checks[cur_x+2],checks[cur_y+2]])
+			{
+				if (++changes > 2)
+					return true;
+			}
+		}
+		return false;
 	}
 
 	GameObject instantiateTowerPointer(GameObject towerType)

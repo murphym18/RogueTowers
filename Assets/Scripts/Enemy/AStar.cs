@@ -15,11 +15,13 @@ public class AStar : MonoBehaviour {
 
 	private GameManager gameManager;
 	private BoardManager boardManager;
+	private WaveManagerScript waveManager;
 	private LayerMask obstructionMask;
 
 	void Awake () {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 		boardManager = gameManager.GetComponentInParent<BoardManager>();
+		waveManager = gameManager.GetComponentInParent<WaveManagerScript>();
 		nodeMesh = new List<Node>[boardManager.numLevels];
 
 		obstructionMask = LayerMask.GetMask("Walls", "Towers", "Chests");
@@ -27,7 +29,7 @@ public class AStar : MonoBehaviour {
 
 	void Start()
 	{
-		target = GetInitialTarget();
+		//target = GetInitialTarget();
 	}
 
 	void Update()
@@ -42,15 +44,18 @@ public class AStar : MonoBehaviour {
 		{
 			AStarJob curJob = aStarQueue.Dequeue();
 			if (curJob.callback != null)
-				CalculateAStar(curJob.start);
-			if (curJob.callback != null)
-				curJob.callback.SendMessage("SetPathPointsCallback", points);
+			{
+				if (!CalculateAStar(curJob.start))
+					points.Clear();
+			    if (curJob.callback != null)
+					curJob.callback.SendMessage("SetPathPointsCallback", points);
+			}
 		}
 	}
 
 	public void Initialize(int level)
 	{
-		target = GetInitialTarget();
+		target = GetInitialTarget(level);
 		InitializeNodeMesh(level);
 		FormAdjacencyList(level);
 	}
@@ -119,6 +124,33 @@ public class AStar : MonoBehaviour {
 		BroadcastTargetMoved();
 	}
 
+	public bool TestObstacleAt(int x, int y)
+	{
+		bool removed = false, reached = false;
+		boardManager[x,y] = true;
+		for (int i = 0; i < nodeMesh[gameManager.currentLevel].Count; i++)
+		{
+			if (nodeMesh[gameManager.currentLevel][i].x == x && nodeMesh[gameManager.currentLevel][i].y == y)
+			{
+				nodeMesh[gameManager.currentLevel].RemoveAt(i);
+				removed = true;
+				break;
+			}
+		}
+		
+		AddToNodeMesh(x-1,y-1);
+		AddToNodeMesh(x-1,y+1);
+		AddToNodeMesh(x+1,y-1);
+		AddToNodeMesh(x+1,y+1);
+		
+		ReformAdjNodeMesh();
+		reached = waveManager.EnemiesCanReachTarget();
+		boardManager[x,y] = false;
+		if (removed)
+			nodeMesh[gameManager.currentLevel].Add(new Node(x,y, true));
+		return reached;
+	}
+
 	private void AddToNodeMesh(int x, int y)
 	{
 		if (boardManager[x,y])
@@ -138,6 +170,21 @@ public class AStar : MonoBehaviour {
 		nodeMesh[level] = new List<Node>();
 		int levelStartX = level * (boardManager.MapWidth / boardManager.numLevels);
 		int levelEndX = levelStartX + (boardManager.MapWidth / boardManager.numLevels);
+
+		for (int c = 0; c < boardManager.numLevels; c++)
+		{
+			GameObject cage = boardManager.levelCages[c];
+			int cage_x = (int)cage.transform.position.x;
+			int cage_y = (int)cage.transform.position.y;
+			for (int x = -1; x < 2; x++)
+			{
+				for (int y = -1; y < 2; y++)
+				{
+					boardManager[cage_x+x, cage_y+y] = true;
+					nodeMesh[level].Add(new Node(cage_x+x, cage_y+y, false));
+				}
+			}
+		}
 
 		for (int x = levelStartX; x < levelEndX; x++)
 		{
@@ -200,7 +247,7 @@ public class AStar : MonoBehaviour {
 	}
 	
 	// Could optimize
-	private void ReformAdjNodeMesh()
+	public void ReformAdjNodeMesh()
 	{
 		foreach (Node node in nodeMesh[gameManager.currentLevel])
 		{
@@ -213,6 +260,8 @@ public class AStar : MonoBehaviour {
 	// Checks if the target moved
 	private bool TargetMoved()
 	{
+		if (target == null)
+			return false;
 		int newTargetX = (int)Mathf.Round(target.transform.position.x);
 		int newTargetY = (int)Mathf.Round(target.transform.position.y);
 		bool moved = oldTargetX != newTargetX ||
@@ -225,9 +274,9 @@ public class AStar : MonoBehaviour {
 	}
 
 	// Gets a target if it exists. Cage -> Player -> Self.
-	private GameObject GetInitialTarget()
+	private GameObject GetInitialTarget(int level)
 	{
-		GameObject toTarget = boardManager.levelCages[gameManager.currentLevel];
+		GameObject toTarget = boardManager.levelCages[level];
 		if (toTarget == null)
 			toTarget = gameManager.PlayerInstance;
 		if (toTarget == null)
@@ -277,18 +326,18 @@ public class AStar : MonoBehaviour {
 		}
 	}
 
-	public void CalculateAStar(Vector3 start)
+	public bool CalculateAStar(Vector3 start)
 	{
 		Vector3 toTarget = target.transform.position;
-		CalculateAStar(start, toTarget);
+		return CalculateAStar(start, toTarget);
 	}
 
-	public void CalculateAStar(Vector3 start, Vector3 target)
+	public bool CalculateAStar(Vector3 start, Vector3 target)
 	{
 		ClearNodeMesh();
 
-		AddStartToNodeMesh(start);
-		AddTargetToNodeMesh(target);
+		if (!(AddStartToNodeMesh(start) && AddTargetToNodeMesh(target)))
+			return false;
 
 		SortedList openList = new SortedList();
 		
@@ -315,7 +364,7 @@ public class AStar : MonoBehaviour {
 			if (cur_n.x == targetNode.x && cur_n.y == targetNode.y)
 			{
 				SetPathPoints();
-				return;
+				return true;
 			}
 		}
 		
@@ -330,7 +379,7 @@ public class AStar : MonoBehaviour {
 			{
 				Debug.Log("GOT CUTOFF");
 				SetPathPoints();
-				return;
+				return true;
 			}
 
 			for (int adjNodeIndex = 0; adjNodeIndex < parent_n.adjList.Count; adjNodeIndex++)
@@ -352,7 +401,7 @@ public class AStar : MonoBehaviour {
 							curNode.g = parent_n.g + g;
 							curNode.f = curNode.g + curNode.h;
 							SetPathPoints();
-							return;
+							return true;
 						}
 					}
 					else if (curNode.open)
@@ -382,7 +431,7 @@ public class AStar : MonoBehaviour {
 			parent_n.open = false;
 			
 		}
-		SetPathPoints();
+		return false;
 	}
 
 	// Sets points to calculated path
@@ -400,12 +449,12 @@ public class AStar : MonoBehaviour {
 		points.Reverse();
 	}
 
-	private void AddStartToNodeMesh(Vector3 target)
+	private bool AddStartToNodeMesh(Vector3 target)
 	{
 		Node nodeA = new Node((int)Mathf.Round(target.x), (int)Mathf.Round(target.y), true);
 		startNode = GetNodeIfExists(nodeA.x, nodeA.y);
 		if (startNode != null)
-			return;
+			return true;
 		
 		float closestDistance = float.PositiveInfinity;
 		for (int nodeIndexB = 0; nodeIndexB < nodeMesh[gameManager.currentLevel].Count; nodeIndexB++)
@@ -417,7 +466,7 @@ public class AStar : MonoBehaviour {
 			if (distanceToTarget > 8)
 				continue;
 			
-			if (NodesAreAdjacent(nodeA.x, nodeA.y, nodeB.x, nodeB.y))
+			if (NodesAreAdjacentToPoint(nodeA.x, nodeA.y, nodeB.x, nodeB.y))
 			{
 				if (distanceToTarget < closestDistance)
 				{
@@ -426,14 +475,15 @@ public class AStar : MonoBehaviour {
 				}
 			}
 		}
+		return startNode != null;
 	}
 	
-	private void AddTargetToNodeMesh(Vector3 target)
+	private bool AddTargetToNodeMesh(Vector3 target)
 	{
 		Node nodeA = new Node((int)Mathf.Round(target.x), (int)Mathf.Round(target.y), true);
 		targetNode = GetNodeIfExists(nodeA.x, nodeA.y);
 		if (targetNode != null)
-			return;
+			return true;
 		
 		float closestDistance = float.PositiveInfinity;
 		for (int nodeIndexB = 0; nodeIndexB < nodeMesh[gameManager.currentLevel].Count; nodeIndexB++)
@@ -445,7 +495,7 @@ public class AStar : MonoBehaviour {
 			if (distanceToTarget > 8)
 				continue;
 			
-			if (NodesAreAdjacent(nodeA.x, nodeA.y, nodeB.x, nodeB.y))
+			if (NodesAreAdjacentToPoint(nodeB.x, nodeB.y, nodeA.x, nodeA.y))
 			{
 				if (distanceToTarget < closestDistance)
 				{
@@ -454,6 +504,7 @@ public class AStar : MonoBehaviour {
 				}
 			}
 		}
+		return targetNode != null;
 	}
 	
 	private int ManhattanDistance(int x, int y)
@@ -498,8 +549,33 @@ public class AStar : MonoBehaviour {
 	{
 		RaycastHit2D[] zeroArray = new RaycastHit2D[1];
 		int hit1, hit2;
-		float thickness = 0.2f;
-		Physics2D.raycastsStartInColliders = false;
+		float thickness = 0.3f;
+		Physics2D.raycastsStartInColliders = true;
+		
+		if ((endX < startX && endY > startY) || (endX > startX && endY < startY))
+		{
+			hit1 = Physics2D.LinecastNonAlloc(new Vector2(startX-thickness, startY-thickness), new Vector2(endX-thickness, endY-thickness), zeroArray, obstructionMask.value);
+			hit2 = Physics2D.LinecastNonAlloc(new Vector2(startX+thickness, startY+thickness), new Vector2(endX+thickness, endY+thickness), zeroArray, obstructionMask.value);
+		}
+		else if ((endX < startX && endY < startY) || (endX > startX && endY > startY))
+		{
+			hit1 = Physics2D.LinecastNonAlloc(new Vector2(startX-thickness, startY+thickness), new Vector2(endX-thickness, endY+thickness), zeroArray, obstructionMask.value);
+			hit2 = Physics2D.LinecastNonAlloc(new Vector2(startX+thickness, startY-thickness), new Vector2(endX+thickness, endY-thickness), zeroArray, obstructionMask.value);
+		}
+		else
+		{
+			hit1 = hit2 = Physics2D.LinecastNonAlloc(new Vector2(startX, startY), new Vector2(endX, endY), zeroArray, obstructionMask.value);
+		}
+		
+		return (hit1 == 0 && hit2 == 0);
+	}
+
+	private bool NodesAreAdjacentToPoint(int startX, int startY, int endX, int endY)
+	{
+		RaycastHit2D[] zeroArray = new RaycastHit2D[1];
+		int hit1, hit2;
+		float thickness = 0.3f;
+		Physics2D.raycastsStartInColliders = true;
 		Vector2 end = new Vector2(endX, endY);
 		
 		if ((endX < startX && endY > startY) || (endX > startX && endY < startY))
@@ -514,9 +590,9 @@ public class AStar : MonoBehaviour {
 		}
 		else
 		{
-			hit1 = hit2 = Physics2D.LinecastNonAlloc(new Vector2(startX, startY), new Vector2(endX, endY), zeroArray, obstructionMask);
+			hit1 = hit2 = Physics2D.LinecastNonAlloc(new Vector2(startX, startY), end, zeroArray, obstructionMask.value);
 		}
-		
+
 		return (hit1 == 0 && hit2 == 0);
 	}
 

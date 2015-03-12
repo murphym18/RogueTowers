@@ -51,6 +51,7 @@ public class WaveManagerScript : MonoBehaviour {
 			if (EnemiesCleared())
 			{
 				ToggleBorderTiles(false, curLevel);
+				player.GetComponent<TowerPlacement>().RecallAllTowers();
 				levelComplete = false;
 			}
 		}
@@ -134,6 +135,17 @@ public class WaveManagerScript : MonoBehaviour {
 		}
 	}
 
+	public bool EnemiesCanReachTarget()
+	{
+		foreach (GameObject spawnPoint in boardManager.levelSpawnPoints[gameManager.currentLevel])
+		{
+			if (!aStarScript.CalculateAStar(spawnPoint.transform.position) ||
+			    !aStarScript.CalculateAStar(spawnPoint.transform.position, player.transform.position))
+				return false;
+		}
+		return true;
+	}
+
 	// When players steps on the trigger tile for the next level
 	public void TriggerNextLevel(int nextLevel)
 	{
@@ -144,6 +156,7 @@ public class WaveManagerScript : MonoBehaviour {
 				ToggleBorderTiles(true, curLevel);
 			gameManager.currentLevel = nextLevel;
 			curLevel = nextLevel;
+			player.GetComponent<TowerPlacement>().RecallAllTowers();
 			ChangeTarget(boardManager.levelCages[curLevel]);
 			InitializeSpawnPoints(nextLevel);
 			levelComplete = false;

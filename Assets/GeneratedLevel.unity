@@ -113,6 +113,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: numLevels
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466952, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: currentLevel
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: levelWidth
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: levelHeight
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 11407222, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: spawnPointCount
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 799280d65a0d247fab2a66169b091293, type: 2}
   m_RootGameObject: {fileID: 491985816}
@@ -157,9 +177,9 @@ MonoBehaviour:
   borderTile: {fileID: 130410, guid: 384f041fcc9e5dc41a91b4c2fab60e53, type: 2}
   levelTriggerTile: {fileID: 108552, guid: 0c5dc22f72f64a2439ffd91f13a33a03, type: 2}
   chestTile: {fileID: 194354, guid: c642aa043e159324fbbb9775e513cc3d, type: 2}
-  numLevels: 2
-  levelWidth: 40
-  levelHeight: 40
+  numLevels: 7
+  levelWidth: 70
+  levelHeight: 70
   minChestsPerLevel: 5
   maxChestsPerLevel: 5
   useFloorEverywhere: 0
@@ -179,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerType: {fileID: 173760, guid: a6865244a2d28c94b8d1c914c9457290, type: 2}
   PlayerInstance: {fileID: 0}
-  currentLevel: 0
+  currentLevel: -1
 --- !u!4 &491985819
 Transform:
   m_ObjectHideFlags: 0
@@ -219,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPointObject: {fileID: 148762, guid: 0d64c547403d74feaa72c41330b39a89, type: 2}
   CageObject: {fileID: 184844, guid: 6e283efe4e08649c9a066c6d975e5561, type: 2}
-  spawnPointCount: 3
+  spawnPointCount: 10
   enemyPocketCount: 3
   enemyPocketSize: 5
   spawnPointOffsetX: 6

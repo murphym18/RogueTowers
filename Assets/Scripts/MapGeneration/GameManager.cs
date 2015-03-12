@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject PlayerType;
     public GameObject PlayerInstance;
-	public int currentLevel = 0;
+	public int currentLevel = -1;
     private BoardManager BoardScript;
 	
 	// Use this for initialization
