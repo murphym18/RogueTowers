@@ -100,31 +100,36 @@ public class TestTowerScript : MonoBehaviour {
 	}//
 	
 	// Update is called once per frame
-	void Update () {
-	}
-	void FixedUpdate(){
-		//Physics2D.OverlapCircleNonAlloc(rigidbody2D.position, attackRadius, enemies, whatIsTargetable, 0, 0);
-		enemies = Physics2D.OverlapCircleAll(rigidbody2D.position, attackRadius, whatIsTargetable, 0, 0);
-		enemyToAttackIndex = -1;
-		enemyToAttackDistance = attackRadius;
-		for (int i = 0; enemies != null && i < enemies.Length; i++) {
-			if((enemies[i].transform.position - this.transform.position).magnitude < enemyToAttackDistance){
-				enemyToAttackIndex = i;
-				enemyToAttackDistance = (enemies[i].transform.position - this.transform.position).magnitude;
-			}
-		}
-		if (Time.time > lastAttack + attackDelay) {
-			lastAttack = Time.time;
+    void Update()
+    {
+        //Physics2D.OverlapCircleNonAlloc(rigidbody2D.position, attackRadius, enemies, whatIsTargetable, 0, 0);
+        enemies = Physics2D.OverlapCircleAll(rigidbody2D.position, attackRadius, whatIsTargetable, 0, 0);
+        enemyToAttackIndex = -1;
+        enemyToAttackDistance = attackRadius;
+        for (int i = 0; enemies != null && i < enemies.Length; i++)
+        {
+            if ((enemies[i].transform.position - this.transform.position).magnitude < enemyToAttackDistance)
+            {
+                enemyToAttackIndex = i;
+                enemyToAttackDistance = (enemies[i].transform.position - this.transform.position).magnitude;
+            }
+        }
+        if (Time.time > lastAttack + attackDelay)
+        {
+            lastAttack = Time.time;
 
-			if(enemyToAttackIndex != -1) {
+            if (enemyToAttackIndex != -1)
+            {
                 Rigidbody2D bulletInstance;
 
                 bulletInstance = Instantiate(Bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
                 bulletInstance.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-			    bulletInstance.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier*UpgradeLevels[towerType];
-			}
+                bulletInstance.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier * UpgradeLevels[towerType];
+            }
 
-		}
+        }
+	}
+	void FixedUpdate(){
 	}
 //	private BulletType createBulletType(string s, GameObject g) {
 //		BulletType b = new BulletType ();

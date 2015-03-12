@@ -17,6 +17,8 @@ public class TowerButtonScript : MonoBehaviour {
 	private TowerPlacement towerPlacement;
 	private enum stat { IncreaseStats, AddExtras }
 
+    private int prevRemaining;
+
 	void Awake()
 	{
 		gameManager = GameObject.Find("GameManager").GetComponentInParent<GameManager>();
@@ -33,14 +35,26 @@ public class TowerButtonScript : MonoBehaviour {
 		towerPlacement.SelectTower(towerType);
 	}
 
-	public void Prepare()
+    private int Remaining
+    {
+        get { return (TowerPlacement.ExtraTowers[towerType] - TowerPlacement.PlacedTowers[towerType]); }
+    }
+
+    public void Prepare()
 	{
 		string level = TestTowerScript.UpgradeLevels[towerType].ToString();
-		string count = (TowerPlacement.ExtraTowers[towerType] - TowerPlacement.PlacedTowers[towerType]).ToString();
 
 		numberLabel.GetComponent<Text>().text = numberKey.ToString();
 		//levelLabel.GetComponent<Text>().text = "lv. " + level;
-		countLabel.GetComponent<Text>().text = "x" + count;
+		countLabel.GetComponent<Text>().text = "x" + Remaining.ToString();
+
+        prevRemaining = Remaining;
 	}
+
+    void Update()
+    {
+        if (Remaining != prevRemaining)
+            countLabel.GetComponent<Text>().text = "x" + Remaining.ToString();
+    }
 
 }
