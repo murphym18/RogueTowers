@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11473760}
   - 114: {fileID: 11454188}
   - 114: {fileID: 11477558}
+  - 95: {fileID: 9543644}
   m_Layer: 9
   m_Name: Tyrem
   m_TagString: Player
@@ -28,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.4033258, y: 2.53335476, z: 0}
+  m_LocalPosition: {x: -241.588837, y: 151.457413, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,6 +60,21 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .400000006, y: .800000012}
   m_Center: {x: 0, y: .389999986}
+--- !u!95 &9543644
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173760}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: daafb62dfe1fd45a4b7dc9773744a299, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11454188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 5
+  hp: 10
 --- !u!114 &11477558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,10 +120,9 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
-  damage: 1
   attackDelay: 1
   Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
-  bulletSpeed: 3
+  towerType: 0
 --- !u!212 &21273760
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -127,7 +143,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2511236001
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 15e535b1dbed1435cb38dabaf459cf98, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 63f37a856e48b45caa9a5b7af2e22e03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
