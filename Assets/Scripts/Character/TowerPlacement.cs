@@ -162,6 +162,7 @@ public class TowerPlacement : MonoBehaviour {
 		curTower.SetActive(true);
 		colorBackup = curTower.GetComponent<SpriteRenderer>().color;
 		recall = false;
+		oldLocX = oldLocY = 0;
 	}
 
 	private void PlaceTower(int x, int y)
@@ -199,6 +200,7 @@ public class TowerPlacement : MonoBehaviour {
 			GameObject tower = ((ObjectXType)towerEnumerator.Current).tower;
 			boardManager[(int)tower.transform.position.x, (int)tower.transform.position.y] = false;
 			Destroy(tower);
+			PlacedTowers[((ObjectXType)towerEnumerator.Current).type]--;
 		}
 		TowerMap.Clear();
 		hud.PrepareChildren();
