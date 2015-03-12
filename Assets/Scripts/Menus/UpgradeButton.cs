@@ -25,11 +25,11 @@ public class UpgradeButton : MonoBehaviour
     // Use this for initialization
 	void Start () {
 	    this.GetComponent<Button>().onClick.AddListener(this.OnClick);
-	    player = gameManagerObject.GetComponent<GameManager>().PlayerInstance.GetComponent<Tyrem>();
 	}
 
     public void Prepare()
     {
+        player = gameManagerObject.GetComponent<GameManager>().PlayerInstance.GetComponent<Tyrem>();
         cost = CalculateUpgradeCost();
         isBuyable = player.upgradePoints >= cost;
 

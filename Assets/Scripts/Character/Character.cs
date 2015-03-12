@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Character : MonoBehaviour {
+public class Character : IsometricObject {
 
 	// Use this for initialization
 	void Start () {

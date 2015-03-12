@@ -29,12 +29,12 @@ public class HUD : MonoBehaviour
 	{
 		foreach (GameObject button in towerButtons)
 		{
-			button.GetComponent<TowerButtonScript>().Prepare();
+			//button.GetComponent<TowerButtonScript>().Prepare();
 		}
 	}
 
 	public void AddTowerButton(GameObject towerButton)
 	{
-		towerButton.GetComponent<TowerButtonScript>().Initialize();
+		//towerButton.GetComponent<TowerButtonScript>().Initialize();
 	}
 }

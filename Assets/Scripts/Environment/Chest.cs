@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Chest : MonoBehaviour
+public class Chest : IsometricObject
 {
 
     public Sprite OpenSprite;
