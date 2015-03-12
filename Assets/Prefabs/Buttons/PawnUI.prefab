@@ -28,6 +28,7 @@ GameObject:
   - 222: {fileID: 22287610}
   - 114: {fileID: 11487612}
   - 114: {fileID: 11487610}
+  - 114: {fileID: 11480954}
   m_Layer: 5
   m_Name: PawnUI
   m_TagString: Untagged
@@ -35,6 +36,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &11480954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14385bcd2db704b81abee6dd81f5983c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerType: 0
 --- !u!114 &11487608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,19 +65,15 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
+    m_MaxSize: 16
+    m_Alignment: 7
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'left: 4
-
-
-
-    Lv. 2'
+  m_Text: x 4 Lv. 2
 --- !u!114 &11487610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,15 +173,15 @@ RectTransform:
   m_GameObject: {fileID: 187610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .699999988, y: .699999988, z: 1}
   m_Children:
   - {fileID: 22487608}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_AnchorMin: {x: .5, y: .5}
-  m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -389.899994, y: -204.399994}
-  m_SizeDelta: {x: 70, y: 70}
+  m_AnchorMin: {x: .0683488473, y: .00419287197}
+  m_AnchorMax: {x: .125674412, y: .105222501}
+  m_AnchoredPosition: {x: .299987793, y: -.600006104}
+  m_SizeDelta: {x: 21, y: 22}
   m_Pivot: {x: .5, y: .5}
 --- !u!1001 &100100000
 Prefab:

@@ -8,9 +8,14 @@ public class HUD : MonoBehaviour
     public GameObject OpenUpgradeScreen;
     public GameObject UpgradeScreen;
 
+	public GameObject[] towerButtons;
+
 	// Use this for initialization
 	void Start () {
 	    OpenUpgradeScreen.GetComponent<Button>().onClick.AddListener(this.OnClick_OpenUpgradeScreen);
+
+		foreach (GameObject button in towerButtons)
+			AddTowerButton(button);
 	}
 
     private void OnClick_OpenUpgradeScreen()
@@ -19,4 +24,17 @@ public class HUD : MonoBehaviour
         UpgradeScreen.GetComponent<UpgradeMenu>().Prepare();
         UpgradeScreen.SetActive(true);
     }
+
+	public void PrepareChildren()
+	{
+		foreach (GameObject button in towerButtons)
+		{
+			button.GetComponent<TowerButtonScript>().Prepare();
+		}
+	}
+
+	public void AddTowerButton(GameObject towerButton)
+	{
+		towerButton.GetComponent<TowerButtonScript>().Initialize();
+	}
 }

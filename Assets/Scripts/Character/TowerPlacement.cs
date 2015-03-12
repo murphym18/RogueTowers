@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class TowerPlacement : MonoBehaviour {
 
     public static Dictionary<TestTowerScript.TowerType, int> ExtraTowers = new Dictionary<TestTowerScript.TowerType, int>();
+	public static Dictionary<TestTowerScript.TowerType, GameObject> TowerGameObjects = new Dictionary<TestTowerScript.TowerType, GameObject>();
+	public static Dictionary<TestTowerScript.TowerType, int> PlacedTowers = new Dictionary<TestTowerScript.TowerType, int>();
 
     static TowerPlacement()
     {
@@ -14,12 +16,14 @@ public class TowerPlacement : MonoBehaviour {
 	
     private static void Initialize()
 	{
-		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Pawn"), 4);
-		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Knight"), 2);
-		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Bishop"), -1);
-		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Rook"), -1);
-		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "King"), 1);
-		ExtraTowers.Add((TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), "Queen"), -1);
+		ExtraTowers.Add(Tower("Pawn"), 4);
+		ExtraTowers.Add(Tower("Knight"), 2);
+		ExtraTowers.Add(Tower("Bishop"), 2);
+		ExtraTowers.Add(Tower("Rook"), 2);
+		ExtraTowers.Add(Tower("King"), 1);
+		ExtraTowers.Add(Tower("Queen"), 1);
+
+		foreach (TestTowerScript.TowerType towerType in Enum.GetValues(typeof (TestTowerScript.TowerType))) PlacedTowers.Add(towerType, 0);
 	}
 
 	public GameObject PawnTower;
@@ -32,6 +36,7 @@ public class TowerPlacement : MonoBehaviour {
 	private GameManager gameManager;
 	private BoardManager boardManager;
 	private AStar aStarScript;
+	private HUD hud;
 	private int levelWidth;
 	private GameObject curTower = null;
 	private TowerInput[] TowerInputKeys;
@@ -39,6 +44,7 @@ public class TowerPlacement : MonoBehaviour {
 	private bool recall = false;
 	private int oldLocX = 0, oldLocY = 0;
 	private bool oldValid = false;
+	private TestTowerScript.TowerType curType;
 
 	private Color goodPlaceColor;
 	private Color badPlaceColor;
@@ -49,30 +55,35 @@ public class TowerPlacement : MonoBehaviour {
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		boardManager = gameManager.GetComponentInParent<BoardManager>();
 		aStarScript = gameManager.GetComponentInParent<AStar>();
+		hud = GameObject.Find("HUD").GetComponent<HUD>();
 		levelWidth = boardManager.MapWidth / boardManager.numLevels;
+
+		TowerGameObjects.Add(Tower("Pawn"), PawnTower);
+		TowerGameObjects.Add(Tower("Knight"), KnightTower);
+		TowerGameObjects.Add(Tower("Bishop"), BishopTower);
+		TowerGameObjects.Add(Tower("Rook"), RookTower);
+		TowerGameObjects.Add(Tower("King"), KingTower);
+		TowerGameObjects.Add(Tower("Queen"), QueenTower);
 	}
 
 	void Start() {
 		goodPlaceColor = new Color(0F, 1F, 0F, 0.25F);
 		badPlaceColor = new Color (1F, 0F, 0F, 0.25F);
 	 	TowerInputKeys = new TowerInput[] {
-			createTowerInput("PlaceTowerPawn", PawnTower),
-			createTowerInput("PlaceTowerKnight", KnightTower),
-			createTowerInput("PlaceTowerBishop", BishopTower),
-			createTowerInput("PlaceTowerRook", RookTower),
-			createTowerInput("PlaceTowerKing", KingTower),
-			createTowerInput("PlaceTowerQueen", QueenTower)
+			createTowerInput("PlaceTowerPawn", Tower("Pawn")),
+			createTowerInput("PlaceTowerKnight", Tower("Knight")),
+			createTowerInput("PlaceTowerBishop", Tower("Bishop")),
+			createTowerInput("PlaceTowerRook", Tower("Rook")),
+	        createTowerInput("PlaceTowerKing", Tower("King")),
+	        createTowerInput("PlaceTowerQueen", Tower("Queen"))
 		};
 	}
 
 	void Update () {
 
-		for (int i = 0; i < TowerInputKeys.Length && curTower == null; ++i) {
+		for (int i = 0; i < TowerInputKeys.Length; ++i) {
 			if (Input.GetButtonDown(TowerInputKeys[i].input)) {
-				curTower = instantiateTowerPointer(TowerInputKeys[i].Tower);
-				curTower.SetActive(true);
-				colorBackup = curTower.GetComponent<SpriteRenderer>().color;
-				recall = false;
+				SelectTower(TowerInputKeys[i].type);
 			}
 		}
 
@@ -127,7 +138,8 @@ public class TowerPlacement : MonoBehaviour {
 			}
 
 			curTower.transform.position = new Vector2(x, y);
-			if (useOldValid ? oldValid : isValidTowerPosition(x, y))
+			if ((ExtraTowers[curType] - PlacedTowers[curType] > 0) &&
+			    (useOldValid ? oldValid : isValidTowerPosition(x, y)))
 			{
 				curTower.GetComponent<SpriteRenderer>().color = goodPlaceColor;
 				oldValid = true;
@@ -143,6 +155,15 @@ public class TowerPlacement : MonoBehaviour {
 		}
 	}
 
+	public void SelectTower(TestTowerScript.TowerType towerType)
+	{
+		curType = towerType;
+		curTower = instantiateTowerPointer(towerType);
+		curTower.SetActive(true);
+		colorBackup = curTower.GetComponent<SpriteRenderer>().color;
+		recall = false;
+	}
+
 	private void PlaceTower(int x, int y)
 	{
 		curTower.SetActive(true);
@@ -150,17 +171,24 @@ public class TowerPlacement : MonoBehaviour {
 		curTower.GetComponent<BoxCollider2D>().enabled = true;
 		curTower.GetComponent<TestTowerScript>().enabled = true;
 
-		TowerMap.Add(x.ToString() + '_' + y.ToString(), curTower);
+		TowerMap.Add(x.ToString() + '_' + y.ToString(), new ObjectXType(curTower, curType));
 		aStarScript.PlacedObstacleAt(x, y);
+		PlacedTowers[curType]++;
+		hud.PrepareChildren();
 		curTower = null;
 	}
 
 	private void RecallTower(string locationKey)
 	{
-		GameObject tower = TowerMap[locationKey] as GameObject;
+		GameObject tower = ((ObjectXType)TowerMap[locationKey]).tower;
+		TestTowerScript.TowerType type = ((ObjectXType)TowerMap[locationKey]).type;
 		boardManager[(int)tower.transform.position.x, (int)tower.transform.position.y] = false;
 		Destroy(tower);
 		TowerMap.Remove(locationKey);
+		PlacedTowers[type]--;
+		hud.PrepareChildren();
+
+		oldLocX = oldLocY = 0;
 	}
 
 	public void RecallAllTowers()
@@ -168,11 +196,12 @@ public class TowerPlacement : MonoBehaviour {
 		IEnumerator towerEnumerator = TowerMap.Values.GetEnumerator();
 		while (towerEnumerator.MoveNext())
 		{
-			GameObject tower = towerEnumerator.Current as GameObject;
+			GameObject tower = ((ObjectXType)towerEnumerator.Current).tower;
 			boardManager[(int)tower.transform.position.x, (int)tower.transform.position.y] = false;
 			Destroy(tower);
 		}
 		TowerMap.Clear();
+		hud.PrepareChildren();
 	}
 
 	// TODO
@@ -221,14 +250,15 @@ public class TowerPlacement : MonoBehaviour {
 		return false;
 	}
 
-	GameObject instantiateTowerPointer(GameObject towerType)
+	GameObject instantiateTowerPointer(TestTowerScript.TowerType towerType)
 	{
 		if (curTower)
 		{
 			Destroy(curTower);
 		}
 
-		GameObject towerPointer = Instantiate (towerType, Vector3.zero, Quaternion.identity) as GameObject;
+
+		GameObject towerPointer = Instantiate (TowerGameObjects[towerType], Vector3.zero, Quaternion.identity) as GameObject;
 		towerPointer.SetActive(false);
 		towerPointer.GetComponent<BoxCollider2D>().enabled = false;
 		towerPointer.GetComponent<TestTowerScript>().enabled = false;
@@ -238,13 +268,28 @@ public class TowerPlacement : MonoBehaviour {
 
 	private class TowerInput {
 		public string input;
-		public GameObject Tower;
+		public TestTowerScript.TowerType type;
 	}
 
-	private TowerInput createTowerInput(string s, GameObject g) {
+	private TowerInput createTowerInput(string s, TestTowerScript.TowerType towerType) {
 		TowerInput t = new TowerInput ();
 		t.input = s;
-		t.Tower = g;
+		t.type = towerType;
 		return t;
+	}
+
+	private class ObjectXType {
+		public GameObject tower;
+		public TestTowerScript.TowerType type;
+		public ObjectXType(GameObject obj, TestTowerScript.TowerType t)
+		{
+			tower = obj;
+			type = t;
+		}
+	}
+
+	private static TestTowerScript.TowerType Tower(string towerType)
+	{
+		return (TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), towerType);
 	}
 }
