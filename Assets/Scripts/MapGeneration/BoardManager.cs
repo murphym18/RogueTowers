@@ -20,16 +20,11 @@ public class BoardManager : MonoBehaviour
 	public List<GameObject>[] levelSpawnPoints;
 	public List<GameObject>[] levelBorderTiles;
 
-    private static Func<int, int, bool> chestPlacement;
-
 	public Transform boardHolder;
 
-    public BoardManager()
+    bool chestPlacement(int x, int y)
     {
-        chestPlacement = (x, y) =>
-        {
-            return map[x - 1, y] || map[x + 1, y] || map[x, y - 1] || map[x, y + 1];
-        };
+        return map[x - 1, y] || map[x + 1, y] || map[x, y - 1] || map[x, y + 1];
     }
 
 	void BoardSetup()
@@ -110,7 +105,9 @@ public class BoardManager : MonoBehaviour
         BoardSetup();
         GenerateMap();
         LayoutMap();
+        Debug.Log(map);
         CreateForeground();
+        Debug.Log(map);
 
 		// Setup enemy spawnpoints and also cages
 		GetComponent<EnemyLayoutScript>().SetupEnemyLayout();

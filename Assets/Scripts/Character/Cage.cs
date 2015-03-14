@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class Cage : IsometricObject {
 
