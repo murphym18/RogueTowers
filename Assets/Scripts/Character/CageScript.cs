@@ -7,41 +7,80 @@ using System.Collections.Generic;
 public class CageScript : IsometricObject {
 
 	public int hp;
+
 	public float unlockDistance;
 	public float unlockTime;
 
+	public Color fullHealthBarColor = Color.green;
+	public Color emptyHealthBarColor = Color.red;
+
+	private float maxHp;
 	private GameObject gameManager;
 	private WaveManagerScript waveManager;
 	private GameObject player;
 	private float progress = 0F;
 	private bool isUnlocked = false;
 
+	private SpriteRenderer healthBarForegroundSprite;
+	private SpriteRenderer healthBarBackgroundSprite;
+	private GameObject lockPickClock;
+
 	// Use this for initialization
 	void Start () {
 		gameManager = GameObject.Find("GameManager");
 		player = GameObject.FindWithTag("Player");
 		waveManager = gameManager.GetComponent<WaveManagerScript>();
+
+		maxHp = (float) hp;
+		healthBarForegroundSprite = this.transform.Find("CageHealthBarForeground").gameObject.GetComponent<SpriteRenderer>();
+		healthBarBackgroundSprite = this.transform.Find("CageHealthBarBackground").gameObject.GetComponent<SpriteRenderer>();
+		updateHealthBar();
+
 	}
 	
 	// Update is called once per frame
-	void Update ()
-	{
+	void Update () {
+		updateCageLock();
+	}
+
+	private void updateCageLock() {
 		if (!isUnlocked) {
 			if (Input.GetButton ("UnlockCage")) {
 				Vector3 d = this.transform.position - player.transform.position;
-
+				
 				if (d.sqrMagnitude < unlockDistance*unlockDistance) {
 					progress += Time.deltaTime;
 					if (unlockTime < progress) {
 						isUnlocked = true;
 						waveManager.TriggerCageUnlocked();
-
+						
 					}
-
-				    //ResetProgressMesh();
+					
+					//ResetProgressMesh();
 				}
 			}
 		}
+	}
+
+	public void damage() {
+		if (!isUnlocked) {
+			if (hp > 0) {
+				hp -= 1;
+				updateHealthBar();
+				if (hp == 0) {
+					waveManager.TriggerCageDestroyed();
+					Destroy(gameObject);
+				}
+			}
+		}
+	}
+
+	private void updateHealthBar() {
+		float health = ((float)hp)/maxHp;
+		Color healthBarColor = Color.Lerp(fullHealthBarColor, emptyHealthBarColor, 1 - health);
+		healthBarForegroundSprite.material.color = healthBarColor;
+		healthBarBackgroundSprite.material.color = healthBarColor;
+		healthBarForegroundSprite.transform.localScale = new Vector3 (health, 1, 1);
 	}
 
     /*
@@ -101,16 +140,4 @@ public class CageScript : IsometricObject {
     }
      * 
      */
-
-	public void damage() {
-		if (!isUnlocked) {
-			if (hp > 0) {
-				hp -= 1;
-				if (hp == 0) {
-					waveManager.TriggerCageDestroyed();
-					Destroy(gameObject);
-				}
-			}
-		}
-	}
 }
