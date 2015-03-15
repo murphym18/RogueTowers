@@ -89,7 +89,7 @@ public class Enemy : IsometricObject {
 		{
 			// stop and attack
 			rigidbody2D.velocity = Vector3.zero;
-			coll.gameObject.GetComponentInParent<Cage>().damage();
+			coll.gameObject.GetComponentInParent<CageScript>().damage();
 			Destroy(gameObject, 2.0f);
 		}
 		else if (coll.gameObject.tag == "Player")
