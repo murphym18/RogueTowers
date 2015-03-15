@@ -8,7 +8,7 @@ public class CageHealthBarScript : MonoBehaviour {
 	GameObject[] cages;
 	GameObject currentCage;
 
-	float health { get { return currentCage.GetComponent<Cage>().hp; } }
+	float health { get { return currentCage.GetComponent<CageScript>().hp; } }
 	int currentLevel { get { return gameManager.GetComponent<GameManager>().currentLevel; } }
 
 	// Use this for initialization

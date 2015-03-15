@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Cage : IsometricObject {
+public class CageScript : IsometricObject {
 
 	public int hp;
 	public float unlockDistance;
