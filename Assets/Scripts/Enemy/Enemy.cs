@@ -10,6 +10,8 @@ public class Enemy : IsometricObject {
 	public float attackPower = 1;
 	public float attackRate = 1;
 	public float level = 1;
+
+	public Color damagedColor = new Color(0.8F,0.6F,0.6F,0.9F);
 	
 	private GameObject target;
 	private SpawnPoint spawnPoint;
@@ -20,11 +22,14 @@ public class Enemy : IsometricObject {
 	private RaycastHit2D[] oneArray = new RaycastHit2D[1];
 	private const float attackTimeout = 1;
 	private float attackTimer = 0;
+	private float damagedColorTimeout = 0.2f;
+	private float damagedColorTimer = 0;
 
 	private GameManager gameManager;
 	private BoardManager boardManager;
 	private AStar aStarScript;
 	private BoxCollider2D boxCollider;
+	private SpriteRenderer spriteRenderer;
 	private LayerMask obstructionMask;
 
 	void Awake()
@@ -33,6 +38,7 @@ public class Enemy : IsometricObject {
 		boardManager = gameManager.GetComponentInParent<BoardManager>();
 		aStarScript = gameManager.GetComponentInParent<AStar>();
 		boxCollider = GetComponent<BoxCollider2D>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 
 		obstructionMask = LayerMask.GetMask("Walls", "Towers", "Chests");
 	}
@@ -68,6 +74,8 @@ public class Enemy : IsometricObject {
 	// otherwise, follow the path points.
 	void FixedUpdate()
 	{
+		UpdateColors();
+
 		if (attackTimer > 0)
 			attackTimer -= Time.fixedDeltaTime;
 		else if (CanSeePoint(target.transform.position))
@@ -75,7 +83,16 @@ public class Enemy : IsometricObject {
 		else if (points != null)
 			MoveToFollowPath();
 	}
-	
+
+	void UpdateColors()
+	{
+		if (damagedColorTimer > 0)
+		{
+			if ((damagedColorTimer -= Time.fixedDeltaTime) < 0)
+				spriteRenderer.material.color = Color.white;
+		}
+	}
+
 	// Give the enemy a new target. i.e. cage to player
 	public void SetTarget(GameObject newTarget)
 	{
@@ -104,9 +121,12 @@ public class Enemy : IsometricObject {
 	{
 		if (coll.gameObject.tag == "Bullet")
 		{
-			// stop and attack
 			float bulletDamage = coll.GetComponentInParent<BulletScript>().damage;
 			this.health -= bulletDamage;
+
+			damagedColorTimer = damagedColorTimeout;
+			spriteRenderer.material.color = damagedColor;
+
 			if (this.health <= 0)
 				Destroy(gameObject, 0.0f);
 		}
@@ -145,6 +165,7 @@ public class Enemy : IsometricObject {
 	private void MoveDirectlyToTarget() {
 		Vector3 direction = target.transform.rigidbody2D.position - this.rigidbody2D.position;
 		Vector3 velocity = direction.normalized * movementSpeed;
+		//rigidbody2D.AddForce(velocity);
 		rigidbody2D.velocity = velocity;
 	}
 	
@@ -154,6 +175,7 @@ public class Enemy : IsometricObject {
 		//Vector3 direction = nextPoint - this.transform.position;
 		Vector3 direction = nextPoint - new Vector3(this.rigidbody2D.position.x, this.rigidbody2D.position.y);
 		Vector3 velocity = direction.normalized * movementSpeed;
+		//rigidbody2D.AddForce(velocity);
 		rigidbody2D.velocity = velocity;
 	}
 	
