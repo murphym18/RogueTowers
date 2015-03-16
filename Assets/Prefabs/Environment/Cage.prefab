@@ -185,10 +185,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 15
+  uiFadeOutDistance: 6
   unlockDistance: 3
   unlockTime: 5
   fullHealthBarColor: {r: 0, g: 1, b: 0, a: 1}
   emptyHealthBarColor: {r: 1, g: 0, b: 0, a: 1}
+  lockPickClockColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!212 &21277982
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -252,9 +254,9 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 1024582385
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d10a3cc1afe48e7478ec706dd8c94254, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21282516
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -274,9 +276,9 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 1024582385
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 0baaac4e2fb315c4781c63df688c90aa, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21282520
 SpriteRenderer:
   m_ObjectHideFlags: 1

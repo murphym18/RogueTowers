@@ -7,51 +7,71 @@ using System.Collections.Generic;
 public class CageScript : IsometricObject {
 
 	public int hp;
+	public float uiFadeOutDistance = 6F;
 
-	public float unlockDistance;
+
+	public float unlockDistance = 3F;
 	public float unlockTime;
 
 	public Color fullHealthBarColor = Color.green;
 	public Color emptyHealthBarColor = Color.red;
 
+	public Color lockPickClockColor = new Color(1F,1F,1F,0.5F); 
+
+	private float health;
 	private float maxHp;
+	private float magSqrt;
 	private GameObject gameManager;
 	private WaveManagerScript waveManager;
 	private GameObject player;
-	private float progress = 0F;
+	private float progress = 0F;	
 	private bool isUnlocked = false;
+	private float uiFadeInDistance;
 
 	private SpriteRenderer healthBarForegroundSprite;
 	private SpriteRenderer healthBarBackgroundSprite;
-	private GameObject lockPickClock;
+
+	private SpriteRenderer clockBodySprite;
+	private SpriteRenderer clockProgressHandSprite;
+
+	private static Color fadeOutColorMultiplier = new Color(1F,1F,1F,0F);
+	private static Color invisibleColor = Color.black * fadeOutColorMultiplier;
 
 	// Use this for initialization
 	void Start () {
 		gameManager = GameObject.Find("GameManager");
 		player = GameObject.FindWithTag("Player");
 		waveManager = gameManager.GetComponent<WaveManagerScript>();
+		uiFadeInDistance = unlockDistance;
 
 		maxHp = (float) hp;
 		healthBarForegroundSprite = this.transform.Find("CageHealthBarForeground").gameObject.GetComponent<SpriteRenderer>();
 		healthBarBackgroundSprite = this.transform.Find("CageHealthBarBackground").gameObject.GetComponent<SpriteRenderer>();
-		updateHealthBar();
 
+		clockBodySprite = this.transform.Find("CageClockBody").gameObject.GetComponent<SpriteRenderer>();
+		clockProgressHandSprite = this.transform.Find("CageClockProgressHand").gameObject.GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		health = ((float)hp)/maxHp;
+		Vector3 d = this.transform.position - player.transform.position;
+		magSqrt = d.sqrMagnitude;
 		updateCageLock();
+		updateHealthBar();
+		updateColors();
 	}
 
 	private void updateCageLock() {
 		if (!isUnlocked) {
 			if (Input.GetButton ("UnlockCage")) {
-				Vector3 d = this.transform.position - player.transform.position;
+
 				
-				if (d.sqrMagnitude < unlockDistance*unlockDistance) {
+				if (magSqrt < unlockDistance*unlockDistance) {
 					progress += Time.deltaTime;
 					if (unlockTime < progress) {
 						isUnlocked = true;
+						lockPickClockColor = new Color(1F, 1F, 1F, 0F);
 						waveManager.TriggerCageUnlocked();
 						
 					}
@@ -59,14 +79,33 @@ public class CageScript : IsometricObject {
 					//ResetProgressMesh();
 				}
 			}
+			float clockHandAngle = -progress/unlockTime*360F;
+			clockProgressHandSprite.transform.eulerAngles = new Vector3(0F, 0F, clockHandAngle);
 		}
+	}
+
+	private void updateColors() {
+		float range = uiFadeOutDistance - uiFadeInDistance;
+		double distance = Math.Sqrt(magSqrt);
+		float lerpPos = (((float)distance) - uiFadeInDistance)/range;
+		lerpPos = Math.Min(Math.Max(lerpPos, 0), 1);
+
+		Color healthBarColor = Color.Lerp(fullHealthBarColor, emptyHealthBarColor, 1 - health);
+		Color healthBarFaded = healthBarColor * fadeOutColorMultiplier;
+
+		healthBarColor = Color.Lerp(healthBarColor, healthBarFaded, lerpPos);
+		healthBarForegroundSprite.material.color = healthBarColor;
+		healthBarBackgroundSprite.material.color = healthBarColor;
+
+		Color clockColor = magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
+		clockBodySprite.material.color = clockColor;
+		clockProgressHandSprite.material.color = clockColor;
 	}
 
 	public void damage() {
 		if (!isUnlocked) {
 			if (hp > 0) {
 				hp -= 1;
-				updateHealthBar();
 				if (hp == 0) {
 					waveManager.TriggerCageDestroyed();
 					Destroy(gameObject);
@@ -76,10 +115,9 @@ public class CageScript : IsometricObject {
 	}
 
 	private void updateHealthBar() {
-		float health = ((float)hp)/maxHp;
+
 		Color healthBarColor = Color.Lerp(fullHealthBarColor, emptyHealthBarColor, 1 - health);
-		healthBarForegroundSprite.material.color = healthBarColor;
-		healthBarBackgroundSprite.material.color = healthBarColor;
+
 		healthBarForegroundSprite.transform.localScale = new Vector3 (health, 1, 1);
 	}
 
