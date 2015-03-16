@@ -11,6 +11,7 @@ public class Tyrem : Character {
 	
 	public float maxSpeed = 5f;
 	public float hp = 10f;
+	public String gameOverScreenTag = "GameOverScreen";
 
     public int upgradePoints { get; private set; }
 
@@ -20,6 +21,7 @@ public class Tyrem : Character {
 	private float knockbackTimer = 0;
 	private float knockbackDistanceMulitplier = 5;
 	private float maxHp;
+	private bool isAlive = true;
 
     public void addUpgradePoints(int points)
     {
@@ -44,6 +46,10 @@ public class Tyrem : Character {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!isAlive) {
+			rigidbody2D.velocity = Vector2.zero;
+			return;
+		}
 		if (invincibiltyTimer > 0)
 			invincibiltyTimer -= Time.deltaTime;
 		if (knockbackTimer > 0) // lock movement when getting knockedback
@@ -59,8 +65,14 @@ public class Tyrem : Character {
 	public void damage(float power)
 	{
 		hp -= power;
-		//if (hp <=0)
-			// Debug.Log("Player health is 0");
+		this.isAlive = hp > 0;
+		if (!isAlive) {
+			onDeath();
+		}
+	}
+
+	private void onDeath() {
+		GameObject.FindWithTag(gameOverScreenTag).GetComponent<GameOverScreenScript>().show();
 	}
 
 	// Collissions

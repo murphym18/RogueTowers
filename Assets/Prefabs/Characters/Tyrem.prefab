@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 5
   hp: 10
+  gameOverScreenTag: GameOverScreen
 --- !u!114 &11477558
 MonoBehaviour:
   m_ObjectHideFlags: 1
