@@ -549,7 +549,7 @@ public class AStar : MonoBehaviour {
 	{
 		RaycastHit2D[] zeroArray = new RaycastHit2D[1];
 		int hit1, hit2;
-		float thickness = 0.32f;
+		float thickness = 0.35f;//0.32f;
 		Physics2D.raycastsStartInColliders = false;
 		
 		if ((endX < startX && endY > startY) || (endX > startX && endY < startY))
@@ -574,7 +574,7 @@ public class AStar : MonoBehaviour {
 	{
 		RaycastHit2D[] zeroArray = new RaycastHit2D[1];
 		int hit1, hit2;
-		float thickness = 0.32f;
+		float thickness = 0.35f;//0.32f;
 		Physics2D.raycastsStartInColliders = false;
 		Vector2 end = new Vector2(endX, endY);
 		

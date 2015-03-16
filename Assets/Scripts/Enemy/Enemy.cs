@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent (typeof (BoxCollider2D))]
 public class Enemy : IsometricObject {
 
 	public float health = 10;
@@ -23,6 +24,7 @@ public class Enemy : IsometricObject {
 	private GameManager gameManager;
 	private BoardManager boardManager;
 	private AStar aStarScript;
+	private BoxCollider2D boxCollider;
 	private LayerMask obstructionMask;
 
 	void Awake()
@@ -30,6 +32,7 @@ public class Enemy : IsometricObject {
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		boardManager = gameManager.GetComponentInParent<BoardManager>();
 		aStarScript = gameManager.GetComponentInParent<AStar>();
+		boxCollider = GetComponent<BoxCollider2D>();
 
 		obstructionMask = LayerMask.GetMask("Walls", "Towers", "Chests");
 	}
@@ -166,7 +169,8 @@ public class Enemy : IsometricObject {
 	{
 		Vector2 start = new Vector2(this.transform.position.x, this.transform.position.y);
 		Vector2 dest = new Vector2(point.x, point.y);
-		float thickness = 0.32f;
+		//float thickness = 0.32f;
+		float thickness = boxCollider.size.x / 2 + 0.05f;
 		Physics2D.raycastsStartInColliders = false;
 		int hit1, hit2;
 		
