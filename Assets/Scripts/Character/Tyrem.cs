@@ -19,6 +19,7 @@ public class Tyrem : Character {
 	private float invincibiltyTimer = 0;
 	private float knockbackTimer = 0;
 	private float knockbackDistanceMulitplier = 5;
+	private float maxHp;
 
     public void addUpgradePoints(int points)
     {
@@ -38,8 +39,7 @@ public class Tyrem : Character {
 	
 	// Use this for initialization
 	void Start () {
-
-		
+		maxHp = hp;
 	}
 	
 	// Update is called once per frame
@@ -77,5 +77,9 @@ public class Tyrem : Character {
 				damage(coll.gameObject.GetComponentInParent<Enemy>().attackPower);
 			}
 		}
+	}
+
+	public float getMaxHp() {
+		return maxHp;
 	}
 }
