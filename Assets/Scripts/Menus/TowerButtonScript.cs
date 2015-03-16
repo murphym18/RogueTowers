@@ -10,22 +10,26 @@ public class TowerButtonScript : MonoBehaviour {
 	public GameObject numberLabel;
 	public GameObject levelLabel;
 	public GameObject countLabel;
-	public int numberKey;
+	public GameObject towerTypeImage;
+
+	private int numberKey;
 
 	private GameManager gameManager;
 	private TowerPlacement towerPlacement;
-	private enum stat { IncreaseStats, AddExtras }
 
     private int prevRemaining;
-
+	
 	void Awake()
 	{
 		gameManager = GameObject.Find("GameManager").GetComponentInParent<GameManager>();
 	}
 
-	public void Initialize()
+	public void Initialize(TestTowerScript.TowerType setType)
 	{
+		towerType = setType;
+		towerTypeImage.GetComponent<Image>().sprite = HUD.towerSpriteDict[towerType];
 		towerPlacement = gameManager.PlayerInstance.GetComponent<TowerPlacement>();
+		numberKey = TowerPlacement.TowerKeys[towerType];
 		GetComponent<Button>().onClick.AddListener(this.OnClick_SelectTower);
 	}
 
