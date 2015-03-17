@@ -11,3 +11,7 @@ EditorBuildSettings:
     path: Assets/MainMenu.unity
   - enabled: 1
     path: Assets/GeneratedLevel.unity
+  - enabled: 1
+    path: Assets/HelpMenu.unity
+  - enabled: 1
+    path: Assets/StartMenu.unity
