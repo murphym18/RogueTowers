@@ -9,8 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 499902}
   - 212: {fileID: 21299902}
+  - 61: {fileID: 6102646}
   - 114: {fileID: 11499902}
-  - 95: {fileID: 9599902}
   m_Layer: 0
   m_Name: Floor2
   m_TagString: Floor
@@ -30,6 +30,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!61 &6102646
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199902}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Size: {x: 1, y: 1}
+  m_Center: {x: 0, y: 0}
 --- !u!95 &9599902
 Animator:
   serializedVersion: 3
@@ -47,7 +58,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11499902
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199902}

@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 466740}
   - 212: {fileID: 21266740}
   - 114: {fileID: 11436044}
-  - 95: {fileID: 9599798}
   m_Layer: 0
   m_Name: Floor1
   m_TagString: Floor
@@ -56,6 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9b3e8753f3149079da8490e72eeeb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   floorTileVersion: 1
 --- !u!212 &21266740
 SpriteRenderer:

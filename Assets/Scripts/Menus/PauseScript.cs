@@ -18,7 +18,7 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = gradualPause.TickValue;
         if (gameObject.activeSelf)
         {
-            if (Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown("Quit"))
             {
                 Application.LoadLevel("MainMenu");
             }

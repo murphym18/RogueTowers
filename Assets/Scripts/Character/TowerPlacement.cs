@@ -29,7 +29,7 @@ public class TowerPlacement : MonoBehaviour {
 	{
         foreach (TT towerType in Enum.GetValues(typeof (TT)))
         {
-            TowerCount[towerType] = InitialTowers[towerType];
+            TowerCount[towerType] = -1;
             PlacedTowers[towerType] = 0;
         }
 	}

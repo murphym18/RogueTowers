@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 public class RookBulletScript : BulletScript {
 	Collider2D[] enemies;
@@ -20,16 +21,15 @@ public class RookBulletScript : BulletScript {
 		rigidbody2D.velocity = new Vector2 (0, 0);
 		//Destroy (gameObject, 10);
 		GameObject[] Towers = GameObject.FindGameObjectsWithTag("Tower");
-		for(int i = 0; Towers != null && i < Towers.Length; i++) {
-			Physics2D.IgnoreCollision(collider2D, Towers[i].collider2D);
+		foreach(var tower in Towers) {
+			Physics2D.IgnoreCollision(collider2D, tower.collider2D);
 		}
 		// Debug.Log ("distanceVector: " + distanceVector*speed);
         var r = gameObject.GetComponent<RectTransform>();
         r.pivot = new Vector2(0, r.rect.height / 2);
-	    //r.rect.width = distanceVector.magnitude;
-		//r.sizeDelta = new Vector2(distanceVector*speed*100, 1);
-		r.rotation = new Quaternion(distanceVector.x, distanceVector.y, 0, 1);
-			
+	    r.offsetMin = Vector2.zero;
+        r.offsetMax = new Vector2(distanceVector.x, r.rect.height);
+		r.rotation = new Quaternion(0, 0, (float)Math.Atan2(distanceVector.y, distanceVector.x), 1);
 	}
 
 	void Update() {
