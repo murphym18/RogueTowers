@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
+	    Time.timeScale = 1;
+
         BoardScript = GetComponent<BoardManager>();
         BoardScript.SetupScene();
 	    playerInstance = (GameObject)Instantiate(playerType, new Vector3(0, (int)(BoardScript.levelHeight/2)), Quaternion.identity);

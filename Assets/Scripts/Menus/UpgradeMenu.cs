@@ -26,7 +26,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            if(Input.GetButton("Cancel"))
+            if(Input.GetButtonDown("Cancel"))
                 OnClick_CloseUpgradeScreen();
             if (lastKnownUpgradePoints != player.upgradePoints)
                 Prepare();
@@ -36,8 +36,16 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnClick_CloseUpgradeScreen()
     {
+        Time.timeScale = 1;
         this.gameObject.SetActive(false);
         hud.SetActive(true);
+    }
+
+    public void show()
+    {
+        Time.timeScale = 0;
+        Prepare();
+        gameObject.SetActive(true);
     }
 
     public void Prepare()
