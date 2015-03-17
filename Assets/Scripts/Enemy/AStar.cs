@@ -278,7 +278,7 @@ public class AStar : MonoBehaviour {
 	{
 		GameObject toTarget = boardManager.levelCages[level];
 		if (toTarget == null)
-			toTarget = gameManager.PlayerInstance;
+			toTarget = gameManager.playerInstance;
 		if (toTarget == null)
 			return this.gameObject;
 		

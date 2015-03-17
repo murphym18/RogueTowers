@@ -163,7 +163,7 @@ public class Enemy : IsometricObject {
 
 	// move directly towards the target
 	private void MoveDirectlyToTarget() {
-		Vector3 direction = target.transform.rigidbody2D.position - this.rigidbody2D.position;
+		Vector3 direction = target.collider2D.transform.position - (Vector3)this.rigidbody2D.position;
 		Vector3 velocity = direction.normalized * movementSpeed;
 		//rigidbody2D.AddForce(velocity);
 		rigidbody2D.velocity = velocity;
@@ -251,7 +251,7 @@ public class Enemy : IsometricObject {
 	{
 		GameObject initialTarget = boardManager.levelCages[gameManager.currentLevel];
 		if (initialTarget == null)
-			initialTarget = gameManager.PlayerInstance;
+			initialTarget = gameManager.playerInstance;
 		if (initialTarget == null)
 			initialTarget = this.gameObject;
 		

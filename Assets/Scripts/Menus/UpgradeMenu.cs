@@ -18,7 +18,7 @@ public class UpgradeMenu : MonoBehaviour
 	void Start () {
 	    this.gameObject.SetActive(false);
         closeUpgradeScreen.GetComponent<Button>().onClick.AddListener(this.OnClick_CloseUpgradeScreen);
-	    player = gameManager.GetComponent<GameManager>().PlayerInstance.GetComponent<Tyrem>();
+	    player = gameManager.GetComponent<GameManager>().playerInstance.GetComponent<Tyrem>();
         lastKnownUpgradePoints = player.upgradePoints;
 	}
 
@@ -39,7 +39,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         upgradePointLabel.GetComponent<Text>().text = "Upgrade Points: " +
                                                       gameManager.GetComponent<GameManager>()
-                                                          .PlayerInstance.GetComponent<Tyrem>()
+                                                          .playerInstance.GetComponent<Tyrem>()
                                                           .upgradePoints;
 
         _recursivePrepare(this.gameObject);

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject PlayerType;
-    public GameObject PlayerInstance;
+    public GameObject playerType;
+    public GameObject playerInstance;
+    public GameObject gameOverScreen;
 	public int currentLevel = -1;
     private BoardManager BoardScript;
 	
@@ -15,7 +16,8 @@ public class GameManager : MonoBehaviour
 	{
 	    BoardScript = GetComponent<BoardManager>();
 	    InitGame();
-	    PlayerInstance = (GameObject)Instantiate(PlayerType, new Vector3(0, (int)(BoardScript.levelHeight/2)), Quaternion.identity);
+	    playerInstance = (GameObject)Instantiate(playerType, new Vector3(0, (int)(BoardScript.levelHeight/2)), Quaternion.identity);
+	    playerInstance.GetComponent<Tyrem>().gameOverScreen = gameOverScreen;
 	}
 
     private void InitGame()

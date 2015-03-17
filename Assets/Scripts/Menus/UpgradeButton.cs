@@ -28,7 +28,7 @@ public class UpgradeButton : MonoBehaviour
 
     public void Prepare()
     {
-        player = gameManagerObject.GetComponent<GameManager>().PlayerInstance.GetComponent<Tyrem>();
+        player = gameManagerObject.GetComponent<GameManager>().playerInstance.GetComponent<Tyrem>();
         cost = CalculateUpgradeCost();
         isBuyable = player.upgradePoints >= cost;
 

@@ -68,13 +68,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ca2ebd8eaa143448deace80c263ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRadius: 10
+  Bullet: {fileID: 5081792, guid: 343ff041e8c744c98b8320b3956744a0, type: 2}
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
-  attackDelay: 1
-  Bullet: {fileID: 5081792, guid: 343ff041e8c744c98b8320b3956744a0, type: 2}
+  damageUpgradeMultiplier: .25
+  speedUpgradeMultiplier: .200000003
+  rangeUpgradeMultiplier: .25
+  _attackDelay: 3
   towerType: 2
+  targetPriority: 0
+  _attackRadius: 10
 --- !u!212 &21201218
 SpriteRenderer:
   m_ObjectHideFlags: 1

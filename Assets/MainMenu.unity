@@ -308,6 +308,7 @@ GameObject:
   - 224: {fileID: 1346791664}
   - 222: {fileID: 1346791663}
   - 114: {fileID: 1346791662}
+  - 114: {fileID: 1346791665}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -364,6 +365,19 @@ RectTransform:
   m_AnchoredPosition: {x: -2, y: 2}
   m_SizeDelta: {x: -4, y: -4}
   m_Pivot: {x: .5, y: .5}
+--- !u!114 &1346791665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1346791661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f05e4b5879dd153478f301414526298f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveDelay: .200000003
+  Wobble: .699999988
 --- !u!1 &1541492549
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,9 +484,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartButton: {fileID: 1779881987}
-  HeaderOverlay: {fileID: 1346791661}
-  MoveDelay: .200000003
-  Wobble: .699999988
 --- !u!1 &1779881987
 GameObject:
   m_ObjectHideFlags: 0

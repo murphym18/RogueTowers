@@ -105,7 +105,7 @@ public class SpawnPoint : IsometricObject {
 	{
 		GameObject initialTarget = boardManager.levelCages[gameManager.currentLevel];
 		if (initialTarget == null)
-			initialTarget = gameManager.PlayerInstance;
+			initialTarget = gameManager.playerInstance;
 		if (initialTarget == null)
 			initialTarget = this.gameObject;
 		

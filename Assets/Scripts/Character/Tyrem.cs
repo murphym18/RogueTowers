@@ -11,7 +11,7 @@ public class Tyrem : Character {
 	
 	public float maxSpeed = 5f;
 	public float hp = 10f;
-	public String gameOverScreenTag = "GameOverScreen";
+	public GameObject gameOverScreen;
 
     public int upgradePoints { get; private set; }
 
@@ -72,7 +72,7 @@ public class Tyrem : Character {
 	}
 
 	private void onDeath() {
-		GameObject.FindWithTag(gameOverScreenTag).GetComponent<GameOverScreenScript>().show();
+		gameOverScreen.GetComponent<GameOverScreenScript>().show();
 	}
 
 	// Collissions
