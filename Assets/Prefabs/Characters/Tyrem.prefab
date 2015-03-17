@@ -92,6 +92,7 @@ MonoBehaviour:
   RookTower: {fileID: 100000, guid: 3a8e25a2337fd4f05a4b257e45b93c62, type: 2}
   KingTower: {fileID: 100000, guid: 1bf797cf62420486886eb6db9d36f0e1, type: 2}
   QueenTower: {fileID: 100000, guid: f3e302cabb5184cb3aa0c9438fe26773, type: 2}
+  rangeIndicatorObject: {fileID: 151414, guid: 4b456d1fcd3e044e1a8d6968a9f31cc5, type: 2}
 --- !u!114 &11473760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 5
   hp: 10
-  gameOverScreenTag: GameOverScreen
+  gameOverScreen: {fileID: 0}
 --- !u!114 &11477558
 MonoBehaviour:
   m_ObjectHideFlags: 1

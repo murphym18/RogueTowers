@@ -33,6 +33,9 @@ public class TowerPlacement : MonoBehaviour {
 	public GameObject RookTower;
 	public GameObject KingTower;
 	public GameObject QueenTower;
+
+	public GameObject rangeIndicatorObject;
+	private GameObject rangeIndicatorInstance;
 	
 	private GameManager gameManager;
 	private BoardManager boardManager;
@@ -71,6 +74,9 @@ public class TowerPlacement : MonoBehaviour {
 	void Start() {
 		goodPlaceColor = new Color(0F, 1F, 0F, 0.25F);
 		badPlaceColor = new Color (1F, 0F, 0F, 0.25F);
+
+		rangeIndicatorInstance = (GameObject) Instantiate(rangeIndicatorObject);
+		rangeIndicatorInstance.SetActive(false);
 	}
 
 	public static void AddTowerType(TestTowerScript.TowerType towerType)
@@ -99,6 +105,7 @@ public class TowerPlacement : MonoBehaviour {
 				curTower = null;
 			}
 			recall = false;
+			rangeIndicatorInstance.SetActive(false);
 		}
 
 		if (Input.GetButtonDown("RecallTower")) {
@@ -143,6 +150,7 @@ public class TowerPlacement : MonoBehaviour {
 			}
 
 			curTower.transform.position = new Vector2(x, y);
+			rangeIndicatorInstance.transform.position = curTower.transform.position;
 			if ((ExtraTowers[curType] - PlacedTowers[curType] > 0) &&
 			    (useOldValid ? oldValid : isValidTowerPosition(x, y)))
 			{
@@ -151,6 +159,7 @@ public class TowerPlacement : MonoBehaviour {
 				if (Input.GetMouseButtonDown(0)) {
 					PlaceTower(x, y);
 					oldValid = false;
+					rangeIndicatorInstance.SetActive(false);
 				}
 			}
 			else {
@@ -168,6 +177,10 @@ public class TowerPlacement : MonoBehaviour {
 		colorBackup = curTower.GetComponent<SpriteRenderer>().color;
 		recall = false;
 		oldLocX = oldLocY = 0;
+
+		float radiusScale = 2 * curTower.GetComponent<TestTowerScript>().attackRadius;
+		rangeIndicatorInstance.transform.localScale = new Vector3(radiusScale, radiusScale, radiusScale);
+		rangeIndicatorInstance.SetActive(true);
 	}
 
 	private void PlaceTower(int x, int y)

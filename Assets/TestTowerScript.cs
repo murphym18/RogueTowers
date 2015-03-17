@@ -46,7 +46,7 @@ public class TestTowerScript : MonoBehaviour {
 
     public float _attackRadius = 10.0f;
 
-    private float attackRadius
+    public float attackRadius
     {
         get { return _attackRadius*(1 + rangeUpgradeMultiplier*UpgradeLevels[towerType]); }
         set { _attackRadius = value; }
