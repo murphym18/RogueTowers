@@ -12,7 +12,7 @@ public class PlayerHealthBarForegroundScript : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindWithTag("Player");
 		tyrem = player.GetComponent<Tyrem>();
-		healthBarForeground = GameObject.Find("/HUD/PlayerHealthBar/HealthBarPanel/HealthBarForeground").GetComponentInChildren<Image>();
+		healthBarForeground = GameObject.Find("/HUD/HealthBarPanel/HealthBarForeground").GetComponentInChildren<Image>();
 		healthBarColors = this.gameObject.GetComponentInParent<PlayerHealthBarColorsScript>();
 	}
 	

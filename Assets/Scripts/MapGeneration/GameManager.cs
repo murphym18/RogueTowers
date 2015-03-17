@@ -14,16 +14,14 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
-	    BoardScript = GetComponent<BoardManager>();
-	    InitGame();
+        BoardScript = GetComponent<BoardManager>();
+        BoardScript.SetupScene();
 	    playerInstance = (GameObject)Instantiate(playerType, new Vector3(0, (int)(BoardScript.levelHeight/2)), Quaternion.identity);
 	    playerInstance.GetComponent<Tyrem>().gameOverScreen = gameOverScreen;
-	}
 
-    private void InitGame()
-    {
-        BoardScript.SetupScene();
-    }
+        TowerPlacement.Initialize();
+        TestTowerScript.Initialize();
+	}
 	
 	// Update is called once per frame
 	void Update ()

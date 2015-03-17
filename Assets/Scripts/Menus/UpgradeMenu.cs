@@ -24,9 +24,14 @@ public class UpgradeMenu : MonoBehaviour
 
     void Update()
     {
-        if(lastKnownUpgradePoints != player.upgradePoints)
-            Prepare();
-        lastKnownUpgradePoints = player.upgradePoints;
+        if (gameObject.activeSelf)
+        {
+            if(Input.GetButton("Cancel"))
+                OnClick_CloseUpgradeScreen();
+            if (lastKnownUpgradePoints != player.upgradePoints)
+                Prepare();
+            lastKnownUpgradePoints = player.upgradePoints;
+        }
     }
 
     private void OnClick_CloseUpgradeScreen()

@@ -36,6 +36,17 @@ public class HUD : MonoBehaviour
 		PrepareChildren();
 	}
 
+    void Update()
+    {
+        if (gameObject.activeSelf)
+        {
+            if (Input.GetButton("Upgrade Menu"))
+            {
+                OnClick_OpenUpgradeScreen();
+            }
+        }
+    }
+
     private void OnClick_OpenUpgradeScreen()
     {
         this.gameObject.SetActive(false);

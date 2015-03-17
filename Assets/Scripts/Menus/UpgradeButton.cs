@@ -38,7 +38,7 @@ public class UpgradeButton : MonoBehaviour
         costLabel.GetComponent<Text>().color = isBuyable ? sufficientUpgradePoints : insufficientUpgradePoints;
         this.GetComponent<Button>().interactable = isBuyable;
 
-        if(TowerPlacement.ExtraTowers[towerType] == -1)
+        if(TowerPlacement.TowerCount[towerType] == -1)
             this.gameObject.SetActive(false);
         else
             this.gameObject.SetActive(true);
@@ -50,20 +50,21 @@ public class UpgradeButton : MonoBehaviour
         switch (upgradeType)
         {
             case UpgradeType.AddExtras:
+                curVal = curVal - TowerPlacement.InitialTowers[towerType];
                 switch (towerType)
                 {
                     case TestTowerScript.TowerType.Pawn:
-                        return 5 * curVal;
+                        return 5*curVal;
                     case TestTowerScript.TowerType.Knight:
-                        return 10 * curVal;
+                        return 10*curVal;
                     case TestTowerScript.TowerType.Bishop:
-                        return 10 * curVal;
+                        return 10*curVal;
                     case TestTowerScript.TowerType.Rook:
-                        return 10 * curVal;
+                        return 10*curVal;
                     case TestTowerScript.TowerType.King:
-                        return 20 * curVal;
+                        return 20*curVal;
                     case TestTowerScript.TowerType.Queen:
-                        return 20 * curVal;
+                        return 20*curVal;
                 }
                 break;
 
@@ -71,17 +72,17 @@ public class UpgradeButton : MonoBehaviour
                 switch (towerType)
                 {
                     case TestTowerScript.TowerType.Pawn:
-                        return 2 * curVal;
+                        return 2*curVal;
                     case TestTowerScript.TowerType.Knight:
-                        return 3 * curVal;
+                        return 3*curVal;
                     case TestTowerScript.TowerType.Bishop:
-                        return 3 * curVal;
+                        return 3*curVal;
                     case TestTowerScript.TowerType.Rook:
-                        return 3 * curVal;
+                        return 3*curVal;
                     case TestTowerScript.TowerType.King:
-                        return 5 * curVal;
+                        return 5*curVal;
                     case TestTowerScript.TowerType.Queen:
-                        return 5 * curVal;
+                        return 5*curVal;
                 }
                 break;
         }
@@ -95,7 +96,7 @@ public class UpgradeButton : MonoBehaviour
             switch (upgradeType)
             {
                 case UpgradeType.AddExtras:
-                    return TowerPlacement.ExtraTowers;
+                    return TowerPlacement.TowerCount;
                 case UpgradeType.IncreaseStats:
                     return TestTowerScript.UpgradeLevels;
                 default:

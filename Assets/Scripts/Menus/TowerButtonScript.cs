@@ -40,7 +40,7 @@ public class TowerButtonScript : MonoBehaviour {
 
     private int Remaining
     {
-        get { return (TowerPlacement.ExtraTowers[towerType] - TowerPlacement.PlacedTowers[towerType]); }
+        get { return (TowerPlacement.TowerCount[towerType] - TowerPlacement.PlacedTowers[towerType]); }
     }
 
     public void Prepare()

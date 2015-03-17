@@ -105,9 +105,7 @@ public class BoardManager : MonoBehaviour
         BoardSetup();
         GenerateMap();
         LayoutMap();
-        Debug.Log(map);
         CreateForeground();
-        Debug.Log(map);
 
 		// Setup enemy spawnpoints and also cages
 		GetComponent<EnemyLayoutScript>().SetupEnemyLayout();

@@ -28,14 +28,16 @@ public class TestTowerScript : MonoBehaviour {
     public TargetPriority targetPriority = TargetPriority.Closest;
 
     public static readonly Dictionary<TowerType, int> UpgradeLevels = new Dictionary<TowerType, int>();
+    /*
     static TestTowerScript()
     {
         Initialize();
     }
+     */
 
-    private static void Initialize()
+    public static void Initialize()
     {
-        foreach (TowerType towerType in Enum.GetValues(typeof (TowerType))) UpgradeLevels.Add(towerType, 0);
+        foreach (TowerType towerType in Enum.GetValues(typeof (TowerType))) UpgradeLevels[towerType] = 0;
     }
 
     private float attackDelay
