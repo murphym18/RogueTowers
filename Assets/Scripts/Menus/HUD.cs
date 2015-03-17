@@ -70,6 +70,7 @@ public class HUD : MonoBehaviour
 
 	private void InitializeSprites()
 	{
+		towerSpriteDict.Clear();
 		towerSpriteDict.Add(Tower("Pawn"), pawnSprite);
 		towerSpriteDict.Add(Tower("Knight"), knightSprite);
 		towerSpriteDict.Add(Tower("Bishop"), bishopSprite);

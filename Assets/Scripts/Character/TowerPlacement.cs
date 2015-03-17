@@ -63,6 +63,7 @@ public class TowerPlacement : MonoBehaviour {
 		hud = GameObject.Find("HUD").GetComponent<HUD>();
 		levelWidth = boardManager.MapWidth / boardManager.numLevels;
 
+		TowerGameObjects.Clear();
 		TowerGameObjects.Add(Tower("Pawn"), PawnTower);
 		TowerGameObjects.Add(Tower("Knight"), KnightTower);
 		TowerGameObjects.Add(Tower("Bishop"), BishopTower);
@@ -75,6 +76,8 @@ public class TowerPlacement : MonoBehaviour {
 		goodPlaceColor = new Color(0F, 1F, 0F, 0.25F);
 		badPlaceColor = new Color (1F, 0F, 0F, 0.25F);
 
+		curTowerKey = 1;
+		TowerKeys.Clear();
 		rangeIndicatorInstance = (GameObject) Instantiate(rangeIndicatorObject);
 		rangeIndicatorInstance.SetActive(false);
 	}
