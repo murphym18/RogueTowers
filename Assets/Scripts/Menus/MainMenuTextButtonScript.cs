@@ -16,7 +16,7 @@ public abstract class MainMenuTextButtonScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 		if (isMouseInButtonArea()) {
 			buttonText.color = mouseOverColor;
 			if (Input.GetMouseButtonDown(0)) {

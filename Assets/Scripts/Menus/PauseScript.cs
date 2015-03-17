@@ -18,7 +18,11 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = gradualPause.TickValue;
         if (gameObject.activeSelf)
         {
-            if (Input.anyKeyDown)
+            if (Input.GetButtonDown("Cancel"))
+            {
+                Application.LoadLevel("MainMenu");
+            }
+            else if (Input.anyKeyDown)
             {
                 hud.GetComponent<HUD>().show();
                 gameObject.SetActive(false);
