@@ -11,6 +11,7 @@ public class HUD : MonoBehaviour
     public GameObject UpgradeScreen;
     public GameObject PauseScreen;
 	public GameObject towerButton;
+	public GameObject towerTooltip;
 	public List<GameObject> towerButtons = new List<GameObject>();
 
 	private float nextAnchorX = 0.07f;
@@ -92,7 +93,7 @@ public class HUD : MonoBehaviour
 
 		nextAnchorX += towerButtonX;
 		
-		buttonInstance.GetComponent<TowerButtonScript>().Initialize(towerType);
+		buttonInstance.GetComponent<TowerButtonScript>().Initialize(towerType, towerTooltip);
 		towerButtons.Add(buttonInstance);
 	}
 
