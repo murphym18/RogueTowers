@@ -109,21 +109,11 @@ public class TowerPlacement : MonoBehaviour {
 		}
 
 		if (Input.GetButtonDown("Cancel")) {
-			if (curTower != null)
-			{
-				Destroy(curTower);
-				curTower = null;
-			}
-			recall = false;
-			rangeIndicatorInstance.SetActive(false);
+			CancelSelectTower();
 		}
 
 		if (Input.GetButtonDown("RecallTower")) {
-			if (curTower != null)
-			{
-				Destroy(curTower);
-				curTower = null;
-			}
+			CancelSelectTower();
 			recall = true;
 		}
 
@@ -181,18 +171,36 @@ public class TowerPlacement : MonoBehaviour {
 
 	public void SelectTower(TT towerType)
 	{
-		curType = towerType;
-		curTower = instantiateTowerPointer(towerType);
-		curTower.SetActive(true);
-		colorBackup = curTower.GetComponent<SpriteRenderer>().color;
-		recall = false;
-		oldLocX = oldLocY = 0;
+		if (curType == towerType && curTower!= null)
+		{
+			CancelSelectTower();
+		}
+		else
+		{
+			curType = towerType;
+			curTower = instantiateTowerPointer(towerType);
+			curTower.SetActive(true);
+			colorBackup = curTower.GetComponent<SpriteRenderer>().color;
+			recall = false;
+			oldLocX = oldLocY = 0;
 
-		float radiusScale = 2 * curTower.GetComponent<TestTowerScript>().attackRadius;
-		rangeIndicatorInstance.transform.localScale = new Vector3(radiusScale, radiusScale, radiusScale);
-		rangeIndicatorInstance.SetActive(true);
+			float radiusScale = 2 * curTower.GetComponent<TestTowerScript>().attackRadius;
+			rangeIndicatorInstance.transform.localScale = new Vector3(radiusScale, radiusScale, radiusScale);
+			rangeIndicatorInstance.SetActive(true);
+		}
 	}
 
+	public void CancelSelectTower()
+	{
+		if (curTower != null)
+		{
+			Destroy(curTower);
+			curTower = null;
+		}
+		recall = false;
+		rangeIndicatorInstance.SetActive(false);
+	}
+	
 	private void PlaceTower(int x, int y)
 	{
 		curTower.SetActive(true);
