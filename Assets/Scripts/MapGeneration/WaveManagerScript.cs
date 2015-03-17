@@ -28,7 +28,7 @@ public class WaveManagerScript : MonoBehaviour {
 
 	void Start()
 	{
-		player = gameManager.PlayerInstance;
+		player = gameManager.playerInstance;
 		for (int level = 0; level < boardManager.numLevels; level++)
 		{
 			GetComponent<AStar>().Initialize(level);

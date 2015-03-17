@@ -2,23 +2,21 @@
 using System.Collections;
 
 public class GameOverScreenScript : MonoBehaviour {
-	private bool isVisible = false;
 	// Use this for initialization
 	void Start () {
-
+        gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (isVisible) {
-			if (Input.GetMouseButtonDown(0)) {
+		if (gameObject.activeSelf) {
+			if (Input.anyKeyDown) {
 				Application.LoadLevel("MainMenu");
 			}
 		}
 	}
 
 	public void show() {
-		gameObject.GetComponent<CanvasGroup>().alpha = 1F;
-		isVisible = true;
+		gameObject.SetActive(true);
 	}
 }

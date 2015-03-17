@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour
 
     public GameObject OpenUpgradeScreen;
     public GameObject UpgradeScreen;
+    public GameObject PauseScreen;
 	public GameObject towerButton;
 	public List<GameObject> towerButtons = new List<GameObject>();
 
@@ -36,11 +37,38 @@ public class HUD : MonoBehaviour
 		PrepareChildren();
 	}
 
+    void Update()
+    {
+        if (gameObject.activeSelf)
+        {
+            if (Input.GetButtonDown("Upgrade Menu"))
+            {
+
+                OnClick_OpenUpgradeScreen();
+            }
+            else if (Input.GetButtonDown("Cancel"))
+            {
+                PauseGame();
+            }
+        }
+    }
+
     private void OnClick_OpenUpgradeScreen()
     {
         this.gameObject.SetActive(false);
-        UpgradeScreen.GetComponent<UpgradeMenu>().Prepare();
-        UpgradeScreen.SetActive(true);
+        UpgradeScreen.GetComponent<UpgradeMenu>().show();
+    }
+
+    private void PauseGame()
+    {
+        this.gameObject.SetActive(false);
+        PauseScreen.GetComponent<PauseScript>().show();
+    }
+
+    public void show()
+    {
+        Time.timeScale = 1;
+        gameObject.SetActive(true);
     }
 
 	public void PrepareChildren()
@@ -70,6 +98,7 @@ public class HUD : MonoBehaviour
 
 	private void InitializeSprites()
 	{
+		towerSpriteDict.Clear();
 		towerSpriteDict.Add(Tower("Pawn"), pawnSprite);
 		towerSpriteDict.Add(Tower("Knight"), knightSprite);
 		towerSpriteDict.Add(Tower("Bishop"), bishopSprite);

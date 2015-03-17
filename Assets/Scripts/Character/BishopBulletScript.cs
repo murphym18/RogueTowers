@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 public class BishopBulletScript : BulletScript {
 	Collider2D[] enemies;
@@ -8,6 +9,7 @@ public class BishopBulletScript : BulletScript {
 	float attackRadius = 10.0f;
 	public LayerMask whatIsTargetable;
 
+    private bool flippedX, flippedY;
 
 	BishopBulletScript() {
 		damage = 7.0f;
@@ -34,6 +36,11 @@ public class BishopBulletScript : BulletScript {
 		
 	}
 
+    void FixedUpdate()
+    {
+        flippedX = flippedY = false;
+    }
+
 	void OnTriggerEnter2D(Collider2D coll)
 	{
 		if (ThingsToDieOn.Contains(coll.gameObject.tag) && coll.gameObject.tag == "Enemy")
@@ -42,18 +49,47 @@ public class BishopBulletScript : BulletScript {
 			Destroy(gameObject, 0.0f);
 		} else if (ThingsToDieOn.Contains(coll.gameObject.tag) && coll.gameObject.tag == "Cage" || coll.gameObject.tag == "Wall"){
 			//Bounce!!!
-			Bounce (coll.transform);
+			Bounce (coll);
 		}
 	}
 
-	void Bounce(Transform coll){
-		if(Mathf.FloorToInt(coll.position.x) > Mathf.FloorToInt(transform.position.x))
-			rigidbody2D.velocity = new Vector3(-rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
-		else if(Mathf.FloorToInt(coll.position.y) > Mathf.FloorToInt(transform.position.y))
-			rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, -rigidbody2D.velocity.y, 0);
-		if(Mathf.FloorToInt(coll.position.x) < Mathf.FloorToInt(transform.position.x))
-			rigidbody2D.velocity = new Vector3(-rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
-		else if(Mathf.FloorToInt(coll.position.y) < Mathf.FloorToInt(transform.position.y))
-			rigidbody2D.velocity = new Vector3(rigidbody2D.velocity.x, -rigidbody2D.velocity.y, 0);
+    void Bounce(Collider2D coll)
+	{
+	    var collX = transform.position.x - coll.transform.position.x;
+        var collY = transform.position.y - coll.transform.position.y;
+
+        if (Math.Abs(collY) > Math.Abs(collX)) // Vertical bounce
+        {
+            if (!flippedY)
+            {
+                rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, -rigidbody2D.velocity.y);
+                if (coll is BoxCollider2D)
+                {
+                    var signY = collY < 0 ? -1 : 1;
+                    var box = (BoxCollider2D) coll;
+                    this.transform.position = new Vector2(rigidbody2D.position.x,
+                        box.transform.position.y + signY*0.5f*(box.size.y + this.GetComponent<BoxCollider2D>().size.y));
+                }
+                flippedY = true;
+            }
+        }
+        else // Horizontal bounce
+        {
+            if (!flippedX)
+            {
+                rigidbody2D.velocity = new Vector2(-rigidbody2D.velocity.x, rigidbody2D.velocity.y);
+                if (coll is BoxCollider2D)
+                {
+                    var signX = collX < 0 ? -1 : 1;
+                    var box = (BoxCollider2D) coll;
+                    this.transform.position =
+                        new Vector2(
+                            box.transform.position.x +
+                            signX*0.5f*(box.size.x + this.GetComponent<BoxCollider2D>().size.x), rigidbody2D.position.y);
+                }
+                flippedX = true;
+            }
+        }
+        rigidbody2D.position = this.transform.position;
 	}
 }

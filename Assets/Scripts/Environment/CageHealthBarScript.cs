@@ -13,7 +13,7 @@ public class CageHealthBarScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//owner = gameManager.GetComponent<GameManager> ().PlayerInstance;
+		//owner = gameManager.GetComponent<GameManager> ().playerInstance;
 		cages = gameManager.GetComponent<BoardManager> ().levelCages;
 	}	
 	

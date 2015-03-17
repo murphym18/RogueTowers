@@ -2,29 +2,36 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TT = TestTowerScript.TowerType;
 
 public class TowerPlacement : MonoBehaviour {
 
-    public static Dictionary<TestTowerScript.TowerType, int> ExtraTowers = new Dictionary<TestTowerScript.TowerType, int>();
-	public static Dictionary<TestTowerScript.TowerType, GameObject> TowerGameObjects = new Dictionary<TestTowerScript.TowerType, GameObject>();
-	public static Dictionary<TestTowerScript.TowerType, int> PlacedTowers = new Dictionary<TestTowerScript.TowerType, int>();
-	public static Dictionary<TestTowerScript.TowerType, int> TowerKeys = new Dictionary<TestTowerScript.TowerType, int>();
+    public static Dictionary<TT, int> TowerCount = new Dictionary<TT, int>();
+    public static readonly Dictionary<TT, int> InitialTowers = new Dictionary<TT, int>(); 
+
+	public static Dictionary<TT, GameObject> TowerGameObjects = new Dictionary<TT, GameObject>();
+	public static Dictionary<TT, int> PlacedTowers = new Dictionary<TT, int>();
+	public static Dictionary<TT, int> TowerKeys = new Dictionary<TT, int>();
 
     static TowerPlacement()
     {
-        Initialize(); // Also needs to be called when the game starts each time
+        InitialTowers.Add(TT.Pawn, 4);
+        InitialTowers.Add(TT.Knight, 2);
+        InitialTowers.Add(TT.Bishop, 2);
+        InitialTowers.Add(TT.Rook, 2);
+        InitialTowers.Add(TT.King, 1);
+        InitialTowers.Add(TT.Queen, 1);
+
+        //Initialize(); // Also needs to be called when the game starts each time
     }
 	
-    private static void Initialize()
+    public static void Initialize()
 	{
-		ExtraTowers.Add(Tower("Pawn"), 4);
-		ExtraTowers.Add(Tower("Knight"), 2);
-		ExtraTowers.Add(Tower("Bishop"), 2);
-		ExtraTowers.Add(Tower("Rook"), 2);
-		ExtraTowers.Add(Tower("King"), 1);
-		ExtraTowers.Add(Tower("Queen"), 1);
-
-		foreach (TestTowerScript.TowerType towerType in Enum.GetValues(typeof (TestTowerScript.TowerType))) PlacedTowers.Add(towerType, 0);
+        foreach (TT towerType in Enum.GetValues(typeof (TT)))
+        {
+            TowerCount[towerType] = InitialTowers[towerType];
+            PlacedTowers[towerType] = 0;
+        }
 	}
 
 	public GameObject PawnTower;
@@ -33,6 +40,9 @@ public class TowerPlacement : MonoBehaviour {
 	public GameObject RookTower;
 	public GameObject KingTower;
 	public GameObject QueenTower;
+
+	public GameObject rangeIndicatorObject;
+	private GameObject rangeIndicatorInstance;
 	
 	private GameManager gameManager;
 	private BoardManager boardManager;
@@ -45,7 +55,7 @@ public class TowerPlacement : MonoBehaviour {
 	private bool recall = false;
 	private int oldLocX = 0, oldLocY = 0;
 	private bool oldValid = false;
-	private TestTowerScript.TowerType curType;
+	private TT curType;
 	private static int curTowerKey = 1;
 
 	private Color goodPlaceColor;
@@ -60,20 +70,26 @@ public class TowerPlacement : MonoBehaviour {
 		hud = GameObject.Find("HUD").GetComponent<HUD>();
 		levelWidth = boardManager.MapWidth / boardManager.numLevels;
 
-		TowerGameObjects.Add(Tower("Pawn"), PawnTower);
-		TowerGameObjects.Add(Tower("Knight"), KnightTower);
-		TowerGameObjects.Add(Tower("Bishop"), BishopTower);
-		TowerGameObjects.Add(Tower("Rook"), RookTower);
-		TowerGameObjects.Add(Tower("King"), KingTower);
-		TowerGameObjects.Add(Tower("Queen"), QueenTower);
+		TowerGameObjects.Clear();
+		TowerGameObjects.Add(TT.Pawn, PawnTower);
+		TowerGameObjects.Add(TT.Knight, KnightTower);
+		TowerGameObjects.Add(TT.Bishop, BishopTower);
+		TowerGameObjects.Add(TT.Rook, RookTower);
+		TowerGameObjects.Add(TT.King, KingTower);
+		TowerGameObjects.Add(TT.Queen, QueenTower);
 	}
 
 	void Start() {
 		goodPlaceColor = new Color(0F, 1F, 0F, 0.25F);
 		badPlaceColor = new Color (1F, 0F, 0F, 0.25F);
+
+		curTowerKey = 1;
+		TowerKeys.Clear();
+		rangeIndicatorInstance = (GameObject) Instantiate(rangeIndicatorObject);
+		rangeIndicatorInstance.SetActive(false);
 	}
 
-	public static void AddTowerType(TestTowerScript.TowerType towerType)
+	public static void AddTowerType(TT towerType)
 	{
 		string buttonName = "PlaceTower" + curTowerKey.ToString();
 		towerInputKeys.Add(createTowerInput(buttonName, towerType));
@@ -99,6 +115,7 @@ public class TowerPlacement : MonoBehaviour {
 				curTower = null;
 			}
 			recall = false;
+			rangeIndicatorInstance.SetActive(false);
 		}
 
 		if (Input.GetButtonDown("RecallTower")) {
@@ -143,7 +160,8 @@ public class TowerPlacement : MonoBehaviour {
 			}
 
 			curTower.transform.position = new Vector2(x, y);
-			if ((ExtraTowers[curType] - PlacedTowers[curType] > 0) &&
+			rangeIndicatorInstance.transform.position = curTower.transform.position;
+			if ((TowerCount[curType] - PlacedTowers[curType] > 0) &&
 			    (useOldValid ? oldValid : isValidTowerPosition(x, y)))
 			{
 				curTower.GetComponent<SpriteRenderer>().color = goodPlaceColor;
@@ -151,6 +169,7 @@ public class TowerPlacement : MonoBehaviour {
 				if (Input.GetMouseButtonDown(0)) {
 					PlaceTower(x, y);
 					oldValid = false;
+					rangeIndicatorInstance.SetActive(false);
 				}
 			}
 			else {
@@ -160,7 +179,7 @@ public class TowerPlacement : MonoBehaviour {
 		}
 	}
 
-	public void SelectTower(TestTowerScript.TowerType towerType)
+	public void SelectTower(TT towerType)
 	{
 		curType = towerType;
 		curTower = instantiateTowerPointer(towerType);
@@ -168,6 +187,10 @@ public class TowerPlacement : MonoBehaviour {
 		colorBackup = curTower.GetComponent<SpriteRenderer>().color;
 		recall = false;
 		oldLocX = oldLocY = 0;
+
+		float radiusScale = 2 * curTower.GetComponent<TestTowerScript>().attackRadius;
+		rangeIndicatorInstance.transform.localScale = new Vector3(radiusScale, radiusScale, radiusScale);
+		rangeIndicatorInstance.SetActive(true);
 	}
 
 	private void PlaceTower(int x, int y)
@@ -187,7 +210,7 @@ public class TowerPlacement : MonoBehaviour {
 	private void RecallTower(string locationKey)
 	{
 		GameObject tower = ((ObjectXType)TowerMap[locationKey]).tower;
-		TestTowerScript.TowerType type = ((ObjectXType)TowerMap[locationKey]).type;
+		TT type = ((ObjectXType)TowerMap[locationKey]).type;
 		boardManager[(int)tower.transform.position.x, (int)tower.transform.position.y] = false;
 		Destroy(tower);
 		TowerMap.Remove(locationKey);
@@ -257,7 +280,7 @@ public class TowerPlacement : MonoBehaviour {
 		return false;
 	}
 
-	GameObject instantiateTowerPointer(TestTowerScript.TowerType towerType)
+	GameObject instantiateTowerPointer(TT towerType)
 	{
 		if (curTower)
 		{
@@ -274,10 +297,10 @@ public class TowerPlacement : MonoBehaviour {
 
 	private class TowerInput {
 		public string input;
-		public TestTowerScript.TowerType type;
+		public TT type;
 	}
 
-	private static TowerInput createTowerInput(string s, TestTowerScript.TowerType towerType) {
+	private static TowerInput createTowerInput(string s, TT towerType) {
 		TowerInput t = new TowerInput ();
 		t.input = s;
 		t.type = towerType;
@@ -286,16 +309,16 @@ public class TowerPlacement : MonoBehaviour {
 
 	private class ObjectXType {
 		public GameObject tower;
-		public TestTowerScript.TowerType type;
-		public ObjectXType(GameObject obj, TestTowerScript.TowerType t)
+		public TT type;
+		public ObjectXType(GameObject obj, TT t)
 		{
 			tower = obj;
 			type = t;
 		}
 	}
 
-	private static TestTowerScript.TowerType Tower(string towerType)
-	{
-		return (TestTowerScript.TowerType)Enum.Parse(typeof(TestTowerScript.TowerType), towerType);
-	}
+	//private static TT Tower(string towerType)
+	//{
+	//	return (TT)Enum.Parse(typeof(TT), towerType);
+	//}
 }

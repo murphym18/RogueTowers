@@ -17,8 +17,8 @@ public class NaiveFollowPlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 	    this.transform.position = new Vector3(
-            _manager.PlayerInstance.transform.position.x,
-            _manager.PlayerInstance.transform.position.y,
+            _manager.playerInstance.transform.position.x,
+            _manager.playerInstance.transform.position.y,
             CameraHeight);
 	}
 }

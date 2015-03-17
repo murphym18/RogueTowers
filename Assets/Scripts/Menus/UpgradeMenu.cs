@@ -18,28 +18,41 @@ public class UpgradeMenu : MonoBehaviour
 	void Start () {
 	    this.gameObject.SetActive(false);
         closeUpgradeScreen.GetComponent<Button>().onClick.AddListener(this.OnClick_CloseUpgradeScreen);
-	    player = gameManager.GetComponent<GameManager>().PlayerInstance.GetComponent<Tyrem>();
+	    player = gameManager.GetComponent<GameManager>().playerInstance.GetComponent<Tyrem>();
         lastKnownUpgradePoints = player.upgradePoints;
 	}
 
     void Update()
     {
-        if(lastKnownUpgradePoints != player.upgradePoints)
-            Prepare();
-        lastKnownUpgradePoints = player.upgradePoints;
+        if (gameObject.activeSelf)
+        {
+            if(Input.GetButtonDown("Cancel"))
+                OnClick_CloseUpgradeScreen();
+            if (lastKnownUpgradePoints != player.upgradePoints)
+                Prepare();
+            lastKnownUpgradePoints = player.upgradePoints;
+        }
     }
 
     private void OnClick_CloseUpgradeScreen()
     {
+        Time.timeScale = 1;
         this.gameObject.SetActive(false);
         hud.SetActive(true);
+    }
+
+    public void show()
+    {
+        Time.timeScale = 0;
+        Prepare();
+        gameObject.SetActive(true);
     }
 
     public void Prepare()
     {
         upgradePointLabel.GetComponent<Text>().text = "Upgrade Points: " +
                                                       gameManager.GetComponent<GameManager>()
-                                                          .PlayerInstance.GetComponent<Tyrem>()
+                                                          .playerInstance.GetComponent<Tyrem>()
                                                           .upgradePoints;
 
         _recursivePrepare(this.gameObject);

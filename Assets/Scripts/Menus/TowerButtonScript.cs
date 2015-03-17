@@ -28,7 +28,7 @@ public class TowerButtonScript : MonoBehaviour {
 	{
 		towerType = setType;
 		towerTypeImage.GetComponent<Image>().sprite = HUD.towerSpriteDict[towerType];
-		towerPlacement = gameManager.PlayerInstance.GetComponent<TowerPlacement>();
+		towerPlacement = gameManager.playerInstance.GetComponent<TowerPlacement>();
 		numberKey = TowerPlacement.TowerKeys[towerType];
 		GetComponent<Button>().onClick.AddListener(this.OnClick_SelectTower);
 	}
@@ -40,7 +40,7 @@ public class TowerButtonScript : MonoBehaviour {
 
     private int Remaining
     {
-        get { return (TowerPlacement.ExtraTowers[towerType] - TowerPlacement.PlacedTowers[towerType]); }
+        get { return (TowerPlacement.TowerCount[towerType] - TowerPlacement.PlacedTowers[towerType]); }
     }
 
     public void Prepare()

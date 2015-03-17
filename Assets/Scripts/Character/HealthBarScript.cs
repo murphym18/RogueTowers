@@ -10,7 +10,7 @@ public class HealthBarScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		owner = gameManager.GetComponent<GameManager> ().PlayerInstance.GetComponent<Tyrem>();
+		owner = gameManager.GetComponent<GameManager> ().playerInstance.GetComponent<Tyrem>();
 	}	
 	
 	// Update is called once per frame

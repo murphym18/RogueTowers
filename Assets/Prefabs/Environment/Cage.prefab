@@ -75,7 +75,6 @@ GameObject:
   - 212: {fileID: 21282512}
   - 61: {fileID: 6182512}
   - 114: {fileID: 11482512}
-  - 50: {fileID: 5084972}
   m_Layer: 2
   m_Name: Cage
   m_TagString: Cage
@@ -176,21 +175,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484844}
   m_RootOrder: 2
---- !u!50 &5084972
-Rigidbody2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 184844}
-  m_Mass: 300000
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!61 &6182512
 BoxCollider2D:
   m_ObjectHideFlags: 1

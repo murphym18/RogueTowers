@@ -14,6 +14,7 @@ public class Enemy : IsometricObject {
 	public Color damagedColor = new Color(0.8F,0.6F,0.6F,0.9F);
 	
 	private GameObject target;
+	private GameObject player;
 	private SpawnPoint spawnPoint;
 	private int pointIndex = 0;
 	private Vector3 nextPoint;
@@ -24,6 +25,14 @@ public class Enemy : IsometricObject {
 	private float attackTimer = 0;
 	private float damagedColorTimeout = 0.2f;
 	private float damagedColorTimer = 0;
+
+	private bool attackingPlayer = false;
+	private const float attackTellTimeout = 0.2f;
+	private float attackTellTimer = 0;
+	private const float attackPlayerTimeout = 1.0f;
+	private float attackPlayerTimer = 0;
+	private Vector3 attackTarget;
+	private Vector3 attackTargetVelocity;
 
 	private GameManager gameManager;
 	private BoardManager boardManager;
@@ -39,6 +48,7 @@ public class Enemy : IsometricObject {
 		aStarScript = gameManager.GetComponentInParent<AStar>();
 		boxCollider = GetComponent<BoxCollider2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		player = gameManager.playerInstance;
 
 		obstructionMask = LayerMask.GetMask("Walls", "Towers", "Chests");
 	}
@@ -78,6 +88,8 @@ public class Enemy : IsometricObject {
 
 		if (attackTimer > 0)
 			attackTimer -= Time.fixedDeltaTime;
+		else if (attackingPlayer || PlayerInAttackRange())
+			AttackPlayer();
 		else if (CanSeePoint(target.transform.position))
 			MoveDirectlyToTarget();
 		else if (points != null)
@@ -145,7 +157,7 @@ public class Enemy : IsometricObject {
 	// if the following point is in sight, skips the current point.
 	private void MoveToFollowPath()
 	{
-		if (IsAtNextPoint() || pointIndex == 0)
+		if (IsAtPoint(nextPoint) || pointIndex == 0)
 		{
 			if (pointEnumerator.MoveNext())
 			{
@@ -163,7 +175,7 @@ public class Enemy : IsometricObject {
 
 	// move directly towards the target
 	private void MoveDirectlyToTarget() {
-		Vector3 direction = target.transform.rigidbody2D.position - this.rigidbody2D.position;
+		Vector3 direction = target.collider2D.transform.position - (Vector3)this.rigidbody2D.position;
 		Vector3 velocity = direction.normalized * movementSpeed;
 		//rigidbody2D.AddForce(velocity);
 		rigidbody2D.velocity = velocity;
@@ -180,10 +192,50 @@ public class Enemy : IsometricObject {
 	}
 	
 	// Checks if at the next path point
-	private bool IsAtNextPoint()
+	private bool IsAtPoint(Vector3 point)
 	{
-		float minDist = 0.05f;
-		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
+		float minDist = 0.1f;
+		return Vector3.Distance(this.rigidbody2D.position, point) < minDist;
+	}
+
+	private bool PlayerInAttackRange()
+	{
+		float attackRange = 2.5f;
+		float dist = (player.collider2D.transform.position - this.collider2D.transform.position).sqrMagnitude;
+		return (dist < (attackRange*attackRange) && CanSeePoint(player.collider2D.transform.position));
+	}
+
+	private void AttackPlayer()
+	{
+		if (!attackingPlayer)
+		{
+			if (attackTellTimer <= 0)
+			{
+				attackTellTimer = attackTellTimeout;
+				rigidbody2D.velocity = Vector3.zero;
+			}
+			else
+			{
+				if ((attackTellTimer -= Time.fixedDeltaTime) <= 0)
+				{
+					attackTarget = player.collider2D.transform.position;
+					attackTargetVelocity = (attackTarget - (Vector3)this.rigidbody2D.position).normalized * (movementSpeed * 1.9f);
+					attackingPlayer = true;
+					attackPlayerTimer = attackPlayerTimeout;
+				}
+			}
+		}
+		else if (attackPlayerTimer > 0 && !IsAtPoint(attackTarget))
+		{
+			rigidbody2D.velocity = attackTargetVelocity;
+			attackPlayerTimer -= Time.fixedDeltaTime;
+		}
+		else
+		{
+			rigidbody2D.velocity = Vector3.zero;
+			attackingPlayer = false;
+			RequestNewPath();
+		}
 	}
 
 	// Checks if has unobstructed direct path line to the given point
@@ -251,7 +303,7 @@ public class Enemy : IsometricObject {
 	{
 		GameObject initialTarget = boardManager.levelCages[gameManager.currentLevel];
 		if (initialTarget == null)
-			initialTarget = gameManager.PlayerInstance;
+			initialTarget = gameManager.playerInstance;
 		if (initialTarget == null)
 			initialTarget = this.gameObject;
 		
