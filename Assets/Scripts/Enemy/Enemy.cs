@@ -182,7 +182,7 @@ public class Enemy : IsometricObject {
 	// Checks if at the next path point
 	private bool IsAtNextPoint()
 	{
-		float minDist = 0.05f;
+		float minDist = 0.1f;
 		return Vector3.Distance(this.rigidbody2D.position, nextPoint) < minDist;
 	}
 
