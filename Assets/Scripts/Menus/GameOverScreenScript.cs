@@ -11,7 +11,7 @@ public class GameOverScreenScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isVisible) {
-			if (Input.anyKeyDown) {
+			if (Input.GetMouseButtonDown(0)) {
 				Application.LoadLevel("MainMenu");
 			}
 		}

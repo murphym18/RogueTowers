@@ -361,7 +361,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press any key to start
+  m_Text: CLICK SCREEN TO START
 --- !u!222 &1105534479
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -645,6 +645,10 @@ Prefab:
     - target: {fileID: 22479966, guid: 0931bee4225f31948b9e8532e5bd97bd, type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11479972, guid: 0931bee4225f31948b9e8532e5bd97bd, type: 2}
+      propertyPath: m_Text
+      value: CLICK SCREEN TO START
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0931bee4225f31948b9e8532e5bd97bd, type: 2}
