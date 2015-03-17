@@ -4,6 +4,8 @@ using System.Collections;
 public class LevelTrigger : MonoBehaviour
 {
 
+    public GameObject levelTransitionNotice;
+
     public int Level { get; set; }
 
 	// Use this for initialization
@@ -21,6 +23,8 @@ public class LevelTrigger : MonoBehaviour
         if (coll.gameObject.tag == "Player")
         {
 			GameObject.Find("GameManager").GetComponent<WaveManagerScript>().TriggerNextLevel(this.Level);
+            levelTransitionNotice.SetActive(true);
+            Destroy(levelTransitionNotice, 3.9f );
         }
     }
 }

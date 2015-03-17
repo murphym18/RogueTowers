@@ -11,6 +11,8 @@ public class BoardManager : MonoBehaviour
     public GameObject borderTile;
     public GameObject levelTriggerTile;
     public GameObject chestTile;
+    public GameObject nextLevelObject;
+    private GameObject[] nextLevelNotices;
     private MapBuilder map;
     public int numLevels, levelWidth, levelHeight;
     public int minChestsPerLevel, maxChestsPerLevel;
@@ -40,35 +42,43 @@ public class BoardManager : MonoBehaviour
     private void LayoutMap()
     {
 		levelBorderTiles = new List<GameObject>[numLevels];
-		for (int level = 0; level < numLevels; level++)
-			levelBorderTiles[level] = new List<GameObject>();
+        nextLevelNotices = new GameObject[numLevels];
+        for (int level = 0; level < numLevels; level++)
+        {
+            levelBorderTiles[level] = new List<GameObject>();
+            Debug.Log(nextLevelObject);
+            nextLevelNotices[level] = Instantiate(nextLevelObject, new Vector2(level*levelWidth, 0.5f*levelHeight + 2),
+                Quaternion.identity) as GameObject;
+            nextLevelNotices[level].SetActive(false);
+        }
 
 		for (int y = 0; y < levelHeight; y++)
             for (int x = 0; x < numLevels * levelWidth; x++)
             {
-                UnityEngine.Object instance = null;
+                GameObject instance = null;
                 if (useFloorEverywhere || !map[x, y])
                 {
-                    instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
-                    ((GameObject) instance).transform.SetParent(boardHolder);
+                    instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(boardHolder);
                 }
                 if (map[x, y])
                 {
-                    instance = Instantiate(wallTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity);
-                    ((GameObject)instance).transform.SetParent(boardHolder);
+                    instance = Instantiate(wallTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(boardHolder);
                 }
                 else if (x%levelWidth == levelWidth - 1)
                 {
-                    instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity);
-                    ((GameObject)instance).transform.SetParent(boardHolder);
+                    instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(boardHolder);
                     map[x, y] = true;
-					levelBorderTiles[x / levelWidth].Add((GameObject)instance);
+					levelBorderTiles[x / levelWidth].Add(instance);
                 }
                 if (x%levelWidth == 1 && !map[x-1,y])
                 {
-                    instance = Instantiate(levelTriggerTile, new Vector3(x, y), Quaternion.identity);
-                    ((GameObject)instance).transform.SetParent(boardHolder);
-                    ((GameObject) instance).GetComponent<LevelTrigger>().Level = (int) ((x - 1)/levelWidth);
+                    instance = Instantiate(levelTriggerTile, new Vector3(x, y), Quaternion.identity) as GameObject;
+                    instance.GetComponent<LevelTrigger>().levelTransitionNotice = nextLevelNotices[(x-1)/levelWidth];
+                    instance.transform.SetParent(boardHolder);
+                    instance.GetComponent<LevelTrigger>().Level = (int) ((x - 1)/levelWidth);
                 }
             }
     }

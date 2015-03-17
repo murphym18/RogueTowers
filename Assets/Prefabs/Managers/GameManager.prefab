@@ -88,11 +88,14 @@ MonoBehaviour:
   - {fileID: 199902, guid: 31e0e8a8bcc8944c1832894ef961d3c9, type: 2}
   - {fileID: 127498, guid: 47cacd2950e494427a5e7634019d3cb9, type: 2}
   - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
+  - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
+  - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
   wallTiles:
   - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
   borderTile: {fileID: 130410, guid: 384f041fcc9e5dc41a91b4c2fab60e53, type: 2}
   levelTriggerTile: {fileID: 108552, guid: 0c5dc22f72f64a2439ffd91f13a33a03, type: 2}
   chestTile: {fileID: 194354, guid: c642aa043e159324fbbb9775e513cc3d, type: 2}
+  nextLevelObject: {fileID: 141896, guid: 409192c28c4ff7c4899c9efc2ff35f28, type: 2}
   numLevels: 2
   levelWidth: 40
   levelHeight: 40
@@ -112,8 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c28484c14dc49b3a667a80deee44e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerType: {fileID: 173760, guid: a6865244a2d28c94b8d1c914c9457290, type: 2}
-  PlayerInstance: {fileID: 0}
+  playerType: {fileID: 173760, guid: a6865244a2d28c94b8d1c914c9457290, type: 2}
+  playerInstance: {fileID: 0}
+  gameOverScreen: {fileID: 0}
   currentLevel: 0
 --- !u!1001 &100100000
 Prefab:
