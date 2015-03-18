@@ -10,6 +10,9 @@ public class LoadingScreenScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Application.LoadLevel(gameWorldLevel);
+		if(Application.GetStreamProgressForLevel(gameWorldLevel) == 1){
+			Application.LoadLevel(gameWorldLevel);
+		}
+
 	}
 }
