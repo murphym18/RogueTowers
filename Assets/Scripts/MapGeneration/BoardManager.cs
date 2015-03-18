@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using Helpers;
 using Random = UnityEngine.Random;
-
+using TowerType = TestTowerScript.TowerType;
 public class BoardManager : MonoBehaviour
 {
-	public GameObject[] floorTiles;
-    public GameObject[] wallTiles;
+
+	public GameObject wallPrefab;
+	public int numWallSpiresPerTheme = 4;
+	public GameObject floorPrefab;
+	public int numFloorSpiresPerTheme = 1;
+
     public GameObject borderTile;
     public GameObject levelTriggerTile;
     public GameObject chestTile;
@@ -24,6 +30,9 @@ public class BoardManager : MonoBehaviour
 
 	public Transform boardHolder;
 
+	public TowerType[] towers;
+	Dictionary<TowerType, TileSet> tileSets = new Dictionary<TowerType, TileSet>();
+
     bool chestPlacement(int x, int y)
     {
         return map[x - 1, y] || map[x + 1, y] || map[x, y - 1] || map[x, y + 1];
@@ -33,6 +42,36 @@ public class BoardManager : MonoBehaviour
     {
         boardHolder = new GameObject("Board").transform;
     }
+
+	private void setupTileSets() {
+		towers = TowerPlacement.InitialTowers.Keys.toShuffledArray();
+		foreach (var tower in towers) {
+			Sprite[] floorTiles = new Sprite[numFloorSpiresPerTheme];
+			Sprite[] wallTiles = new Sprite[numWallSpiresPerTheme];
+			
+			for (int i = 0; i < numFloorSpiresPerTheme; ++i) {
+				floorTiles[i] = loadFromImage("Floors/" + tower.ToString() + i);
+			}
+			for (int i = 0; i < numWallSpiresPerTheme; ++i) {
+				wallTiles[i] = loadFromImage("Walls/" + tower.ToString() + i);
+			}
+			tileSets.Add(tower, new TileSet(floorPrefab, floorTiles, wallPrefab, wallTiles));
+		}
+	}
+
+	Rect imgRect = new Rect(0F, 0F, 48F, 48F);
+	Vector2 imgPiv = new Vector2(0.5F, 0.5F);
+	float imgPixelsToUnits = 48F;
+
+	private Sprite loadFromImage(string img) {
+		TextAsset imgData = Resources.Load<TextAsset>(img);
+		Debug.Log ("loading " + img);
+		Texture2D tex = new Texture2D(1,1);
+		tex.LoadImage(imgData.bytes);
+		return Sprite.Create (tex, imgRect, imgPiv, imgPixelsToUnits);
+	}
+
+
 
     private void GenerateMap()
     {
@@ -45,41 +84,43 @@ public class BoardManager : MonoBehaviour
         nextLevelNotices = new GameObject[numLevels];
         for (int level = 0; level < numLevels; level++)
         {
+			TowerType tower = towers[level % towers.Length];
             levelBorderTiles[level] = new List<GameObject>();
             nextLevelNotices[level] = Instantiate(nextLevelObject, new Vector2(level*levelWidth, 0.5f*levelHeight + 2),
                 Quaternion.identity) as GameObject;
             nextLevelNotices[level].SetActive(false);
+			for (int y = 0; y < levelHeight; y++)
+				for (int x = level*levelWidth; x < (level + 1)*levelWidth; x++)
+				{
+					GameObject instance = null;
+					if (useFloorEverywhere || !map[x, y])
+					{
+						instance = tileSets[tower].createFloorTile(x, y);
+						instance.transform.SetParent(boardHolder);
+					}
+					if (map[x, y])
+					{
+						instance = tileSets[tower].createWallTile(x, y);
+						instance.transform.SetParent(boardHolder);
+					}
+					else if (x%levelWidth == levelWidth - 1)
+					{
+						instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity) as GameObject;
+						instance.transform.SetParent(boardHolder);
+						map[x, y] = true;
+						levelBorderTiles[x / levelWidth].Add(instance);
+					}
+					if (x%levelWidth == 1 && !map[x-1,y])
+					{
+						instance = Instantiate(levelTriggerTile, new Vector3(x, y), Quaternion.identity) as GameObject;
+						instance.GetComponent<LevelTrigger>().levelTransitionNotice = nextLevelNotices[(x-1)/levelWidth];
+						instance.transform.SetParent(boardHolder);
+						instance.GetComponent<LevelTrigger>().Level = (int) ((x - 1)/levelWidth);
+					}
+				}
         }
 
-		for (int y = 0; y < levelHeight; y++)
-            for (int x = 0; x < numLevels * levelWidth; x++)
-            {
-                GameObject instance = null;
-                if (useFloorEverywhere || !map[x, y])
-                {
-                    instance = Instantiate(floorTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity) as GameObject;
-                    instance.transform.SetParent(boardHolder);
-                }
-                if (map[x, y])
-                {
-                    instance = Instantiate(wallTiles.RandomChoice(), new Vector3(x, y), Quaternion.identity) as GameObject;
-                    instance.transform.SetParent(boardHolder);
-                }
-                else if (x%levelWidth == levelWidth - 1)
-                {
-                    instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity) as GameObject;
-                    instance.transform.SetParent(boardHolder);
-                    map[x, y] = true;
-					levelBorderTiles[x / levelWidth].Add(instance);
-                }
-                if (x%levelWidth == 1 && !map[x-1,y])
-                {
-                    instance = Instantiate(levelTriggerTile, new Vector3(x, y), Quaternion.identity) as GameObject;
-                    instance.GetComponent<LevelTrigger>().levelTransitionNotice = nextLevelNotices[(x-1)/levelWidth];
-                    instance.transform.SetParent(boardHolder);
-                    instance.GetComponent<LevelTrigger>().Level = (int) ((x - 1)/levelWidth);
-                }
-            }
+
     }
 
     private void ScatterObjects(int Count, GameObject ToGenerate, int XMin = 0, int XMax = -1, Func<int, int, bool> Condition = null)
@@ -111,6 +152,7 @@ public class BoardManager : MonoBehaviour
 
     public void SetupScene()
     {
+		setupTileSets();
         BoardSetup();
         GenerateMap();
         LayoutMap();
@@ -163,4 +205,36 @@ public class BoardManager : MonoBehaviour
     {
         get { return levelHeight; }
     }
+
+
+
+	public class TileSet {
+		public GameObject floorPrefab;
+		public Sprite[] floorTiles;
+		public GameObject wallPrefab;
+		public Sprite[] wallTiles;
+	
+		public TileSet(GameObject floorPrefab, Sprite[] floorTiles, GameObject wallPrefab, Sprite[] wallTiles) {
+			this.floorPrefab = floorPrefab;
+			this.floorTiles = floorTiles;
+			this.wallPrefab = wallPrefab;
+			this.wallTiles = wallTiles;
+		}
+
+		public GameObject createFloorTile(float x, float y) {
+			return createTile(floorPrefab, floorTiles, x, y);
+		}
+
+		public GameObject createWallTile(float x, float y) {
+			return createTile(wallPrefab, wallTiles, x, y);
+		}
+
+		private GameObject createTile(GameObject prefab, Sprite[] imgs, float x, float y) {
+			GameObject tile = Instantiate(prefab, new Vector3(x, y), Quaternion.identity) as GameObject;
+			SpriteRenderer renderer = tile.AddComponent<SpriteRenderer>();
+			renderer.sprite = imgs.RandomChoice();
+			renderer.sortingLayerName = "Background";
+			return tile;
+		}
+	}
 }

@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &7479735
 GameObject:
@@ -2328,18 +2327,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0899ab93e03464b31b30c89ac42fb276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorTiles:
-  - {fileID: 166740, guid: 09bbfd5bb294747b6b17f3040c0af067, type: 2}
-  wallTiles:
-  - {fileID: 196488, guid: 0779e9f0d67d44f7286dc1cd10e5f971, type: 2}
-  - {fileID: 199902, guid: 31e0e8a8bcc8944c1832894ef961d3c9, type: 2}
-  - {fileID: 127498, guid: 47cacd2950e494427a5e7634019d3cb9, type: 2}
-  - {fileID: 180132, guid: dc8e82a9bb92542139f2b35f00b69d63, type: 2}
+  wallPrefab: {fileID: 180132, guid: 50a08082dfbcd314f920f869b95efc89, type: 2}
+  numWallSpiresPerTheme: 4
+  floorPrefab: {fileID: 166740, guid: 3bfc04057135cc34ba7fb42411608da0, type: 2}
+  numFloorSpiresPerTheme: 1
   borderTile: {fileID: 130410, guid: 384f041fcc9e5dc41a91b4c2fab60e53, type: 2}
   levelTriggerTile: {fileID: 108552, guid: 0c5dc22f72f64a2439ffd91f13a33a03, type: 2}
   chestTile: {fileID: 194354, guid: c642aa043e159324fbbb9775e513cc3d, type: 2}
   nextLevelObject: {fileID: 141896, guid: 409192c28c4ff7c4899c9efc2ff35f28, type: 2}
-  numLevels: 2
+  numLevels: 7
   levelWidth: 40
   levelHeight: 40
   minChestsPerLevel: 5
@@ -2347,6 +2343,7 @@ MonoBehaviour:
   useFloorEverywhere: 0
   levelCages: []
   boardHolder: {fileID: 0}
+  towers: 
 --- !u!114 &491985818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3942,8 +3939,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -5443,8 +5440,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -5612,8 +5609,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -5830,8 +5827,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -7421,6 +7418,18 @@ Prefab:
       propertyPath: messageBoardObject
       value: 
       objectReference: {fileID: 1380740063}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: wallPrefab
+      value: 
+      objectReference: {fileID: 180132, guid: 50a08082dfbcd314f920f869b95efc89, type: 2}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: floorPrefab
+      value: 
+      objectReference: {fileID: 166740, guid: 3bfc04057135cc34ba7fb42411608da0, type: 2}
+    - target: {fileID: 11466950, guid: 799280d65a0d247fab2a66169b091293, type: 2}
+      propertyPath: numLevels
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 799280d65a0d247fab2a66169b091293, type: 2}
   m_RootGameObject: {fileID: 491985816}

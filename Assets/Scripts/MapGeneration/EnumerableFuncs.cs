@@ -63,6 +63,19 @@ namespace Helpers
         {
             return Arr.ElementAt(rand.Next(Arr.Count()));
         }
+
+		public static T[] toShuffledArray<T>(this ICollection<T> collection) {
+			T[] arr = collection.ToArray ();
+			int i = arr.ToArray().Length;
+			
+			while (i-- > 1) {
+				int swapIndex = UnityEngine.Random.Range(0, i);
+				T tmp = arr[i];
+				arr[i] = arr[swapIndex];
+				arr[swapIndex] = tmp;
+			}
+			return arr;
+		}
     }
 
 }
