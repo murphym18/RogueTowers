@@ -12,6 +12,7 @@ public class TowerPlacement : MonoBehaviour {
 	public static Dictionary<TT, GameObject> TowerGameObjects = new Dictionary<TT, GameObject>();
 	public static Dictionary<TT, int> PlacedTowers = new Dictionary<TT, int>();
 	public static Dictionary<TT, int> TowerKeys = new Dictionary<TT, int>();
+	public static HashSet<TT> unlockedTowers = new HashSet<TT>();
 
     static TowerPlacement()
     {
@@ -108,9 +109,10 @@ public class TowerPlacement : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown("Cancel")) {
+		/*
+		if (Input.GetButtonDown("Cancel"))
 			CancelSelectTower();
-		}
+		*/
 
 		if (Input.GetButtonDown("RecallTower")) {
 			CancelSelectTower();
@@ -301,6 +303,11 @@ public class TowerPlacement : MonoBehaviour {
 		towerPointer.GetComponent<TestTowerScript>().enabled = false;
 
 		return towerPointer;
+	}
+
+	public bool IsTowerSelected()
+	{
+		return curTower != null;
 	}
 
 	private class TowerInput {

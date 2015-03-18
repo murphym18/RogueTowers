@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using TT = TestTowerScript.TowerType;
 
 public class CageScript : IsometricObject {
 
@@ -14,6 +15,7 @@ public class CageScript : IsometricObject {
 	public float unlockTime;
 
 	public Color fullHealthBarColor = Color.green;
+	public TT unlockReward;
 	public Color emptyHealthBarColor = Color.red;
 
 	public Color lockPickClockColor = new Color(1F,1F,1F,0.5F); 
@@ -73,7 +75,10 @@ public class CageScript : IsometricObject {
 						isUnlocked = true;
 						lockPickClockColor = new Color(1F, 1F, 1F, 0F);
 						waveManager.TriggerCageUnlocked();
-						
+						if (unlockReward != null) {
+							gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " Unlocked!");
+							TowerPlacement.AddTowerType(unlockReward);
+						}
 					}
 					
 					//ResetProgressMesh();
