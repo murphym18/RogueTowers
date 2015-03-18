@@ -68,13 +68,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ca2ebd8eaa143448deace80c263ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRadius: 10
+  Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
-  attackDelay: 1
-  Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
+  damageUpgradeMultiplier: .25
+  speedUpgradeMultiplier: .200000003
+  rangeUpgradeMultiplier: .25
+  _attackDelay: 1
   towerType: 5
+  targetPriority: 0
+  _attackRadius: 10
 --- !u!212 &21201218
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -95,7 +99,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2511236001
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: cdca46458167a4b0591008eec26e34e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 49c01e3d1c531f2419713b853854cd80, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

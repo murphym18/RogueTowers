@@ -10,11 +10,15 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreen;
 	public int currentLevel = -1;
     private BoardManager BoardScript;
+
+    public GameObject messageBoardObject;
+    private MessageBoardScript msgBoard;
 	
 	// Use this for initialization
 	void Awake ()
 	{
 	    Time.timeScale = 1;
+        msgBoard = messageBoardObject.GetComponent<MessageBoardScript>();
 
         BoardScript = GetComponent<BoardManager>();
         BoardScript.SetupScene();
@@ -29,4 +33,9 @@ public class GameManager : MonoBehaviour
 	void Update ()
 	{
 	}
+
+    public void DisplayMessage(string Msg)
+    {
+        msgBoard.DisplayMessage(Msg.ToUpper());
+    }
 }

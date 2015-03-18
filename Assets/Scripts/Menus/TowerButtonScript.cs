@@ -16,6 +16,11 @@ public class TowerButtonScript : MonoBehaviour {
 
 	private GameManager gameManager;
 	private TowerPlacement towerPlacement;
+	private GameObject towerTooltip;
+	private Text tooltipText;
+	private float tooltipTimeout = 0.4f;
+	private float tooltipTimer = 0;
+	private bool tooltipTimerStarted = false;
 
     private int prevRemaining;
 	
@@ -24,12 +29,16 @@ public class TowerButtonScript : MonoBehaviour {
 		gameManager = GameObject.Find("GameManager").GetComponentInParent<GameManager>();
 	}
 
-	public void Initialize(TestTowerScript.TowerType setType)
+	public void Initialize(TestTowerScript.TowerType setType, GameObject tooltip)
 	{
 		towerType = setType;
 		towerTypeImage.GetComponent<Image>().sprite = HUD.towerSpriteDict[towerType];
 		towerPlacement = gameManager.playerInstance.GetComponent<TowerPlacement>();
 		numberKey = TowerPlacement.TowerKeys[towerType];
+		towerTooltip = tooltip;
+		towerTooltip.SetActive(true);
+		tooltipText = towerTooltip.GetComponentInChildren<Text>();
+		towerTooltip.SetActive(false);
 		GetComponent<Button>().onClick.AddListener(this.OnClick_SelectTower);
 	}
 
@@ -58,6 +67,38 @@ public class TowerButtonScript : MonoBehaviour {
     {
         if (Remaining != prevRemaining)
             countLabel.GetComponent<Text>().text = "x" + Remaining.ToString();
+		if (tooltipTimerStarted && tooltipTimer > 0)
+		{
+			if ((tooltipTimer -= Time.deltaTime) <= 0)
+				ShowTooltip();
+		}
     }
 
+	public void StartTooltipTimer()
+	{
+		tooltipTimer = tooltipTimeout;
+		tooltipTimerStarted = true;
+	}
+
+	public void ShowTooltip()
+	{
+		towerTooltip.transform.position = transform.position;
+		towerTooltip.transform.Translate(0, GetComponent<RectTransform>().rect.height/2, 0);
+		tooltipText.text = GetTooltipString();
+		towerTooltip.SetActive(true);
+	}
+
+	public void HideTooltip()
+	{
+		towerTooltip.SetActive(false);
+		tooltipTimerStarted = false;
+	}
+
+	private string GetTooltipString()
+	{
+		string type = towerType.ToString();
+		string level = "level: " + TestTowerScript.UpgradeLevels[towerType].ToString();
+
+		return type + "\n" + level;
+	}
 }

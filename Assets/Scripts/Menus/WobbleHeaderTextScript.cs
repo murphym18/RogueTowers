@@ -20,7 +20,7 @@ public class WobbleHeaderTextScript : MonoBehaviour {
 
     void Update()
     {
-        var curTime = Time.time;
+        var curTime = Time.unscaledTime;
         if (curTime - LastUpdate > MoveDelay)
         {
             GetComponent<RectTransform>().position = new Vector3(Base.x + Random.Range(-Wobble, Wobble), Base.y + Random.Range(-Wobble, Wobble));

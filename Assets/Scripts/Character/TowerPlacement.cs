@@ -29,7 +29,7 @@ public class TowerPlacement : MonoBehaviour {
 	{
         foreach (TT towerType in Enum.GetValues(typeof (TT)))
         {
-            TowerCount[towerType] = InitialTowers[towerType];
+            TowerCount[towerType] = -1;
             PlacedTowers[towerType] = 0;
         }
 	}
@@ -108,9 +108,10 @@ public class TowerPlacement : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown("Cancel")) {
+		/*
+		if (Input.GetButtonDown("Cancel"))
 			CancelSelectTower();
-		}
+		*/
 
 		if (Input.GetButtonDown("RecallTower")) {
 			CancelSelectTower();
@@ -301,6 +302,11 @@ public class TowerPlacement : MonoBehaviour {
 		towerPointer.GetComponent<TestTowerScript>().enabled = false;
 
 		return towerPointer;
+	}
+
+	public bool IsTowerSelected()
+	{
+		return curTower != null;
 	}
 
 	private class TowerInput {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Helpers;
 
 public class Chest : IsometricObject
 {
@@ -8,7 +9,22 @@ public class Chest : IsometricObject
     public int PointsPerChest;
     private bool Opened = false;
 
-	// Use this for initialization
+    private static bool firstMessage = true;
+
+    private string message
+    {
+        get
+        {
+            if (firstMessage)
+            {
+                firstMessage = false;
+                return "{0} Upgrade points (UP)".QuickFormat(PointsPerChest);
+            }
+            return "{0} UP".QuickFormat(PointsPerChest);
+        }
+    }
+
+    // Use this for initialization
 	void Start () {
 	
 	}
@@ -25,6 +41,7 @@ public class Chest : IsometricObject
             Opened = true;
             GetComponent<SpriteRenderer>().sprite = OpenSprite;
             coll.gameObject.GetComponent<Tyrem>().addUpgradePoints(PointsPerChest);
+            GameObject.Find("GameManager").GetComponent<GameManager>().DisplayMessage(message);
         }
     }
 }
