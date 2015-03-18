@@ -76,7 +76,7 @@ public class CageScript : IsometricObject {
 						lockPickClockColor = new Color(1F, 1F, 1F, 0F);
 						waveManager.TriggerCageUnlocked();
 						if (unlockReward != null) {
-							gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " Unlocked!");
+							gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " now available!");
 							TowerPlacement.AddTowerType(unlockReward);
 						}
 					}

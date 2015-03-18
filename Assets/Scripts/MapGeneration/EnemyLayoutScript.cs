@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using TT = TestTowerScript.TowerType;
-using System;
-using System.Linq;
-using System.Collections.Generic;
+
 public class EnemyLayoutScript : MonoBehaviour {
 
 	public GameObject SpawnPointObject;
@@ -43,22 +43,11 @@ public class EnemyLayoutScript : MonoBehaviour {
 		SetupEnemyPockets(enemyPocketCount, enemyPocketSize);
 	}
 
-	public static T[] shuffle<T>(ICollection<T> l) {
-		T[] arr = l.ToArray ();
-		int i = arr.ToArray().Length;
-		
-		while (i-- > 1) {
-			int swapIndex = Random.Range(0, i);
-			T tmp = arr[i];
-			arr[i] = arr[swapIndex];
-			arr[swapIndex] = tmp;
-		}
-		return arr;
-	}
+
 
 	void SetupCages(int levels)
 	{
-		TT[] towers = shuffle<TT>(TowerPlacement.InitialTowers.Keys);
+
 
 		for (int curLevel = 0; curLevel < levels; curLevel++)
 		{
@@ -66,8 +55,8 @@ public class EnemyLayoutScript : MonoBehaviour {
 			GameObject instance = Instantiate(CageObject, new Vector3(levelOffset_x + cageOffset_x, cageOffset_y), Quaternion.identity) as GameObject;
 			CageScript cage = instance.GetComponent<CageScript>();
 			cage.unlockTime *= (float) Math.Pow(1.5, curLevel);
-			if (curLevel < towers.Length)
-				cage.unlockReward = towers[curLevel];
+			if (curLevel < boardScript.towers.Length)
+				cage.unlockReward = boardScript.towers[curLevel];
 			boardScript.levelCages[curLevel] = instance;
 		}
 	}

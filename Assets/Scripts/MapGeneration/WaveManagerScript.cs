@@ -43,6 +43,7 @@ public class WaveManagerScript : MonoBehaviour {
 		{
 			if (EnemiesCleared())
 			{
+				gameManager.DisplayMessage("wave cleared");
 				inCooldown = true;
 				StartCoroutine( waitForCooldown(cooldownTime) );
 			}
@@ -51,6 +52,7 @@ public class WaveManagerScript : MonoBehaviour {
 		{
 			if (EnemiesCleared())
 			{
+				gameManager.DisplayMessage("level complete");
 				ToggleBorderTiles(false, curLevel);
 				player.GetComponent<TowerPlacement>().RecallAllTowers();
 				levelComplete = false;
@@ -61,9 +63,7 @@ public class WaveManagerScript : MonoBehaviour {
 	private bool EnemiesCleared()
 	{
 		GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-        var res = enemy == null;
-        if(res) gameManager.DisplayMessage("All enemies destroyed");
-	    return res;
+		return enemy == null;
 	}
 
 	private void ToggleBorderTiles(bool isEnabled, int level)

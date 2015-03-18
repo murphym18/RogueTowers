@@ -31,18 +31,6 @@ public class KnightBulletScript : BulletScript {
 		}
 	}
 
-	
-	void OnCollisionEnter2D(Collision2D coll)
-	{
-		if (coll.gameObject.tag == "Enemy")
-		{
-			// stop and attack
-			//rigidbody2D.velocity = Vector3.zero;
-
-		}
-		
-	}
-
 	void FixedUpdate() {
 		if(hitFirstTarget && Time.time < attackRefreshedLife + attackLifeSpan) {
 			Destroy(gameObject, 0.5f);
