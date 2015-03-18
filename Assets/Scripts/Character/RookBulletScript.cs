@@ -9,7 +9,6 @@ public class RookBulletScript : BulletScript {
 	float lastAttack = 0.0f;
 	int enemyToAttackIndex = 0;
 	float attackRadius = 10.0f;
-    private float bulletYOffset = 0f;
 	public LayerMask whatIsTargetable;
 	Vector2 distanceVector;
 
