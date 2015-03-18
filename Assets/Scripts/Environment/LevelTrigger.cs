@@ -20,7 +20,7 @@ public class LevelTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Player")
+        if (coll.gameObject.tag == "Player" && levelTransitionNotice != null)
         {
 			GameObject.Find("GameManager").GetComponent<WaveManagerScript>().TriggerNextLevel(this.Level);
             levelTransitionNotice.SetActive(true);

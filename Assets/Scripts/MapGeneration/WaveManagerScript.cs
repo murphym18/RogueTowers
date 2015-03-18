@@ -43,6 +43,7 @@ public class WaveManagerScript : MonoBehaviour {
 		{
 			if (EnemiesCleared())
 			{
+				gameManager.DisplayMessage("wave cleared");
 				inCooldown = true;
 				StartCoroutine( waitForCooldown(cooldownTime) );
 			}
@@ -51,6 +52,7 @@ public class WaveManagerScript : MonoBehaviour {
 		{
 			if (EnemiesCleared())
 			{
+				gameManager.DisplayMessage("level complete");
 				ToggleBorderTiles(false, curLevel);
 				player.GetComponent<TowerPlacement>().RecallAllTowers();
 				levelComplete = false;
@@ -168,6 +170,8 @@ public class WaveManagerScript : MonoBehaviour {
 
 	public void TriggerCageDestroyed()
     {
+        gameManager.DisplayMessage("Cage destroyed!");
+
         Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;
@@ -179,6 +183,8 @@ public class WaveManagerScript : MonoBehaviour {
 
 	public void TriggerCageUnlocked()
 	{
+        gameManager.DisplayMessage("Cage unlocked!");
+
 	    Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;

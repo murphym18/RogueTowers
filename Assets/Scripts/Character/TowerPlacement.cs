@@ -92,12 +92,15 @@ public class TowerPlacement : MonoBehaviour {
 
 	public static void AddTowerType(TT towerType)
 	{
-		string buttonName = "PlaceTower" + curTowerKey.ToString();
-		towerInputKeys.Add(createTowerInput(buttonName, towerType));
-		TowerKeys.Add(towerType, curTowerKey);
-		curTowerKey++;
+		if (curTowerKey <= Enum.GetValues(typeof (TT)).Length)
+		{
+			string buttonName = "PlaceTower" + curTowerKey.ToString();
+			towerInputKeys.Add(createTowerInput(buttonName, towerType));
+			TowerKeys.Add(towerType, curTowerKey);
+			curTowerKey++;
 
-		hud.AddTowerButton(towerType);
+			hud.AddTowerButton(towerType);
+		}
 	}
 
 	void Update () {
