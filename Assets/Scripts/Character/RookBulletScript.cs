@@ -23,8 +23,9 @@ public class RookBulletScript : BulletScript {
             //r.offsetMin = Vector2.zero;
             //r.offsetMax = new Vector2(distanceVector.x, r.rect.height);
             var ang = Vector3.Angle(new Vector3(1, 0), value);
+            var norm = Vector3.Cross(new Vector3(1, 0), value).normalized;
             Debug.Log(ang);
-            r.Rotate(Vector3.back, ang);
+            r.Rotate(norm, ang);
         }
     }
 

@@ -54,7 +54,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 129542}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Size: {x: .209999993, y: .666666627}
   m_Center: {x: 0, y: 0}
 --- !u!114 &11429542
@@ -73,7 +73,7 @@ MonoBehaviour:
   - Wall
   - Cage
   damage: 5
-  speed: 1
+  speed: 10
   lifetime: 6
   whatIsTargetable:
     serializedVersion: 2
