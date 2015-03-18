@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class TestTowerScript : MonoBehaviour {
     public enum TowerType { Pawn, Knight, Bishop, Rook, King, Queen }
-    public enum TargetPriority { Closest, Furthest }
+    public enum TargetPriority { Closest, ClosestToCage, Furthest }
 
 	GameObject target;
 	Collider2D[] enemies;
@@ -59,11 +59,12 @@ public class TestTowerScript : MonoBehaviour {
             if (enemyToAttackIndex != -1)
             {
                 GameObject bulletInstance;
+                var towerPos = transform.position + new Vector3(0, bulletYOffset);
 
                 bulletInstance =
-                    Instantiate(Bullet, transform.position + new Vector3(0, bulletYOffset), Quaternion.identity) as GameObject;
+                    Instantiate(Bullet, towerPos, Quaternion.identity) as GameObject;
                 bulletInstance.GetComponent<BulletScript>().velocity =
-                    enemies[enemyToAttackIndex].transform.position - this.transform.position;
+                    enemies[enemyToAttackIndex].transform.position - towerPos;
                 bulletInstance.GetComponent<BulletScript>().damage *=
                     1 + damageUpgradeMultiplier*UpgradeLevels[towerType];
             }
@@ -80,6 +81,7 @@ public class TestTowerScript : MonoBehaviour {
         {
             case TargetPriority.Closest:
                 return Closest(tower, enemies);
+            case TargetPriority.ClosestToCage:
             case TargetPriority.Furthest:
                 return Furthest(tower, enemies);
 
@@ -98,6 +100,22 @@ public class TestTowerScript : MonoBehaviour {
             {
                 idx = i;
                 dist = (enemies[i].transform.position - tower.position).magnitude;
+            }
+        }
+        return idx;
+    }
+
+    static int ClosestToCage(Transform tower, Collider2D[] enemies)
+    {
+        var idx = -1;
+        var dist = float.MaxValue;
+        var cagePos = GameManager.Current.getBoardManager.levelCages[GameManager.Current.currentLevel].transform;
+        for (int i = 0; enemies != null && i < enemies.Length; i++)
+        {
+            if ((enemies[i].transform.position - tower.position).magnitude < dist)
+            {
+                idx = i;
+                dist = (enemies[i].transform.position - cagePos.position).magnitude;
             }
         }
         return idx;

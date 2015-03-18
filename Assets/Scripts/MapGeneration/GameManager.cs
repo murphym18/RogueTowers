@@ -13,6 +13,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject messageBoardObject;
     private MessageBoardScript msgBoard;
+
+    public static GameManager Current;
+
+    public BoardManager getBoardManager
+    {
+        get { return BoardScript; }
+    }
+
 	
 	// Use this for initialization
 	void Awake ()
@@ -27,6 +35,8 @@ public class GameManager : MonoBehaviour
 
         TowerPlacement.Initialize();
         TestTowerScript.Initialize();
+
+	    Current = this;
 	}
 	
 	// Update is called once per frame

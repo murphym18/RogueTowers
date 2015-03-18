@@ -78,7 +78,7 @@ MonoBehaviour:
   rangeUpgradeMultiplier: .25
   _attackDelay: 1
   towerType: 3
-  targetPriority: 1
+  targetPriority: 2
   _attackRadius: 10
 --- !u!212 &21201218
 SpriteRenderer:

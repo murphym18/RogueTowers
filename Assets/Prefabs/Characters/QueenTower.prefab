@@ -69,15 +69,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 133100, guid: 30eb39c130b0c3f49b92836da0a404d3, type: 2}
+  bulletYOffset: 0
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
   damageUpgradeMultiplier: .25
   speedUpgradeMultiplier: .200000003
   rangeUpgradeMultiplier: .25
-  _attackDelay: 1
+  _attackDelay: 3
   towerType: 5
-  targetPriority: 0
+  targetPriority: 1
   _attackRadius: 10
 --- !u!212 &21201218
 SpriteRenderer:
