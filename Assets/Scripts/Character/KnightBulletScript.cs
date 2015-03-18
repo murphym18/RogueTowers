@@ -24,8 +24,8 @@ public class KnightBulletScript : BulletScript {
 			//r.offsetMin = Vector2.zero;
 			//r.offsetMax = new Vector2(distanceVector.x, r.rect.height);
 			var ang = Vector3.Angle(savedRotation, value);
-			Debug.Log(value);
-			r.Rotate(Vector3.back, ang);
+		    var norm = Vector3.Cross(savedRotation, value);
+			r.Rotate(norm, ang);
 			//base.velocity = value;
 			savedRotation = value.normalized;
 		}

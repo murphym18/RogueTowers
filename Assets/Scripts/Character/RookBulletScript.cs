@@ -9,7 +9,6 @@ public class RookBulletScript : BulletScript {
 	float lastAttack = 0.0f;
 	int enemyToAttackIndex = 0;
 	float attackRadius = 10.0f;
-    private float bulletYOffset = 0f;
 	public LayerMask whatIsTargetable;
 	Vector2 distanceVector;
 
@@ -24,9 +23,9 @@ public class RookBulletScript : BulletScript {
             //r.offsetMin = Vector2.zero;
             //r.offsetMax = new Vector2(distanceVector.x, r.rect.height);
             var ang = Vector3.Angle(new Vector3(1, 0), value);
+            var norm = Vector3.Cross(new Vector3(1, 0), value).normalized;
             Debug.Log(ang);
-            r.Rotate(Vector3.back, ang);
-			//base.velocity = value;
+            r.Rotate(norm, ang);
         }
     }
 
