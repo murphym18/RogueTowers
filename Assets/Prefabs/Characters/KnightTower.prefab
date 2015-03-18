@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 129542, guid: 491bb9ad9a7234a3bbb2c9ab3144fedf, type: 2}
+  bulletYOffset: 0
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
@@ -78,7 +79,7 @@ MonoBehaviour:
   _attackDelay: 1
   towerType: 1
   targetPriority: 0
-  _attackRadius: 10
+  _attackRadius: 5
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -7,6 +7,7 @@ public abstract class BulletScript : MonoBehaviour {
 	public float damage = 1.0f;
 	public float speed = 3.0f;
     public float lifetime = 6f;
+    public TestTowerScript parent { get; set; }
 
     public virtual Vector2 velocity
     {

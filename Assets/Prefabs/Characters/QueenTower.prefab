@@ -79,7 +79,7 @@ MonoBehaviour:
   _attackDelay: 3
   towerType: 5
   targetPriority: 1
-  _attackRadius: 10
+  _attackRadius: 20
 --- !u!212 &21201218
 SpriteRenderer:
   m_ObjectHideFlags: 1

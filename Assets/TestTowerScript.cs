@@ -65,10 +65,10 @@ public class TestTowerScript : MonoBehaviour {
 
                 bulletInstance =
                     Instantiate(Bullet, towerPos, Quaternion.identity) as GameObject;
-                bulletInstance.GetComponent<BulletScript>().velocity =
-                    enemies[enemyToAttackIndex].transform.position - towerPos;
-                bulletInstance.GetComponent<BulletScript>().damage *=
-                    1 + damageUpgradeMultiplier*UpgradeLevels[towerType];
+                var bulletScript = bulletInstance.GetComponent<BulletScript>();
+                bulletScript.parent = this;
+                bulletScript.velocity = enemies[enemyToAttackIndex].transform.position - towerPos;
+                bulletScript.damage *= 1 + damageUpgradeMultiplier*UpgradeLevels[towerType];
             }
 
         }

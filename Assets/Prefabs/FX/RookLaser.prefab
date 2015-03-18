@@ -48,9 +48,6 @@ MonoBehaviour:
   damage: 3
   speed: 1
   lifetime: .200000003
-  whatIsTargetable:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!114 &11417066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,7 +108,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2511236001
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 09fcb2fd1cf114f65aefe4cc9d614bc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

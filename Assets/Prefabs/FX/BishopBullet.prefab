@@ -61,10 +61,14 @@ MonoBehaviour:
   - Cage
   - Wall
   damage: 7
-  speed: 2
+  speed: 5
+  lifetime: 6
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
+  explosionType: {fileID: 151658, guid: 9bb1ffedd1dfc9e46b842ec3cf242865, type: 2}
+  explosionSize: 2
+  explosionTime: .100000001
 --- !u!212 &21281792
 SpriteRenderer:
   m_ObjectHideFlags: 1

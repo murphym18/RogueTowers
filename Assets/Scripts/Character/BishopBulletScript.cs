@@ -9,12 +9,10 @@ public class BishopBulletScript : BulletScript {
 	float attackRadius = 10.0f;
 	public LayerMask whatIsTargetable;
 
-    private bool flippedX, flippedY;
+    public GameObject explosionType;
+    public float explosionSize, explosionTime;
 
-	BishopBulletScript() {
-		damage = 7.0f;
-		speed = 9.0f;
-	}
+    private bool flippedX, flippedY;
 
 	void Start()
 	{
@@ -36,6 +34,10 @@ public class BishopBulletScript : BulletScript {
 		if (ThingsToDieOn.Contains(coll.gameObject.tag) && coll.gameObject.tag == "Enemy")
 		{
 			//Explosion!!!
+		    var explosion = Instantiate(explosionType, this.transform.position, Quaternion.identity) as GameObject;
+		    explosion.transform.localScale = new Vector3(explosionSize, explosionSize, 1);
+		    explosion.transform.parent = this.transform.parent;
+            Destroy(explosion, explosionTime);
 			Destroy(gameObject, 0.0f);
 		} else if (ThingsToDieOn.Contains(coll.gameObject.tag) && coll.gameObject.tag == "Cage" || coll.gameObject.tag == "Wall"){
 			//Bounce!!!
@@ -52,7 +54,7 @@ public class BishopBulletScript : BulletScript {
         {
             if (!flippedY)
             {
-                rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, -rigidbody2D.velocity.y);
+                velocity = new Vector2(rigidbody2D.velocity.x, -rigidbody2D.velocity.y);
                 if (coll is BoxCollider2D)
                 {
                     var signY = collY < 0 ? -1 : 1;
@@ -67,7 +69,7 @@ public class BishopBulletScript : BulletScript {
         {
             if (!flippedX)
             {
-                rigidbody2D.velocity = new Vector2(-rigidbody2D.velocity.x, rigidbody2D.velocity.y);
+                velocity = new Vector2(-rigidbody2D.velocity.x, rigidbody2D.velocity.y);
                 if (coll is BoxCollider2D)
                 {
                     var signX = collX < 0 ? -1 : 1;

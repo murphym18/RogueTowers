@@ -210,7 +210,7 @@ public class TowerPlacement : MonoBehaviour {
 	{
 		curTower.SetActive(true);
 		curTower.GetComponent<SpriteRenderer>().color = colorBackup;
-		curTower.GetComponent<BoxCollider2D>().enabled = true;
+		curTower.collider2D.enabled = true;
 		curTower.GetComponent<TestTowerScript>().enabled = true;
 
 		TowerMap.Add(x.ToString() + '_' + y.ToString(), new ObjectXType(curTower, curType));
@@ -302,7 +302,7 @@ public class TowerPlacement : MonoBehaviour {
 
 		GameObject towerPointer = Instantiate (TowerGameObjects[towerType], Vector3.zero, Quaternion.identity) as GameObject;
 		towerPointer.SetActive(false);
-		towerPointer.GetComponent<BoxCollider2D>().enabled = false;
+		towerPointer.collider2D.enabled = false;
 		towerPointer.GetComponent<TestTowerScript>().enabled = false;
 
 		return towerPointer;

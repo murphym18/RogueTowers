@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public GameObject playerType;
-    public GameObject playerInstance;
+    public GameObject playerInstance { get; private set; }
     public GameObject gameOverScreen;
 	public int currentLevel = -1;
     private BoardManager BoardScript;
