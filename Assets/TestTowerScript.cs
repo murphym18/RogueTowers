@@ -10,14 +10,12 @@ public class TestTowerScript : MonoBehaviour {
 	GameObject target;
 	Collider2D[] enemies;
 	float enemyToAttackDistance = 10.0f;
-	public Rigidbody2D Bullet;
-	//public float bulletSpeed = 3.0f;
+    public GameObject Bullet;
+    public float bulletYOffset = 0f;
 	float lastAttack = 0.0f;
 	int enemyToAttackIndex = 0;
 
-    // bool attackEnemy = false;
 	public LayerMask whatIsTargetable;
-	//public float damage = 1.0f;
 
     public float damageUpgradeMultiplier = 0.25f;
     public float speedUpgradeMultiplier = 0.2f;
@@ -28,12 +26,6 @@ public class TestTowerScript : MonoBehaviour {
     public TargetPriority targetPriority = TargetPriority.Closest;
 
     public static readonly Dictionary<TowerType, int> UpgradeLevels = new Dictionary<TowerType, int>();
-    /*
-    static TestTowerScript()
-    {
-        Initialize();
-    }
-     */
 
     public static void Initialize()
     {
@@ -53,55 +45,6 @@ public class TestTowerScript : MonoBehaviour {
         get { return _attackRadius*(1 + rangeUpgradeMultiplier*UpgradeLevels[towerType]); }
         set { _attackRadius = value; }
     }
-//	private BulletType[] TowerInputKeys;
-//	private class BulletType {
-//		public string input;
-//		public GameObject Bullet;
-//	}
-
-
-	// Use this for initialization
-	void Start () {
-		switch(towerType){
-		case TowerType.Pawn :
-			attackDelay = 1.0f;
-			attackRadius = 10.0f;
-			break;
-		case TowerType.Knight :
-			attackDelay = 2.5f;
-			attackRadius = 10.0f;
-			break;
-		case TowerType.Bishop :
-			attackDelay = .3f;
-			attackRadius = 20.0f;
-			break;
-		case TowerType.Rook :
-			attackDelay = 3.5f;
-			attackRadius = 15.0f;
-			break;
-		case TowerType.King :
-			attackDelay = 1.0f; //Have to see on how quickly the blast radius goes
-			attackRadius = 5.0f;
-			break;
-		case TowerType.Queen :
-			attackDelay = 3.0f;
-			attackRadius = 50.0f;
-			break;
-			
-		}
-
-
-
-		//Destroy(gameObject, 0.7777777f);
-//		BulletType[] = new BulletType[] {
-//			createBulletType("ShootPawnBullet", PawnBullet),
-//			createBulletType("ShootKnightBullet", KnightBullet),
-//			createBulletType("ShootBishopnBullet", BishopBullet),
-//			createBulletType("ShootRookBullet", RookBullet),
-//			createBulletType("ShootKingnBullet", KingBullet),
-//			createBulletType("ShootQueenBullet", QueenBullet)
-//		};
-	}//
 	
 	// Update is called once per frame
     private void Update()
@@ -115,14 +58,14 @@ public class TestTowerScript : MonoBehaviour {
 
             if (enemyToAttackIndex != -1)
             {
-                Rigidbody2D bulletInstance;
+                GameObject bulletInstance;
 
                 bulletInstance =
-                    Instantiate(Bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
-                bulletInstance.velocity =
-                    (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized;
-                bulletInstance.GetComponent<BulletScript>().damage *= 1 +
-                                                                      damageUpgradeMultiplier*UpgradeLevels[towerType];
+                    Instantiate(Bullet, transform.position + new Vector3(0, bulletYOffset), Quaternion.identity) as GameObject;
+                bulletInstance.GetComponent<BulletScript>().velocity =
+                    enemies[enemyToAttackIndex].transform.position - this.transform.position;
+                bulletInstance.GetComponent<BulletScript>().damage *=
+                    1 + damageUpgradeMultiplier*UpgradeLevels[towerType];
             }
 
         }

@@ -11,7 +11,7 @@ GameObject:
   - 50: {fileID: 5011720}
   - 61: {fileID: 6111720}
   - 212: {fileID: 21211720}
-  - 114: {fileID: 11411720}
+  - 114: {fileID: 11476358}
   m_Layer: 0
   m_Name: PawnBullet
   m_TagString: Bullet
@@ -57,7 +57,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_Size: {x: .159999996, y: .159999996}
   m_Center: {x: 0, y: 0}
---- !u!114 &11411720
+--- !u!114 &11476358
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -65,13 +65,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 111720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df89c02ccba5345a896c9a65c1e473ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 2be2ef551fd6a4523aaef13d8684fe19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ThingsToDieOn:
   - Enemy
-  - Wall
   - Cage
+  - Wall
   damage: 1
   speed: 3
 --- !u!212 &21211720

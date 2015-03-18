@@ -16,7 +16,9 @@ public class GameOverScreenScript : MonoBehaviour {
 		}
 	}
 
-	public void show() {
+	public void show()
+	{
+	    Time.timeScale = 0;
 		gameObject.SetActive(true);
 	}
 }
