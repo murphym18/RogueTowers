@@ -17,6 +17,8 @@ public class TowerButtonScript : MonoBehaviour {
 	private GameManager gameManager;
 	private TowerPlacement towerPlacement;
 	private GameObject towerTooltip;
+	private TestTowerScript towerObject;
+	private BulletScript towerBullet;
 	private Text tooltipText;
 	private float tooltipTimeout = 0.4f;
 	private float tooltipTimer = 0;
@@ -34,6 +36,8 @@ public class TowerButtonScript : MonoBehaviour {
 		towerType = setType;
 		towerTypeImage.GetComponent<Image>().sprite = HUD.towerSpriteDict[towerType];
 		towerPlacement = gameManager.playerInstance.GetComponent<TowerPlacement>();
+		towerObject = TowerPlacement.TowerGameObjects[towerType].GetComponent<TestTowerScript>();
+		towerBullet = towerObject.Bullet.GetComponent<BulletScript>();
 		numberKey = TowerPlacement.TowerKeys[towerType];
 		towerTooltip = tooltip;
 		towerTooltip.SetActive(true);
@@ -97,8 +101,19 @@ public class TowerButtonScript : MonoBehaviour {
 	private string GetTooltipString()
 	{
 		string type = towerType.ToString();
-		string level = "level: " + TestTowerScript.UpgradeLevels[towerType].ToString();
+		string description = towerObject.description;
+		string level = "level:\t\t\t" + TestTowerScript.UpgradeLevels[towerType].ToString();
+		string damage = "damage:\t\t" + towerDamage.ToString("n1");
+		string speed = "delay:\t\t\t" + towerObject.attackDelay.ToString("n1");
+		string range = "range:\t\t\t" + towerObject.attackRadius.ToString("n1");
 
-		return type + "\n" + level;
+		return type + "\n" + description + "\n\n" + level + "\n" + damage + "\n" + speed + "\n" + range;
+	}
+
+	private float towerDamage
+	{
+		get { return towerBullet.damage *
+			(1 + towerObject.damageUpgradeMultiplier*
+			 TestTowerScript.UpgradeLevels[towerType]); }
 	}
 }

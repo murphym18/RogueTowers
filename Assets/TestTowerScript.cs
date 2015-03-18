@@ -32,7 +32,7 @@ public class TestTowerScript : MonoBehaviour {
         foreach (TowerType towerType in Enum.GetValues(typeof (TowerType))) UpgradeLevels[towerType] = 0;
     }
 
-    private float attackDelay
+    public float attackDelay
     {
         get { return _attackDelay / (1 + speedUpgradeMultiplier*UpgradeLevels[this.towerType]); }
         set { _attackDelay = value; }
@@ -45,7 +45,9 @@ public class TestTowerScript : MonoBehaviour {
         get { return _attackRadius*(1 + rangeUpgradeMultiplier*UpgradeLevels[towerType]); }
         set { _attackRadius = value; }
     }
-	
+
+	public string description;
+
 	// Update is called once per frame
     private void Update()
     {
