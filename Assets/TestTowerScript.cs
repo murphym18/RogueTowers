@@ -82,6 +82,7 @@ public class TestTowerScript : MonoBehaviour {
             case TargetPriority.Closest:
                 return Closest(tower, enemies);
             case TargetPriority.ClosestToCage:
+                return ClosestToCage(tower, enemies);
             case TargetPriority.Furthest:
                 return Furthest(tower, enemies);
 
