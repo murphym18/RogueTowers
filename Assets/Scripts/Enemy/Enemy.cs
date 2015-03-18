@@ -316,13 +316,16 @@ public class Enemy : IsometricObject {
 		return initialTarget;
 	}
 	private void UpdateDirection() {
-		if(rigidbody2D.velocity.x >= rigidbody2D.velocity.y && rigidbody2D.velocity.x > 0) {
+		var velocityX = Mathf.Abs(rigidbody2D.velocity.x);
+		var velocityY = Mathf.Abs(rigidbody2D.velocity.y);
+
+		if(velocityX >= velocityY && rigidbody2D.velocity.x > 0) {
 			direction = 3;
-		} else if(rigidbody2D.velocity.x >= rigidbody2D.velocity.y && rigidbody2D.velocity.x < 0) {
+		} else if(velocityX >= velocityY && rigidbody2D.velocity.x < 0) {
 			direction = 2;
-		}else if(rigidbody2D.velocity.x <= rigidbody2D.velocity.y && rigidbody2D.velocity.y < 0) {
+		}else if(velocityX <= velocityY && rigidbody2D.velocity.y < 0) {
 			direction = 0;
-		} else if(rigidbody2D.velocity.x <= rigidbody2D.velocity.y && rigidbody2D.velocity.y > 0){
+		} else if(velocityX <= velocityY && rigidbody2D.velocity.y > 0){
 			direction = 1;
 		}
 		anim.SetInteger ("Direction", direction);
