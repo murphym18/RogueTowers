@@ -46,7 +46,6 @@ public class BoardManager : MonoBehaviour
         for (int level = 0; level < numLevels; level++)
         {
             levelBorderTiles[level] = new List<GameObject>();
-            Debug.Log(nextLevelObject);
             nextLevelNotices[level] = Instantiate(nextLevelObject, new Vector2(level*levelWidth, 0.5f*levelHeight + 2),
                 Quaternion.identity) as GameObject;
             nextLevelNotices[level].SetActive(false);

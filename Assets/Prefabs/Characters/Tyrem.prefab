@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ca2ebd8eaa143448deace80c263ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet: {fileID: 5000000, guid: 6f361838b8b9447929b074120d6872a6, type: 2}
+  Bullet: {fileID: 133100, guid: 30eb39c130b0c3f49b92836da0a404d3, type: 2}
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024

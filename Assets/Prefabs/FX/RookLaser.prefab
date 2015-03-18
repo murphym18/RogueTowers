@@ -14,7 +14,7 @@ GameObject:
   - 223: {fileID: 22317066}
   - 114: {fileID: 11417066}
   - 114: {fileID: 11409962}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RookLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,6 +35,7 @@ MonoBehaviour:
   ThingsToDieOn: []
   damage: 3
   speed: 1
+  lifetime: 1
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
@@ -50,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 6
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
@@ -75,7 +76,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 21300000, guid: 6bf92f05ed3e0459f8105d6d5a882d95, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
-  m_FillCenter: 0
+  m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
@@ -123,7 +124,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1024582385
   m_SortingOrder: 0
 --- !u!224 &22453750
 RectTransform:
@@ -133,14 +134,14 @@ RectTransform:
   m_GameObject: {fileID: 109962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 41.5999985, y: 1, z: 1}
+  m_LocalScale: {x: 1.32000005, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -9.54039383, y: -4.02193117}
-  m_SizeDelta: {x: 4.17000008, y: 3.3599999}
+  m_AnchoredPosition: {x: 324.12796, y: -64.3794098}
+  m_SizeDelta: {x: 5, y: 1}
   m_Pivot: {x: .5, y: .5}
 --- !u!1001 &100100000
 Prefab:

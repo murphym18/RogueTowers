@@ -61,7 +61,9 @@ public class WaveManagerScript : MonoBehaviour {
 	private bool EnemiesCleared()
 	{
 		GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-		return enemy == null;
+        var res = enemy == null;
+        if(res) gameManager.DisplayMessage("All enemies destroyed");
+	    return res;
 	}
 
 	private void ToggleBorderTiles(bool isEnabled, int level)
@@ -168,6 +170,8 @@ public class WaveManagerScript : MonoBehaviour {
 
 	public void TriggerCageDestroyed()
     {
+        gameManager.DisplayMessage("Cage destroyed!");
+
         Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;
@@ -179,6 +183,8 @@ public class WaveManagerScript : MonoBehaviour {
 
 	public void TriggerCageUnlocked()
 	{
+        gameManager.DisplayMessage("Cage unlocked!");
+
 	    Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;

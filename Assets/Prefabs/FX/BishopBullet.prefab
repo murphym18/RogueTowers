@@ -11,7 +11,7 @@ GameObject:
   - 61: {fileID: 6181792}
   - 212: {fileID: 21281792}
   - 114: {fileID: 11481792}
-  - 50: {fileID: 5081792}
+  - 50: {fileID: 5056040}
   m_Layer: 0
   m_Name: BishopBullet
   m_TagString: Bullet
@@ -19,7 +19,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &5081792
+--- !u!50 &5056040
 Rigidbody2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -27,13 +27,13 @@ Rigidbody2D:
   m_GameObject: {fileID: 181792}
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_FixedAngle: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!61 &6181792
 BoxCollider2D:
   m_ObjectHideFlags: 1
