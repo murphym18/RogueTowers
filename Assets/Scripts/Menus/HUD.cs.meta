@@ -5,12 +5,15 @@ MonoImporter:
   defaultReferences:
   - OpenUpgradeScreen: {instanceID: 0}
   - UpgradeScreen: {instanceID: 0}
+  - PauseScreen: {instanceID: 0}
+  - towerButton: {fileID: 195684, guid: 435bd1ae6adb34bdbbab1d5a30b1284f, type: 2}
+  - towerTooltip: {fileID: 113198, guid: fd29c80edc54e46e38c312a7bff183d2, type: 2}
   - pawnSprite: {fileID: 21300000, guid: 605ee4a910b1541909d3786d300288f9, type: 3}
   - knightSprite: {fileID: 21300000, guid: bc8b4e3a4196f40088db6d78c89b6caf, type: 3}
   - bishopSprite: {fileID: 21300000, guid: 029b350c4392142eca4f81eaedc79517, type: 3}
   - rookSprite: {fileID: 21300000, guid: d390a9df65b6f453293ca93639cfb1d7, type: 3}
   - kingSprite: {fileID: 21300000, guid: 1cb6e838b5b0e4488a7af975301bc7ca, type: 3}
-  - queenSprite: {fileID: 21300000, guid: cdca46458167a4b0591008eec26e34e5, type: 3}
+  - queenSprite: {fileID: 21300000, guid: 49c01e3d1c531f2419713b853854cd80, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -109,9 +109,10 @@ public class TowerPlacement : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown("Cancel")) {
+		/*
+		if (Input.GetButtonDown("Cancel"))
 			CancelSelectTower();
-		}
+		*/
 
 		if (Input.GetButtonDown("RecallTower")) {
 			CancelSelectTower();
@@ -302,6 +303,11 @@ public class TowerPlacement : MonoBehaviour {
 		towerPointer.GetComponent<TestTowerScript>().enabled = false;
 
 		return towerPointer;
+	}
+
+	public bool IsTowerSelected()
+	{
+		return curTower != null;
 	}
 
 	private class TowerInput {

@@ -10,9 +10,9 @@ GameObject:
   - 4: {fileID: 496488}
   - 212: {fileID: 21296488}
   - 61: {fileID: 6102646}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Floor4
-  m_TagString: Floor
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

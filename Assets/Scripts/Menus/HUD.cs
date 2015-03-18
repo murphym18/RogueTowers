@@ -11,7 +11,9 @@ public class HUD : MonoBehaviour
     public GameObject UpgradeScreen;
     public GameObject PauseScreen;
 	public GameObject towerButton;
+	public GameObject towerTooltip;
 	public List<GameObject> towerButtons = new List<GameObject>();
+	public TowerPlacement towerPlacement;
 
 	private float nextAnchorX = 0.07f;
 	private float towerButtonX = 0.0636f;
@@ -28,6 +30,7 @@ public class HUD : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 	    OpenUpgradeScreen.GetComponent<Button>().onClick.AddListener(this.OnClick_OpenUpgradeScreen);
+		towerPlacement = GameObject.Find("GameManager").GetComponent<GameManager>().playerInstance.GetComponent<TowerPlacement>();
 
 		InitializeSprites();
 
@@ -61,8 +64,15 @@ public class HUD : MonoBehaviour
 
     private void PauseGame()
     {
-        this.gameObject.SetActive(false);
-        PauseScreen.GetComponent<PauseScript>().show();
+		if (towerPlacement.IsTowerSelected())
+		{
+			towerPlacement.CancelSelectTower();
+		}
+		else
+		{
+        	this.gameObject.SetActive(false);
+        	PauseScreen.GetComponent<PauseScript>().show();
+		}
     }
 
     public void show()
@@ -92,7 +102,7 @@ public class HUD : MonoBehaviour
 
 		nextAnchorX += towerButtonX;
 		
-		buttonInstance.GetComponent<TowerButtonScript>().Initialize(towerType);
+		buttonInstance.GetComponent<TowerButtonScript>().Initialize(towerType, towerTooltip);
 		towerButtons.Add(buttonInstance);
 	}
 
