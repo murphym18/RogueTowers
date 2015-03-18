@@ -26,6 +26,7 @@ public class RookBulletScript : BulletScript {
             var ang = Vector3.Angle(new Vector3(1, 0), value);
             Debug.Log(ang);
             r.Rotate(Vector3.back, ang);
+			//base.velocity = value;
         }
     }
 

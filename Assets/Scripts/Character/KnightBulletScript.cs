@@ -12,12 +12,26 @@ public class KnightBulletScript : BulletScript {
 	float attackLifeSpan = 0.5f;
 	float attackRefreshedLife = 0.0f;
 	bool hitFirstTarget = false;
+	Vector3 savedRotation = new Vector3(0, 1, 0);
 
-	KnightBulletScript() {
-		damage = 5.0f;
-		speed = 10.0f;
+	public override Vector2 velocity
+	{
+		get { return base.velocity; }
+		set
+		{
+			base.velocity = value;
+			var r = rigidbody2D.transform;
+			//r.offsetMin = Vector2.zero;
+			//r.offsetMax = new Vector2(distanceVector.x, r.rect.height);
+			var ang = Vector3.Angle(savedRotation, value);
+			Debug.Log(value);
+			r.Rotate(Vector3.back, ang);
+			//base.velocity = value;
+			savedRotation = value.normalized;
+		}
 	}
 
+	
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if (coll.gameObject.tag == "Enemy")
@@ -60,7 +74,7 @@ public class KnightBulletScript : BulletScript {
 				}
 
 				if(enemyToAttackIndex != -1) {
-					rigidbody2D.velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized*speed;
+					velocity = (enemies[enemyToAttackIndex].transform.position - this.transform.position).normalized*speed;
 					hitsLeft--;
 				}
 			} else {
