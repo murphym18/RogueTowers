@@ -12,6 +12,7 @@ public class TowerPlacement : MonoBehaviour {
 	public static Dictionary<TT, GameObject> TowerGameObjects = new Dictionary<TT, GameObject>();
 	public static Dictionary<TT, int> PlacedTowers = new Dictionary<TT, int>();
 	public static Dictionary<TT, int> TowerKeys = new Dictionary<TT, int>();
+	public static HashSet<TT> unlockedTowers = new HashSet<TT>();
 
     static TowerPlacement()
     {
@@ -29,7 +30,7 @@ public class TowerPlacement : MonoBehaviour {
 	{
         foreach (TT towerType in Enum.GetValues(typeof (TT)))
         {
-            TowerCount[towerType] = -1;
+            TowerCount[towerType] = InitialTowers[towerType];
             PlacedTowers[towerType] = 0;
         }
 	}

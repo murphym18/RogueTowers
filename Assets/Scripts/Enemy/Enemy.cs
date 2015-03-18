@@ -11,6 +11,10 @@ public class Enemy : IsometricObject {
 	public float attackRate = 1;
 	public float level = 1;
 
+	Animator anim;
+	public int direction;
+	public enum Direction { Front, Back, Left, Right}
+
 	public Color damagedColor = new Color(0.8F,0.6F,0.6F,0.9F);
 	
 	private GameObject target;
@@ -43,6 +47,7 @@ public class Enemy : IsometricObject {
 
 	void Awake()
 	{
+		anim = GetComponent<Animator> ();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		boardManager = gameManager.GetComponentInParent<BoardManager>();
 		aStarScript = gameManager.GetComponentInParent<AStar>();
@@ -85,6 +90,7 @@ public class Enemy : IsometricObject {
 	void FixedUpdate()
 	{
 		UpdateColors();
+		UpdateDirection();
 
 		if (attackTimer > 0)
 			attackTimer -= Time.fixedDeltaTime;
@@ -308,6 +314,18 @@ public class Enemy : IsometricObject {
 			initialTarget = this.gameObject;
 		
 		return initialTarget;
+	}
+	private void UpdateDirection() {
+		if(rigidbody2D.velocity.x >= rigidbody2D.velocity.y && rigidbody2D.velocity.x > 0) {
+			direction = 3;
+		} else if(rigidbody2D.velocity.x >= rigidbody2D.velocity.y && rigidbody2D.velocity.x < 0) {
+			direction = 2;
+		}else if(rigidbody2D.velocity.x <= rigidbody2D.velocity.y && rigidbody2D.velocity.y < 0) {
+			direction = 0;
+		} else if(rigidbody2D.velocity.x <= rigidbody2D.velocity.y && rigidbody2D.velocity.y > 0){
+			direction = 1;
+		}
+		anim.SetInteger ("Direction", direction);
 	}
 
 }
