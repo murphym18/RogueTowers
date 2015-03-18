@@ -76,10 +76,11 @@ MonoBehaviour:
   damageUpgradeMultiplier: .25
   speedUpgradeMultiplier: .200000003
   rangeUpgradeMultiplier: .25
-  _attackDelay: 1
+  _attackDelay: 3
   towerType: 3
   targetPriority: 2
-  _attackRadius: 5
+  _attackRadius: 10
+  description: Fires a laser at the farthest target
 --- !u!212 &21201218
 SpriteRenderer:
   m_ObjectHideFlags: 1

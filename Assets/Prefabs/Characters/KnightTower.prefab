@@ -79,7 +79,8 @@ MonoBehaviour:
   _attackDelay: 1
   towerType: 1
   targetPriority: 0
-  _attackRadius: 5
+  _attackRadius: 10
+  description: Fires an electric bolt that bounces between enemies
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

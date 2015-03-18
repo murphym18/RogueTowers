@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 400000}
   - 50: {fileID: 5000000}
   - 212: {fileID: 21201218}
+  - 61: {fileID: 6100000}
   - 114: {fileID: 11437302}
-  - 58: {fileID: 5826816}
   m_Layer: 13
   m_Name: KingTower
   m_TagString: Tower
@@ -46,8 +46,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
---- !u!58 &5826816
-CircleCollider2D:
+--- !u!61 &6100000
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -55,7 +55,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Radius: .5
+  m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}
 --- !u!114 &11437302
 MonoBehaviour:
@@ -78,8 +78,9 @@ MonoBehaviour:
   rangeUpgradeMultiplier: .25
   _attackDelay: 1
   towerType: 4
-  targetPriority: 2
-  _attackRadius: 3
+  targetPriority: 0
+  _attackRadius: 2
+  description: Blasts radius around himself
 --- !u!212 &21201218
 SpriteRenderer:
   m_ObjectHideFlags: 1
