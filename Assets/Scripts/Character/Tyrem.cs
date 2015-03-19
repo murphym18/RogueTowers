@@ -23,6 +23,9 @@ public class Tyrem : Character {
 	private float maxHp;
 	private bool isAlive = true;
 
+	Animator anim;
+	int direction = -1;
+
     public void addUpgradePoints(int points)
     {
         upgradePoints += points;
@@ -42,6 +45,7 @@ public class Tyrem : Character {
 	// Use this for initialization
 	void Start () {
 		maxHp = hp;
+		anim = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -59,6 +63,7 @@ public class Tyrem : Character {
 			float h = Input.GetAxis ("MovePlayerHorizontal");
 			float v = Input.GetAxis ("MovePlayerVertical");
 			rigidbody2D.velocity = (new Vector2 (h, v)).normalized * maxSpeed;
+			UpdateDirection();
 		}
 	}
 
@@ -93,5 +98,23 @@ public class Tyrem : Character {
 
 	public float getMaxHp() {
 		return maxHp;
+	}
+
+	private void UpdateDirection() {
+		var velocityX = Mathf.Abs(rigidbody2D.velocity.x);
+		var velocityY = Mathf.Abs(rigidbody2D.velocity.y);
+		
+		if (velocityX >= velocityY && rigidbody2D.velocity.x > 0) {
+			direction = 3;
+		} else if (velocityX >= velocityY && rigidbody2D.velocity.x < 0) {
+			direction = 2;
+		} else if (velocityX <= velocityY && rigidbody2D.velocity.y < 0) {
+			direction = 0;
+		} else if (velocityX <= velocityY && rigidbody2D.velocity.y > 0) {
+			direction = 1;
+		} else {
+			direction = -1;
+		}
+		anim.SetInteger ("Direction", direction);
 	}
 }
