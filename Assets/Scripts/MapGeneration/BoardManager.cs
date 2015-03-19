@@ -50,7 +50,7 @@ public class BoardManager : MonoBehaviour
 			Sprite[] wallTiles = new Sprite[numWallSpiresPerTheme];
 			
 			for (int i = 0; i < numFloorSpiresPerTheme; ++i) {
-				floorTiles[i] = loadFromImage("Floors/" + tower.ToString() + i);
+				floorTiles[i] = loadFromImage("Floors/" /*+ tower.ToString()*/ + i);
 			}
 			for (int i = 0; i < numWallSpiresPerTheme; ++i) {
 				wallTiles[i] = loadFromImage("Walls/" + tower.ToString() + i);
@@ -65,7 +65,6 @@ public class BoardManager : MonoBehaviour
 
 	private Sprite loadFromImage(string img) {
 		TextAsset imgData = Resources.Load<TextAsset>(img);
-		Debug.Log ("loading " + img);
 		Texture2D tex = new Texture2D(1,1);
 		tex.LoadImage(imgData.bytes);
 		return Sprite.Create (tex, imgRect, imgPiv, imgPixelsToUnits);
