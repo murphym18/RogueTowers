@@ -102,9 +102,9 @@ public class StoryScreenScript : MonoBehaviour {
 
 
 	private void loadText(string path) {
-		Debug.Log ("loading from " + path);
+		// Debug.Log ("loading from " + path);
 		string tmp = Resources.Load<TextAsset> (path).text;
-		Debug.Log (tmp);
+		// Debug.Log (tmp);
 		lines = tmp.Split('\n');
 		currentLine = 0;
 	}
@@ -122,7 +122,7 @@ public class StoryScreenScript : MonoBehaviour {
 		string character = tmp [0];
 		string dialogText = tmp [1];
 		dialogBox.GetComponent<Text> ().text = dialogText;
-		Debug.Log ("character is " + character);
+		// Debug.Log ("character is " + character);
 		GameObject g = Instantiate (charToFace [character], Vector3.zero, Quaternion.identity) as GameObject;
 		g.transform.SetParent(LowerThird.transform);
 		RectTransform rtx = g.GetComponent<RectTransform> ();
