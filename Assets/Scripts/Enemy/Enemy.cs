@@ -11,6 +11,10 @@ public class Enemy : IsometricObject {
 	public float attackRate = 1;
 	public float level = 1;
 
+	public float spawnFrequency = 1.0f;
+	public enum EnemyType {Basic, Fast, Strong}
+	public EnemyType enemyType;
+
 	Animator anim;
 	public int direction;
 	public enum Direction { Front, Back, Left, Right}
@@ -117,6 +121,13 @@ public class Enemy : IsometricObject {
 		this.target = newTarget;
 	}
 
+	public void KillSelf(float time)
+	{
+		WaveManagerScript.enemiesRemaining[enemyType]--;
+		WaveManagerScript.UpdateWavePanel();
+		Destroy(gameObject, time);
+	}
+
 	// Collissions
 	void OnCollisionEnter2D(Collision2D coll)
 	{
@@ -125,7 +136,7 @@ public class Enemy : IsometricObject {
 			// stop and attack
 			rigidbody2D.velocity = Vector3.zero;
 			coll.gameObject.GetComponentInParent<CageScript>().damage();
-			Destroy(gameObject, 2.0f);
+			KillSelf(0.0f);
 		}
 		else if (coll.gameObject.tag == "Player")
 		{
@@ -146,7 +157,7 @@ public class Enemy : IsometricObject {
 			spriteRenderer.material.color = damagedColor;
 
 			if (this.health <= 0)
-				Destroy(gameObject, 0.0f);
+				KillSelf(0.0f);
 		}
 	}
 
