@@ -2,11 +2,5 @@ Luku	Tyrem! What are you doing here?!
 Tyrem	I heard an SOS, so here I am.
 Luku	So now you want to help? You already left us once - 
 Luku	How long is it gonna be until you leave us again!?
-Tyrem	Probably soon after you're all safe. 
-Tyrem	Still not done living my own life. Seeing everyone again has been nice though.
-Luku	Psh, I thought as much! Just leave now, then! 
-Luku	We don't need you - I'm more than enough to save our family.
-Tyrem	I'm sure you are. Now come on, I could use your tower's power.
-Luku	What! If you think I'll just give yo- hey, give that back! 
-Luku	Tyreeeemmm!!!
-Tyrem	*Eyeroll and smirk*
+Tyrem	Probably soon after you're all safe. Let me lend you a hand.
+Luku  Wait but....
