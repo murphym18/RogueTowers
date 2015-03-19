@@ -171,21 +171,18 @@ public class AStar : MonoBehaviour {
 		int levelStartX = level * (boardManager.MapWidth / boardManager.numLevels);
 		int levelEndX = levelStartX + (boardManager.MapWidth / boardManager.numLevels);
 
-		for (int c = 0; c < boardManager.numLevels; c++)
+		GameObject cage = boardManager.levelCages[level];
+		int cage_x = (int)cage.transform.position.x;
+		int cage_y = (int)cage.transform.position.y;
+		for (int x = -1; x < 2; x++)
 		{
-			GameObject cage = boardManager.levelCages[c];
-			int cage_x = (int)cage.transform.position.x;
-			int cage_y = (int)cage.transform.position.y;
-			for (int x = -1; x < 2; x++)
+			for (int y = -1; y < 2; y++)
 			{
-				for (int y = -1; y < 2; y++)
-				{
-					boardManager[cage_x+x, cage_y+y] = true;
-					nodeMesh[level].Add(new Node(cage_x+x, cage_y+y, false));
-				}
+				nodeMesh[level].Add(new Node(cage_x+x, cage_y+y, false));
+				boardManager[cage_x+x, cage_y+y] = true;
 			}
 		}
-
+		
 		for (int x = levelStartX; x < levelEndX; x++)
 		{
 			for (int y = 0; y < boardManager.MapHeight; y++)
@@ -544,12 +541,57 @@ public class AStar : MonoBehaviour {
 		}
 		return null;
 	}
-	
+
+	public void CageOfftarget(int level)
+	{
+		GameObject cage = boardManager.levelCages[level];
+		int cage_x = (int)cage.transform.position.x;
+		int cage_y = (int)cage.transform.position.y;
+		for (int x = -1; x < 2; x++)
+		{
+			for (int y = -1; y < 2; y++)
+			{
+				//boardManager[cage_x+x, cage_y+y] = false;
+				for (int i = 0; i < nodeMesh[level].Count; i++)
+				{
+					if (nodeMesh[level][i].x == cage_x + x && nodeMesh[level][i].y == cage_y + y)
+						nodeMesh[gameManager.currentLevel].RemoveAt(i--);
+				}
+			}
+		}
+
+		int y_edge = cage.GetComponent<CageScript>().isDestroyed ? 2 : 1;
+
+		for (int x = -1; x < 2; x++)
+		{
+			for (int y = -1; y < y_edge; y++)
+			{
+				CageOfftargetHelper(cage_x + x, cage_y + y);
+			}
+		}
+		ReformAdjNodeMesh();
+	}
+
+	public void CageOfftargetHelper(int x, int y)
+	{
+		boardManager[x,y] = true;
+		for (int i = 0; i < nodeMesh[gameManager.currentLevel].Count; i++)
+		{
+			if (nodeMesh[gameManager.currentLevel][i].x == x && nodeMesh[gameManager.currentLevel][i].y == y)
+				nodeMesh[gameManager.currentLevel].RemoveAt(i);
+		}
+		
+		AddToNodeMesh(x-1,y-1);
+		AddToNodeMesh(x-1,y+1);
+		AddToNodeMesh(x+1,y-1);
+		AddToNodeMesh(x+1,y+1);
+	}
+
 	private bool NodesAreAdjacent(int startX, int startY, int endX, int endY)
 	{
 		RaycastHit2D[] zeroArray = new RaycastHit2D[1];
 		int hit1, hit2;
-		float thickness = 0.35f;//0.32f;
+		float thickness = 0.38f;//0.32f;
 		Physics2D.raycastsStartInColliders = false;
 		
 		if ((endX < startX && endY > startY) || (endX > startX && endY < startY))
@@ -574,7 +616,7 @@ public class AStar : MonoBehaviour {
 	{
 		RaycastHit2D[] zeroArray = new RaycastHit2D[1];
 		int hit1, hit2;
-		float thickness = 0.35f;//0.32f;
+		float thickness = 0.38f;//0.32f;
 		Physics2D.raycastsStartInColliders = false;
 		Vector2 end = new Vector2(endX, endY);
 		
