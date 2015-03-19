@@ -89,7 +89,7 @@ MonoBehaviour:
   - Wall
   - Cage
   damage: 5
-  speed: 1
+  speed: 10
   lifetime: 6
   whatIsTargetable:
     serializedVersion: 2
