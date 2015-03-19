@@ -6,18 +6,27 @@ using System.Collections.Generic;
 public class WaveManagerScript : MonoBehaviour {
 	
 	public int cooldownTime = 2;
-	
+	public float enemyCountMultiplier = 1.5f;
+	public float nextWaveMultiplier = 0.3f;
+	public float nextLevelMultiplier = 0.3f;
+	public List<GameObject> enemyList;
+	public static Dictionary<Enemy.EnemyType, int> enemiesRemaining = new Dictionary<Enemy.EnemyType, int>();
+	public GameObject wavePanelObject;
+
+	public int waveNumber = 0;
 	private int curLevel = -1;
 	private bool inCooldown = true;
 	private bool stopWave = false;
 	private bool inCooldownTimer = false;
 	private bool levelComplete = false;
 	private List<GameObject> curLevelSpawnPoints = new List<GameObject>();
+	public List<GameObject> nextWaveList = new List<GameObject>();
 	
 	private GameManager gameManager;
 	private BoardManager boardManager;
 	private AStar aStarScript;
 	private GameObject player;
+	private static WavePanelScript wavePanelScript;
 
 	void Awake()
 	{
@@ -33,6 +42,11 @@ public class WaveManagerScript : MonoBehaviour {
 		{
 			GetComponent<AStar>().Initialize(level);
 		}
+		enemiesRemaining.Clear();
+		foreach (Enemy.EnemyType type in Enum.GetValues( typeof(Enemy.EnemyType)))
+			enemiesRemaining.Add(type, 0);
+
+		wavePanelScript = wavePanelObject.GetComponent<WavePanelScript>();
 	}
 
 	// If in cooldown, do nothing
@@ -58,6 +72,11 @@ public class WaveManagerScript : MonoBehaviour {
 				levelComplete = false;
 			}
 		}
+	}
+
+	public static void UpdateWavePanel()
+	{
+		wavePanelScript.UpdatePanel();
 	}
 
 	private bool EnemiesCleared()
@@ -93,13 +112,50 @@ public class WaveManagerScript : MonoBehaviour {
 		inCooldownTimer = false;
 	}
 
+	public int curEnemyCount
+	{
+		get { 
+			int remaining = 0;
+			foreach (KeyValuePair<Enemy.EnemyType, int> pair in enemiesRemaining)
+				remaining += pair.Value;
+			return remaining;
+		}
+	}
+
+	private float finalEnemyCountMultiplier
+	{
+		get { return enemyCountMultiplier +
+					waveNumber * nextWaveMultiplier +
+					curLevel * nextLevelMultiplier; }
+	}
+
+	void CreateNextWaveList()
+	{
+		nextWaveList.Clear();
+		foreach(GameObject enemy in enemyList)
+		{
+			for (int i = 0; i < Mathf.FloorToInt( enemy.GetComponent<Enemy>().spawnFrequency * finalEnemyCountMultiplier); i++)
+			{
+				nextWaveList.Add(enemy);
+				enemiesRemaining[enemy.GetComponent<Enemy>().enemyType]++;
+			}
+		}
+	}
+
 	// Tells each spawnPoint to call the function SendNextWave
 	void sendWave()
 	{
-		foreach(GameObject spawnPoint in curLevelSpawnPoints)
+		waveNumber++;
+		CreateNextWaveList();
+		nextWaveList = new List<GameObject>( Helpers.EnumerableFuncs.toShuffledArray(nextWaveList) );
+
+		for (int i = 0; i < curLevelSpawnPoints.Count; i++)
 		{
-			spawnPoint.GetComponent<SpawnPoint>().SendNextWave();
+			curLevelSpawnPoints[i].GetComponent<SpawnPoint>().SetEnemyList(SplitEnemyList(nextWaveList, i, curLevelSpawnPoints.Count));
+			curLevelSpawnPoints[i].GetComponent<SpawnPoint>().SendNextWave();
 		}
+
+		wavePanelScript.UpdatePanel();
 	}
 
 	// Calls each spawn point in given level to initialize
@@ -163,6 +219,7 @@ public class WaveManagerScript : MonoBehaviour {
 			ChangeTarget(boardManager.levelCages[curLevel]);
 			InitializeSpawnPoints(nextLevel);
 			levelComplete = false;
+			waveNumber = -1;
 			sendWave();
 			inCooldown = false;
 		}
@@ -194,4 +251,16 @@ public class WaveManagerScript : MonoBehaviour {
 		ChangeTarget(player);
 	}
 
+	private List<GameObject> SplitEnemyList(List<GameObject> list, int index, int count)
+	{
+		float startIndex = Mathf.Ceil( index * ((float)list.Count / count) );
+		float endIndex = (index+1) * ((float)list.Count / count);
+		List<GameObject> newList = new List<GameObject>();
+
+		for (float i = startIndex; i < endIndex && i < list.Count; i+=1)
+		{
+			newList.Add(list[(int)i]);
+		}
+		return newList;
+	}
 }

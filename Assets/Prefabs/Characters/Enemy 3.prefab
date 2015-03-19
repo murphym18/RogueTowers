@@ -89,6 +89,8 @@ MonoBehaviour:
   attackPower: 3
   attackRate: .5
   level: 1
+  spawnFrequency: .800000012
+  enemyType: 2
   direction: 0
   damagedColor: {r: .800000012, g: .600000024, b: .600000024, a: .899999976}
 --- !u!212 &21282496

@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpawnPoint : IsometricObject {
-
-	public GameObject[] enemySpawns;
+	
 	public int spawnInterval = 3;
 	public int nextWaveLevel = 1;
 
 	private GameObject target;
 	private List<Vector3> pathPoints = null;
 	private int level = 0;
+	public List<GameObject> enemySpawns = new List<GameObject>();
 
 	private GameManager gameManager;
 	private BoardManager boardManager;
@@ -31,6 +31,11 @@ public class SpawnPoint : IsometricObject {
 		pathPoints = new List<Vector3>(GetInitialPath());
 	}
 
+	public void SetEnemyList(List<GameObject> newEnemyList)
+	{
+		enemySpawns = new List<GameObject>(newEnemyList);
+	}
+
 	// Called by WaveManagerScript
 	// Starts a coroutine to spawn enemies at given interval.
 	public void SendNextWave()
@@ -42,22 +47,10 @@ public class SpawnPoint : IsometricObject {
 	// Waits the given seconds between enemy spawns.
 	private IEnumerator SpawnAtInterval(int seconds, int waveLevel)
 	{
-		int maxEnemies = enemySpawns.Length * waveLevel;
-		int enemyCount = 0;
-		
-		while (enemyCount < maxEnemies)
+		foreach (GameObject enemyType in enemySpawns)
 		{
-			foreach (GameObject enemyType in enemySpawns)
-			{
-				if (enemyCount++ > maxEnemies)
-					break;
-
-				// Checks if spawnPoint is enabled, should not be neccessary, need to test.
-				if (enabled)
-					SpawnEnemy(enemyType);
-				
-				yield return new WaitForSeconds(seconds);
-			}
+			SpawnEnemy(enemyType);
+			yield return new WaitForSeconds(seconds);
 		}
 	}
 
