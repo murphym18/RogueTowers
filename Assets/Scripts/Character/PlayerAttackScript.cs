@@ -12,11 +12,11 @@ public class PlayerAttackScript : MonoBehaviour {
 	private TowerPlacement towerPlacement;
 
 	private float basicBulletSpeed = 1.5f;
-	private float basicBulletTimeout = 0.4f;
+	private float basicBulletDelay = 0.4f;
 	private float basicBulletTime = 0;
 
 	private float spreadBulletSpeed = 3.0f;
-	private float spreadBulletTimeout = 1.0f;
+	private float spreadBulletDelay = 1.0f;
 	private float spreadBulletTime = 0;
 
 	private enum AttackType {
@@ -60,7 +60,7 @@ public class PlayerAttackScript : MonoBehaviour {
 
 	private void BasicBulletAttack()
 	{
-		if (Time.time > basicBulletTime + basicBulletTimeout)
+		if (Time.time > basicBulletTime + basicBulletDelay)
 		{
 			Vector3 velocity = (GetMousePos() - transform.position).normalized * basicBulletSpeed;
 			
@@ -73,7 +73,7 @@ public class PlayerAttackScript : MonoBehaviour {
 
 	private void SpreadBulletAttack()
 	{
-		if (Time.time > spreadBulletTime + spreadBulletTimeout)
+		if (Time.time > spreadBulletTime + spreadBulletDelay)
 		{
 			Vector3 velocityMain = (GetMousePos() - transform.position).normalized * spreadBulletSpeed;
 			Vector3 velocitySide1 = RotateVector(velocityMain, 15).normalized * spreadBulletSpeed;

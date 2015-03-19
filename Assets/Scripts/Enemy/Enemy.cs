@@ -133,10 +133,14 @@ public class Enemy : IsometricObject {
 	{
 		if (coll.gameObject.tag == "Cage")
 		{
-			// stop and attack
-			rigidbody2D.velocity = Vector3.zero;
-			coll.gameObject.GetComponentInParent<CageScript>().damage();
-			KillSelf(0.0f);
+			if (coll.gameObject.GetComponentInParent<CageScript>().hp > 0
+			    && !coll.gameObject.GetComponentInParent<CageScript>().isUnlocked)
+			{
+				// stop and attack
+				rigidbody2D.velocity = Vector3.zero;
+				coll.gameObject.GetComponentInParent<CageScript>().damage();
+				KillSelf(0.0f);
+			}
 		}
 		else if (coll.gameObject.tag == "Player")
 		{

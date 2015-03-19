@@ -20,14 +20,19 @@ public class CageScript : IsometricObject {
 
 	public Color lockPickClockColor = new Color(1F,1F,1F,0.5F); 
 
+	public Sprite normalCageSprite;
+	public Sprite unlockedCageSprite;
+	public Sprite brokenCageSprite;
+
 	private float health;
 	private float maxHp;
 	private float magSqrt;
 	private GameObject gameManager;
 	private WaveManagerScript waveManager;
+	private SpriteRenderer spriteRenderer;
 	private GameObject player;
 	private float progress = 0F;	
-	private bool isUnlocked = false;
+	public bool isUnlocked = false;
 	private float uiFadeInDistance;
 
 	private SpriteRenderer healthBarForegroundSprite;
@@ -44,6 +49,7 @@ public class CageScript : IsometricObject {
 		gameManager = GameObject.Find("GameManager");
 		player = GameObject.FindWithTag("Player");
 		waveManager = gameManager.GetComponent<WaveManagerScript>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		uiFadeInDistance = unlockDistance;
 
 		maxHp = (float) hp;
@@ -79,6 +85,7 @@ public class CageScript : IsometricObject {
 							gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " now available!");
 							TowerPlacement.AddTowerType(unlockReward);
 						}
+						spriteRenderer.sprite = unlockedCageSprite;
 					}
 					
 					//ResetProgressMesh();
@@ -112,8 +119,9 @@ public class CageScript : IsometricObject {
 			if (hp > 0) {
 				hp -= 1;
 				if (hp == 0) {
+					spriteRenderer.sprite = brokenCageSprite;
 					waveManager.TriggerCageDestroyed();
-					Destroy(gameObject);
+					//Destroy(gameObject);
 				}
 			}
 		}
