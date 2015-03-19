@@ -275,7 +275,7 @@ MonoBehaviour:
   hp: 15
   uiFadeOutDistance: 6
   unlockDistance: 3
-  unlockTime: 30
+  unlockTime: 20
   fullHealthBarColor: {r: 0, g: 1, b: 0, a: 1}
   unlockReward: 0
   emptyHealthBarColor: {r: 1, g: 0, b: 0, a: 1}

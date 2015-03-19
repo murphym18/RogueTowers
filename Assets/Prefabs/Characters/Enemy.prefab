@@ -89,12 +89,7 @@ MonoBehaviour:
   attackPower: 1
   attackRate: 1
   level: 1
-  healthMultiplier: .5
-  movementSpeedMultiplier: .0799999982
-  attackPowerMultiplier: .150000006
-  attackRateMultiplier: .150000006
   spawnFrequency: 2
-  enemyType: 0
   direction: 0
   damagedColor: {r: .800000012, g: .600000024, b: .600000024, a: .899999976}
 --- !u!212 &21282496
