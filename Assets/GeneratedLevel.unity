@@ -2907,7 +2907,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -98.6700058
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_SizeDelta.x
@@ -2915,7 +2915,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 197.340012
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_AnchorMin.x
@@ -2923,7 +2923,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_AnchorMax.x
@@ -2931,7 +2931,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22481616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
       propertyPath: m_Pivot.x
@@ -5016,7 +5016,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 3
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
@@ -8025,7 +8025,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hud: {fileID: 1055854360}
-  levelTransitionNotice: {fileID: 0}
+  TyremFace: {fileID: 150022, guid: 86470569d5430034ba4bccecc44b247a, type: 2}
+  AlreyFace: {fileID: 175292, guid: b4f0cc80be97b5a4c8717394979fe381, type: 2}
+  ArckhanFace: {fileID: 166156, guid: 47e5ebaa9a85fef4e980d6f04eff3934, type: 2}
+  ClairaFace: {fileID: 123918, guid: c58c753528eac8d49b76fe92213c6c9d, type: 2}
+  DawnFace: {fileID: 150972, guid: a1a1b397ecb7ed346a7b231b0f6d0c5d, type: 2}
+  LukuFace: {fileID: 195750, guid: d6bf8a1d075c28143888c3b0b2cb5452, type: 2}
+  MaessFace: {fileID: 181616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
 --- !u!1 &2050185742
 GameObject:
   m_ObjectHideFlags: 0

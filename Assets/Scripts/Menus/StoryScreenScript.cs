@@ -3,7 +3,16 @@ using System.Collections;
 
 public class StoryScreenScript : MonoBehaviour {
 	public GameObject hud;
-	public GameObject levelTransitionNotice;
+
+	public GameObject TyremFace;
+	public GameObject AlreyFace;
+	public GameObject ArckhanFace;
+	public GameObject ClairaFace;
+	public GameObject DawnFace;
+	public GameObject LukuFace;
+	public GameObject MaessFace;
+
+	private GameObject levelTransitionNotice;
 
 	void Start(){
 		gameObject.SetActive(false);
@@ -24,7 +33,6 @@ public class StoryScreenScript : MonoBehaviour {
 
 	public void show(int levelNumber, GameObject levelTransitionNotice) {
 		this.levelTransitionNotice = levelTransitionNotice;
-		Debug.Log ("started level " + levelNumber);
 		gameObject.SetActive(true);
 	}
 
