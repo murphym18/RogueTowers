@@ -27,8 +27,8 @@ public class CageScript : IsometricObject {
 	private WaveManagerScript waveManager;
 	private GameObject player;
 	private float progress = 0F;	
-	private bool isUnlocked = false;
-	private bool isDestroyed = false;
+	public bool isUnlocked = false;
+	public bool isDestroyed = false;
 	private float uiFadeInDistance;
 
 	private SpriteRenderer healthBarForegroundSprite;
@@ -71,7 +71,7 @@ public class CageScript : IsometricObject {
 	}
 
 	private void updateCageLock() {
-		if (!isUnlocked) {
+		if (!isUnlocked && !isDestroyed) {
 			if (Input.GetButton ("UnlockCage")) {
 
 				
@@ -109,7 +109,7 @@ public class CageScript : IsometricObject {
 		healthBarForegroundSprite.material.color = healthBarColor;
 		healthBarBackgroundSprite.material.color = healthBarColor;
 
-		Color clockColor = magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
+		Color clockColor = isDestroyed || magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
 		clockBodySprite.material.color = clockColor;
 		clockProgressHandSprite.material.color = clockColor;
 	}
