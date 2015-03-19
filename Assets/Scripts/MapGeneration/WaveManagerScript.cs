@@ -145,6 +145,7 @@ public class WaveManagerScript : MonoBehaviour {
 	// Tells each spawnPoint to call the function SendNextWave
 	void sendWave()
 	{
+		gameManager.DisplayMessage("Wave Incoming");
 		waveNumber++;
 		CreateNextWaveList();
 		nextWaveList = new List<GameObject>( Helpers.EnumerableFuncs.toShuffledArray(nextWaveList) );
