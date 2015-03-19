@@ -266,7 +266,7 @@ public class Enemy : IsometricObject {
 		Vector2 dest = new Vector2(point.x, point.y);
 		//float thickness = 0.32f;
 		float thickness = boxCollider.size.x / 2 + 0.05f;
-		Physics2D.raycastsStartInColliders = false;
+		Physics2D.raycastsStartInColliders = true;
 		int hit1, hit2;
 		
 		if ((dest.x < start.x && dest.y > start.y) || (dest.x > start.x && dest.y < start.y))

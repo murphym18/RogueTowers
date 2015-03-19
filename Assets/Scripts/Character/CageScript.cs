@@ -119,9 +119,11 @@ public class CageScript : IsometricObject {
 			if (hp > 0) {
 				hp -= 1;
 				if (hp == 0) {
-					waveManager.TriggerCageDestroyed();
 					anim.SetBool("Destroyed", true);
 					isDestroyed = true; //Just to stop it from being unlocked after it is destroyed
+					GetComponent<BoxCollider2D>().center = new Vector2(0, -0.5f);
+					GetComponent<BoxCollider2D>().size = new Vector2(2, 1);
+					waveManager.TriggerCageDestroyed();
 					//Destroy(gameObject);
 				}
 			}

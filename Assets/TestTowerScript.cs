@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class TestTowerScript : MonoBehaviour {
     public enum TowerType { Pawn, Knight, Bishop, Rook, King, Queen }
@@ -112,7 +113,7 @@ public class TestTowerScript : MonoBehaviour {
     {
         var idx = -1;
         var dist = float.MaxValue;
-        var cagePos = GameManager.Current.getBoardManager.levelCages[GameManager.Current.currentLevel].transform;
+        var cagePos = (GameManager.Current.getBoardManager.levelCages[GameManager.Current.currentLevel] ?? GameManager.Current.playerInstance).transform;
         for (int i = 0; enemies != null && i < enemies.Length; i++)
         {
             if ((enemies[i].transform.position - tower.position).magnitude < dist)

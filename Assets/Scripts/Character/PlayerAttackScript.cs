@@ -7,15 +7,16 @@ public class PlayerAttackScript : MonoBehaviour {
 
 	// TODO: implement multiple attacks
 
-	public Rigidbody2D bullet;
+	public Rigidbody2D basicBullet;
+	public Rigidbody2D spreadBullet;
 
 	private TowerPlacement towerPlacement;
 
-	private float basicBulletSpeed = 1.5f;
+	private float basicBulletSpeed = 14f;
 	private float basicBulletDelay = 0.4f;
 	private float basicBulletTime = 0;
 
-	private float spreadBulletSpeed = 3.0f;
+	private float spreadBulletSpeed = 10f;
 	private float spreadBulletDelay = 1.0f;
 	private float spreadBulletTime = 0;
 
@@ -38,7 +39,7 @@ public class PlayerAttackScript : MonoBehaviour {
 			curAttackTypeIndex = ((curAttackTypeIndex + 1) % attackTypeList.Length);
 		}
 
-		if (Input.GetButton("Attack") && !towerPlacement.IsTowerSelected())
+		if ((Input.GetButton("Attack") || Input.GetMouseButton(1)) && !towerPlacement.IsTowerSelected())
 		{
 			Attack(attackTypeList[curAttackTypeIndex]);
 		}
@@ -64,7 +65,7 @@ public class PlayerAttackScript : MonoBehaviour {
 		{
 			Vector3 velocity = (GetMousePos() - transform.position).normalized * basicBulletSpeed;
 			
-			Rigidbody2D attackInstance = Instantiate(bullet, transform.position, Quaternion.identity) as Rigidbody2D;
+			Rigidbody2D attackInstance = Instantiate(basicBullet, transform.position, Quaternion.identity) as Rigidbody2D;
 			attackInstance.velocity = velocity;
 
 			basicBulletTime = Time.time;
@@ -79,9 +80,9 @@ public class PlayerAttackScript : MonoBehaviour {
 			Vector3 velocitySide1 = RotateVector(velocityMain, 15).normalized * spreadBulletSpeed;
 			Vector3 velocitySide2 = RotateVector(velocityMain, -15).normalized * spreadBulletSpeed;
 
-			Rigidbody2D attackInstanceMain = Instantiate(bullet, transform.position, Quaternion.identity) as Rigidbody2D;
-			Rigidbody2D attackInstanceSide1 = Instantiate(bullet, transform.position, Quaternion.identity) as Rigidbody2D;
-			Rigidbody2D attackInstanceSide2 = Instantiate(bullet, transform.position, Quaternion.identity) as Rigidbody2D;
+			Rigidbody2D attackInstanceMain = Instantiate(spreadBullet, transform.position, Quaternion.identity) as Rigidbody2D;
+			Rigidbody2D attackInstanceSide1 = Instantiate(spreadBullet, transform.position, Quaternion.identity) as Rigidbody2D;
+			Rigidbody2D attackInstanceSide2 = Instantiate(spreadBullet, transform.position, Quaternion.identity) as Rigidbody2D;
 			attackInstanceMain.velocity = velocityMain;
 			attackInstanceSide1.velocity = velocitySide1;
 			attackInstanceSide2.velocity = velocitySide2;

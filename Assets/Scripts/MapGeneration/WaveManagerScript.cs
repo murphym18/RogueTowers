@@ -236,6 +236,7 @@ public class WaveManagerScript : MonoBehaviour {
 		levelComplete = true;
 		curLevelSpawnPoints = new List<GameObject>();
 		// Debug.Log("Cage Destroyed!");
+		aStarScript.CageOfftarget(curLevel);
 		ChangeTarget(player);
 	}
 
@@ -249,6 +250,7 @@ public class WaveManagerScript : MonoBehaviour {
 		levelComplete = true;
 		curLevelSpawnPoints = new List<GameObject>();
 		// Debug.Log("Cage Unlocked!");
+		aStarScript.CageOfftarget(curLevel);
 		ChangeTarget(player);
 	}
 

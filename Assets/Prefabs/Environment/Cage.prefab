@@ -76,7 +76,7 @@ GameObject:
   - 61: {fileID: 6182512}
   - 114: {fileID: 11482512}
   - 95: {fileID: 9503094}
-  m_Layer: 2
+  m_Layer: 14
   m_Name: Cage
   m_TagString: Cage
   m_Icon: {fileID: 0}
@@ -221,10 +221,8 @@ MonoBehaviour:
   unlockReward: 0
   emptyHealthBarColor: {r: 1, g: 0, b: 0, a: 1}
   lockPickClockColor: {r: 0, g: 0, b: 0, a: 1}
-  normalCageSprite: {fileID: 21300000, guid: 67b4e0f300c7549829479f011dd9ca03, type: 3}
-  unlockedCageSprite: {fileID: 21300000, guid: 6f9075afd11ca49c69867e33a60143a4, type: 3}
-  brokenCageSprite: {fileID: 21300000, guid: 6146f3ce3dc684635891e0ca8c261af4, type: 3}
   isUnlocked: 0
+  isDestroyed: 0
 --- !u!212 &21277982
 SpriteRenderer:
   m_ObjectHideFlags: 1
