@@ -15,9 +15,10 @@ public class PauseScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Time.timeScale = gradualPause.TickValue;
+
         if (gameObject.activeSelf)
         {
+			Time.timeScale = gradualPause.TickValue;
             if (Input.GetButtonDown("Quit"))
             {
                 Application.LoadLevel("MainMenu");
