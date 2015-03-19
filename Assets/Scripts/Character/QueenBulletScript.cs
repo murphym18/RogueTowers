@@ -3,6 +3,8 @@ using System.Collections.Generic;
 public class QueenBulletScript : BulletScript
 {
     private Vector2 distanceVector;
+    private SpriteRenderer spriteRenderer;
+    private float startTime;
 
     public override Vector2 velocity
     {
@@ -28,8 +30,21 @@ public class QueenBulletScript : BulletScript
         }
     }
 
+    void Start()
+    {
+        startTime = Time.time;
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
+        base.Start();
+    }
+
+    void Update()
+    {
+        var c = spriteRenderer.color;
+        spriteRenderer.color = new Color(c.r, c.g, c.b, 1 - (Time.time - startTime) / lifetime);
+    }
+
     private new void OnTriggerEnter2D(Collider2D coll)
     {
-        // Just prevent the parent class from destroying this bullet
+        this.collider2D.enabled = false;
     }
 }

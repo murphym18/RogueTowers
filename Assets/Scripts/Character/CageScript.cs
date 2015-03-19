@@ -40,10 +40,15 @@ public class CageScript : IsometricObject {
 	private static Color fadeOutColorMultiplier = new Color(1F,1F,1F,0F);
 	private static Color invisibleColor = Color.black * fadeOutColorMultiplier;
 
+    private AudioSource unlockSound;
+
 	Animator anim;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+	    unlockSound = this.GetComponent<AudioSource>();
+
 		anim = GetComponent<Animator> ();
 		anim.SetBool("Destroyed", false);
 		anim.SetBool("Unlocked", false);
@@ -71,27 +76,38 @@ public class CageScript : IsometricObject {
 	}
 
 	private void updateCageLock() {
-		if (!isUnlocked && !isDestroyed) {
-			if (Input.GetButton ("UnlockCage")) {
+        if (!isUnlocked && !isDestroyed)
+        {
+            if (magSqrt < unlockDistance*unlockDistance)
+            {
+                if (Input.GetButton("UnlockCage"))
+                {
+                    progress += Time.deltaTime;
+                    if (unlockTime < progress)
+                    {
+                        isUnlocked = true;
+                        unlockSound.Stop();
+                        anim.SetBool("Unlocked", isUnlocked);
+                        lockPickClockColor = new Color(1F, 1F, 1F, 0F);
+                        waveManager.TriggerCageUnlocked();
+                        if (unlockReward != null)
+                        {
+                            gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " now available!");
+                            TowerPlacement.AddTowerType(unlockReward);
+                        }
+                    }
 
-				
-				if (magSqrt < unlockDistance*unlockDistance) {
-					progress += Time.deltaTime;
-					if (unlockTime < progress) {
-						isUnlocked = true;
-						anim.SetBool("Unlocked", isUnlocked);
-						lockPickClockColor = new Color(1F, 1F, 1F, 0F);
-						waveManager.TriggerCageUnlocked();
-						if (unlockReward != null) {
-							gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " now available!");
-							TowerPlacement.AddTowerType(unlockReward);
-						}
-					}
-					
-					//ResetProgressMesh();
-				}
-			}
-			float clockHandAngle = -progress/unlockTime*360F;
+                    if (!unlockSound.isPlaying)
+                        unlockSound.Play();
+                    //ResetProgressMesh();
+                }
+                else if (unlockSound.isPlaying)
+                    unlockSound.Pause();
+            }
+            else if (unlockSound.isPlaying)
+                unlockSound.Stop();
+
+            float clockHandAngle = -progress/unlockTime*360F;
 			clockProgressHandSprite.transform.eulerAngles = new Vector3(0F, 0F, clockHandAngle);
 		}
 	}
