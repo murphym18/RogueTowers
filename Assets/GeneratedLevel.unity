@@ -2562,6 +2562,7 @@ MonoBehaviour:
   enemyPocketCount: 3
   enemyPocketSize: 5
   spawnPointOffsetX: 6
+  unlockMult: 1.20000005
 --- !u!114 &491985822
 MonoBehaviour:
   m_ObjectHideFlags: 0
