@@ -230,7 +230,7 @@ public class WaveManagerScript : MonoBehaviour {
     {
         gameManager.DisplayMessage("Cage destroyed!");
 
-        Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
+        //Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;
 		levelComplete = true;
@@ -243,7 +243,7 @@ public class WaveManagerScript : MonoBehaviour {
 	{
         gameManager.DisplayMessage("Cage unlocked!");
 
-	    Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
+	    //Destroy(boardManager.levelCages[gameManager.currentLevel], 0);
 		stopWave = inCooldownTimer;
 		inCooldown = true;
 		levelComplete = true;
