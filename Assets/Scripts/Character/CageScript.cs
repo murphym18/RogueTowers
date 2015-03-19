@@ -92,6 +92,7 @@ public class CageScript : IsometricObject {
                         waveManager.TriggerCageUnlocked();
                         if (unlockReward != null)
                         {
+							GameObject.FindWithTag("HUD").GetComponent<HUD>().ShowStoryEndScreen();
                             gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " now available!");
                             TowerPlacement.AddTowerType(unlockReward);
                         }

@@ -61,10 +61,16 @@ public class UpgradeMenu : MonoBehaviour
     private void _recursivePrepare(GameObject obj)
     {
         var button = obj.GetComponent<UpgradeButton>();
+		var playerButton = obj.GetComponent<PlayerUpgradeButton>();
+
         if (button != null)
         {
             button.Prepare();
         }
+		else if (playerButton != null)
+		{
+			playerButton.Prepare();
+		}
         foreach (Transform child in obj.transform)
         {
             _recursivePrepare(child.gameObject);

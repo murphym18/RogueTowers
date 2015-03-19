@@ -22,9 +22,9 @@ public class LevelTrigger : MonoBehaviour
     {
         if (coll.gameObject.tag == "Player" && levelTransitionNotice != null)
         {
+			GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>().ShowStoryScreen(this.Level, levelTransitionNotice);
 			GameObject.Find("GameManager").GetComponent<WaveManagerScript>().TriggerNextLevel(this.Level);
-            levelTransitionNotice.SetActive(true);
-            Destroy(levelTransitionNotice, 3.9f );
+
         }
     }
 }
