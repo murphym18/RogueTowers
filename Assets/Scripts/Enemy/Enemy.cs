@@ -133,7 +133,7 @@ public class Enemy : IsometricObject {
 	{
 		if (coll.gameObject.tag == "Cage")
 		{
-			if (coll.gameObject.GetComponentInParent<CageScript>().hp > 0
+			if (!coll.gameObject.GetComponentInParent<CageScript>().isDestroyed
 			    && !coll.gameObject.GetComponentInParent<CageScript>().isUnlocked)
 			{
 				// stop and attack

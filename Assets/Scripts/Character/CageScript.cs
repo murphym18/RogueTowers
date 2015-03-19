@@ -33,6 +33,7 @@ public class CageScript : IsometricObject {
 	private GameObject player;
 	private float progress = 0F;	
 	public bool isUnlocked = false;
+	public bool isDestroyed = false;
 	private float uiFadeInDistance;
 
 	private SpriteRenderer healthBarForegroundSprite;
@@ -71,7 +72,7 @@ public class CageScript : IsometricObject {
 	}
 
 	private void updateCageLock() {
-		if (!isUnlocked) {
+		if (!isUnlocked && !isDestroyed) {
 			if (Input.GetButton ("UnlockCage")) {
 
 				
@@ -109,7 +110,7 @@ public class CageScript : IsometricObject {
 		healthBarForegroundSprite.material.color = healthBarColor;
 		healthBarBackgroundSprite.material.color = healthBarColor;
 
-		Color clockColor = magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
+		Color clockColor = isDestroyed || magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
 		clockBodySprite.material.color = clockColor;
 		clockProgressHandSprite.material.color = clockColor;
 	}
@@ -119,8 +120,11 @@ public class CageScript : IsometricObject {
 			if (hp > 0) {
 				hp -= 1;
 				if (hp == 0) {
+					isDestroyed = true;
 					spriteRenderer.sprite = brokenCageSprite;
 					waveManager.TriggerCageDestroyed();
+					GetComponent<BoxCollider2D>().center = new Vector2(0, -0.5);
+					GetComponent<BoxCollider2D>().size = new Vector2(2, 1);
 					//Destroy(gameObject);
 				}
 			}
