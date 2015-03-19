@@ -85,6 +85,10 @@ public class HUD : MonoBehaviour
 		}
 	}
 
+	public void ShowStoryEndScreen() {
+		StoryScreen.GetComponent<StoryScreenScript> ().showEnd ();
+	}
+
     public void show()
     {
         Time.timeScale = 1;

@@ -29,7 +29,7 @@ public class StoryScreenScript : MonoBehaviour {
 
 	void Start(){
 
-		towerToChar.Add(TowerType.Bishop, "Clairy");
+		towerToChar.Add(TowerType.Bishop, "Claira");
 		towerToChar.Add(TowerType.King, "Arckhan");
 		towerToChar.Add(TowerType.Knight, "Alry");
 		towerToChar.Add(TowerType.Pawn, "Dawn");
