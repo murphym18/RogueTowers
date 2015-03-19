@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
 
+	public GameObject StoryScreen;
     public GameObject OpenUpgradeScreen;
     public GameObject UpgradeScreen;
     public GameObject PauseScreen;
@@ -26,7 +27,8 @@ public class HUD : MonoBehaviour
 	public Sprite rookSprite;
 	public Sprite kingSprite;
 	public Sprite queenSprite;
-	
+
+	private int currentLevel = -1;
 	// Use this for initialization
 	void Start () {
 	    OpenUpgradeScreen.GetComponent<Button>().onClick.AddListener(this.OnClick_OpenUpgradeScreen);
@@ -74,6 +76,14 @@ public class HUD : MonoBehaviour
         	PauseScreen.GetComponent<PauseScript>().show();
 		}
     }
+
+	public void ShowStoryScreen(int levelNumber, GameObject levelTransitionNotice) {
+		if (this.currentLevel != levelNumber) {
+			this.currentLevel = levelNumber;
+			this.gameObject.SetActive (false);
+			StoryScreen.GetComponent<StoryScreenScript> ().show (levelNumber, levelTransitionNotice);
+		}
+	}
 
     public void show()
     {
