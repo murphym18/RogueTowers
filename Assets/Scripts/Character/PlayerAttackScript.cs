@@ -29,7 +29,7 @@ public class PlayerAttackScript : MonoBehaviour {
 	public static readonly Dictionary<AttackType, int> PlayerAttackLevels = new Dictionary<AttackType, int>();
 	private AttackType[] attackTypeList = {AttackType.BasicBullet, AttackType.SpreadBullet};
 	private int curAttackTypeIndex = 0;
-
+	private GameObject gameManager;
 	public static void Initialize()
 	{
 		foreach (AttackType attackType in Enum.GetValues(typeof (AttackType))) PlayerAttackLevels[attackType] = 0;
@@ -37,6 +37,8 @@ public class PlayerAttackScript : MonoBehaviour {
 
 	void Start () {
 		towerPlacement = GetComponent<TowerPlacement>();
+		gameManager = GameObject.FindGameObjectWithTag ("GameManager");
+
 	}
 	
 	// Update is called once per frame
@@ -46,9 +48,24 @@ public class PlayerAttackScript : MonoBehaviour {
 			curAttackTypeIndex = ((curAttackTypeIndex + 1) % attackTypeList.Length);
 		}
 
-		if ((Input.GetButton("Attack") || Input.GetMouseButton(1)) && !towerPlacement.IsTowerSelected())
-		{
-			Attack(attackTypeList[curAttackTypeIndex]);
+		if ((Input.GetButton("Attack") || Input.GetMouseButton(1)) && !towerPlacement.IsTowerSelected()){
+		    if (Input.GetButton("UnlockCage")) {
+				GameObject target = gameManager.GetComponent<AStar>().target;
+				if (target != null) {
+					CageScript cage = target.GetComponent<CageScript>();
+					if (cage != null) {
+						if (!cage.isPlayerInRange()) {
+							Attack(attackTypeList[curAttackTypeIndex]);
+						}
+					}
+					else {
+						Attack(attackTypeList[curAttackTypeIndex]);
+					}
+				}
+			}
+			else {
+				Attack(attackTypeList[curAttackTypeIndex]);
+			}
 		}
 	}
 
