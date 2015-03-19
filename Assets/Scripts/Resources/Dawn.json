@@ -1,0 +1,26 @@
+@Dawn,Help I'm Stuck in this cage!
+@Tyrem,Cages suck...
+#
+Dawn,
+{"start":
+[
+   {
+      "character":"",
+      "text":""
+   },
+   {
+      "character":"",
+      "text":"
+   }
+],
+"end":
+[
+   {
+      "character":"",
+      "text":"YAY! you saved me!"
+   },
+   {
+      "character":"Tyrem",
+      "text":"I am Tyrem."
+   }
+]}

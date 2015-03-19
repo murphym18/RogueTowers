@@ -81,7 +81,7 @@ public class HUD : MonoBehaviour
 		if (this.currentLevel != levelNumber) {
 			this.currentLevel = levelNumber;
 			this.gameObject.SetActive (false);
-			StoryScreen.GetComponent<StoryScreenScript> ().show (levelNumber, levelTransitionNotice);
+			StoryScreen.GetComponent<StoryScreenScript> ().showStart(levelNumber, levelTransitionNotice);
 		}
 	}
 
