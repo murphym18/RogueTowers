@@ -10,6 +10,8 @@ public class PlayerAttackScript : MonoBehaviour {
 	public Rigidbody2D basicBullet;
 	public Rigidbody2D spreadBullet;
 
+	public float damageUpgradeMultiplier = 0.25f;
+
 	private TowerPlacement towerPlacement;
 
 	private float basicBulletSpeed = 14f;
@@ -20,14 +22,19 @@ public class PlayerAttackScript : MonoBehaviour {
 	private float spreadBulletDelay = 1.0f;
 	private float spreadBulletTime = 0;
 
-	private enum AttackType {
+	public enum AttackType {
 		BasicBullet,
 		SpreadBullet
 	}
+	public static readonly Dictionary<AttackType, int> PlayerAttackLevels = new Dictionary<AttackType, int>();
 	private AttackType[] attackTypeList = {AttackType.BasicBullet, AttackType.SpreadBullet};
 	private int curAttackTypeIndex = 0;
 
-	// Use this for initialization
+	public static void Initialize()
+	{
+		foreach (AttackType attackType in Enum.GetValues(typeof (AttackType))) PlayerAttackLevels[attackType] = 0;
+	}
+
 	void Start () {
 		towerPlacement = GetComponent<TowerPlacement>();
 	}
@@ -66,6 +73,7 @@ public class PlayerAttackScript : MonoBehaviour {
 			Vector3 velocity = (GetMousePos() - transform.position).normalized * basicBulletSpeed;
 			
 			Rigidbody2D attackInstance = Instantiate(basicBullet, transform.position, Quaternion.identity) as Rigidbody2D;
+			attackInstance.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier*PlayerAttackLevels[AttackType.BasicBullet];
 			attackInstance.velocity = velocity;
 
 			basicBulletTime = Time.time;
@@ -83,6 +91,12 @@ public class PlayerAttackScript : MonoBehaviour {
 			Rigidbody2D attackInstanceMain = Instantiate(spreadBullet, transform.position, Quaternion.identity) as Rigidbody2D;
 			Rigidbody2D attackInstanceSide1 = Instantiate(spreadBullet, transform.position, Quaternion.identity) as Rigidbody2D;
 			Rigidbody2D attackInstanceSide2 = Instantiate(spreadBullet, transform.position, Quaternion.identity) as Rigidbody2D;
+
+			
+			attackInstanceMain.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier*PlayerAttackLevels[AttackType.SpreadBullet];
+			attackInstanceSide1.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier*PlayerAttackLevels[AttackType.SpreadBullet];
+			attackInstanceSide2.GetComponent<BulletScript>().damage *= 1 + damageUpgradeMultiplier*PlayerAttackLevels[AttackType.SpreadBullet];
+
 			attackInstanceMain.velocity = velocityMain;
 			attackInstanceSide1.velocity = velocitySide1;
 			attackInstanceSide2.velocity = velocitySide2;
