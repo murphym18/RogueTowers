@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: .368627459}
-  m_Sprite: {fileID: 21300000, guid: 6bf92f05ed3e0459f8105d6d5a882d95, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e14ceddf13294f2cb25861ba776065f, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -110,7 +110,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2511236001
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 09fcb2fd1cf114f65aefe4cc9d614bc5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e14ceddf13294f2cb25861ba776065f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!222 &22253750
 CanvasRenderer:

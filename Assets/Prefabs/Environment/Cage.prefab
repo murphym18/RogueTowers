@@ -75,6 +75,7 @@ GameObject:
   - 212: {fileID: 21282512}
   - 61: {fileID: 6182512}
   - 114: {fileID: 11482512}
+  - 95: {fileID: 9503094}
   m_Layer: 2
   m_Name: Cage
   m_TagString: Cage
@@ -153,7 +154,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 184844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -17.9593143, y: 10.633112, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 482522}
@@ -186,6 +187,21 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 2, y: 2}
   m_Center: {x: 0, y: 0}
+--- !u!95 &9503094
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184844}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84894ca63c87c457791369815f028025, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11482512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -202,8 +218,13 @@ MonoBehaviour:
   unlockDistance: 3
   unlockTime: 5
   fullHealthBarColor: {r: 0, g: 1, b: 0, a: 1}
+  unlockReward: 0
   emptyHealthBarColor: {r: 1, g: 0, b: 0, a: 1}
   lockPickClockColor: {r: 0, g: 0, b: 0, a: 1}
+  normalCageSprite: {fileID: 21300000, guid: 67b4e0f300c7549829479f011dd9ca03, type: 3}
+  unlockedCageSprite: {fileID: 21300000, guid: 6f9075afd11ca49c69867e33a60143a4, type: 3}
+  brokenCageSprite: {fileID: 21300000, guid: 6146f3ce3dc684635891e0ca8c261af4, type: 3}
+  isUnlocked: 0
 --- !u!212 &21277982
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -246,7 +267,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2511236001
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1d14ffdafb0e74472ab0a666a98acc5d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67b4e0f300c7549829479f011dd9ca03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21282514
 SpriteRenderer:

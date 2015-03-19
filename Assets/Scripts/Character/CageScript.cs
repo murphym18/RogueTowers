@@ -27,7 +27,8 @@ public class CageScript : IsometricObject {
 	private WaveManagerScript waveManager;
 	private GameObject player;
 	private float progress = 0F;	
-	private bool isUnlocked = false;
+	public bool isUnlocked = false;
+	public bool isDestroyed = false;
 	private float uiFadeInDistance;
 
 	private SpriteRenderer healthBarForegroundSprite;
@@ -39,8 +40,13 @@ public class CageScript : IsometricObject {
 	private static Color fadeOutColorMultiplier = new Color(1F,1F,1F,0F);
 	private static Color invisibleColor = Color.black * fadeOutColorMultiplier;
 
+	Animator anim;
+
 	// Use this for initialization
 	void Start () {
+		anim = GetComponent<Animator> ();
+		anim.SetBool("Destroyed", false);
+		anim.SetBool("Unlocked", false);
 		gameManager = GameObject.Find("GameManager");
 		player = GameObject.FindWithTag("Player");
 		waveManager = gameManager.GetComponent<WaveManagerScript>();
@@ -65,7 +71,7 @@ public class CageScript : IsometricObject {
 	}
 
 	private void updateCageLock() {
-		if (!isUnlocked) {
+		if (!isUnlocked && !isDestroyed) {
 			if (Input.GetButton ("UnlockCage")) {
 
 				
@@ -73,6 +79,7 @@ public class CageScript : IsometricObject {
 					progress += Time.deltaTime;
 					if (unlockTime < progress) {
 						isUnlocked = true;
+						anim.SetBool("Unlocked", isUnlocked);
 						lockPickClockColor = new Color(1F, 1F, 1F, 0F);
 						waveManager.TriggerCageUnlocked();
 						if (unlockReward != null) {
@@ -102,7 +109,7 @@ public class CageScript : IsometricObject {
 		healthBarForegroundSprite.material.color = healthBarColor;
 		healthBarBackgroundSprite.material.color = healthBarColor;
 
-		Color clockColor = magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
+		Color clockColor = isDestroyed || magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
 		clockBodySprite.material.color = clockColor;
 		clockProgressHandSprite.material.color = clockColor;
 	}
@@ -113,7 +120,9 @@ public class CageScript : IsometricObject {
 				hp -= 1;
 				if (hp == 0) {
 					waveManager.TriggerCageDestroyed();
-					Destroy(gameObject);
+					anim.SetBool("Destroyed", true);
+					isDestroyed = true; //Just to stop it from being unlocked after it is destroyed
+					//Destroy(gameObject);
 				}
 			}
 		}

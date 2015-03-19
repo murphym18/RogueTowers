@@ -12,6 +12,7 @@ GameObject:
   - 61: {fileID: 6129542}
   - 212: {fileID: 21229542}
   - 114: {fileID: 11429542}
+  - 95: {fileID: 9555150}
   m_Layer: 0
   m_Name: KnightBullet
   m_TagString: Bullet
@@ -57,6 +58,21 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_Size: {x: .209999993, y: .666666627}
   m_Center: {x: 0, y: 0}
+--- !u!95 &9555150
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129542}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66ce35bd20a45c243b257c3a499eaa97, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11429542
 MonoBehaviour:
   m_ObjectHideFlags: 1

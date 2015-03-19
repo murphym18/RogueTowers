@@ -50,7 +50,7 @@ public class BoardManager : MonoBehaviour
 			Sprite[] wallTiles = new Sprite[numWallSpiresPerTheme];
 			
 			for (int i = 0; i < numFloorSpiresPerTheme; ++i) {
-				floorTiles[i] = loadFromImage("Floors/" + tower.ToString() + i);
+				floorTiles[i] = loadFromImage("Floors/" /*+ tower.ToString()*/ + i);
 			}
 			for (int i = 0; i < numWallSpiresPerTheme; ++i) {
 				wallTiles[i] = loadFromImage("Walls/" + tower.ToString() + i);
