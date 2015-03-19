@@ -15,6 +15,7 @@ public class StoryScreenScript : MonoBehaviour {
 	public GameObject DawnFace;
 	public GameObject LukuFace;
 	public GameObject MaessFace;
+	public GameObject LowerThird;
 
 	private GameObject levelTransitionNotice;
 	private Dictionary<TowerType, string> towerToChar = new Dictionary<TowerType, string>();
@@ -38,7 +39,7 @@ public class StoryScreenScript : MonoBehaviour {
 
 		charToFace.Add ("Tyrem", TyremFace);
 		charToFace.Add ("Alrey", AlreyFace);
-		charToFace.Add ("rckhan", ArckhanFace);
+		charToFace.Add ("Arckhan", ArckhanFace);
 		charToFace.Add ("Claira", ClairaFace);
 		charToFace.Add ("Dawn", DawnFace);
 		charToFace.Add ("Luku", LukuFace);
@@ -96,10 +97,24 @@ public class StoryScreenScript : MonoBehaviour {
 		currentLine = 0;
 	}
 
+	private void clearDialog() {
+		if (LowerThird.transform.childCount > 1) {
+			Destroy (LowerThird.transform.GetChild (1).gameObject);
+		}
+		dialogBox.GetComponent<Text>().text = "";
+	}
+
 	private void showDialog() {
+		clearDialog();
 		string[] tmp = lines[currentLine++].Split ('\t');
 		string character = tmp [0];
 		string dialogText = tmp [1];
 		dialogBox.GetComponent<Text> ().text = dialogText;
+		Debug.Log ("character is " + character);
+		GameObject g = Instantiate (charToFace [character], Vector3.zero, Quaternion.identity) as GameObject;
+		g.transform.parent = LowerThird.transform;
+		RectTransform rtx = g.GetComponent<RectTransform> ();
+		rtx.offsetMax = rtx.anchorMax + Vector2.zero;
+		rtx.offsetMin = rtx.anchorMin + Vector2.zero;
 	}
 }
