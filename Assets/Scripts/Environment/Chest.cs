@@ -42,6 +42,7 @@ public class Chest : IsometricObject
             GetComponent<SpriteRenderer>().sprite = OpenSprite;
             coll.gameObject.GetComponent<Tyrem>().addUpgradePoints(PointsPerChest);
             GameObject.Find("GameManager").GetComponent<GameManager>().DisplayMessage(message);
+            this.GetComponent<AudioSource>().Play();
         }
     }
 }
