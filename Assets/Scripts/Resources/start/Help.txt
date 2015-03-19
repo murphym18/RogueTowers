@@ -1,5 +1,5 @@
-Enemy	Dearest Tyrem, we've cordially apprehend your family. 
+Enemy	Dearest Tyrem, we've apprehend your family. 
 Tyrem	What!?!?
-Enemy	They were stealing so we imprissioned them in cages.
-Tyrem	We'll see about that.
+Enemy	We imprissioned them in cages.
+Tyrem	NOOO!!!
 Enemy	Please don't attempt to rescue them by holding <space> near the cages.
