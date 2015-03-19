@@ -15,6 +15,7 @@ public class StoryScreenScript : MonoBehaviour {
 	public GameObject DawnFace;
 	public GameObject LukuFace;
 	public GameObject MaessFace;
+	public GameObject EnemyFace;
 	public GameObject LowerThird;
 
 	private GameObject levelTransitionNotice;
@@ -32,7 +33,7 @@ public class StoryScreenScript : MonoBehaviour {
 
 		towerToChar.Add(TowerType.Bishop, "Claira");
 		towerToChar.Add(TowerType.King, "Arckhan");
-		towerToChar.Add(TowerType.Knight, "Alry");
+		towerToChar.Add(TowerType.Knight, "Alrey");
 		towerToChar.Add(TowerType.Pawn, "Dawn");
 		towerToChar.Add(TowerType.Queen, "Maess");
 		towerToChar.Add(TowerType.Rook, "Luku");
@@ -44,15 +45,17 @@ public class StoryScreenScript : MonoBehaviour {
 		charToFace.Add ("Dawn", DawnFace);
 		charToFace.Add ("Luku", LukuFace);
 		charToFace.Add ("Maess", MaessFace);
+		charToFace.Add ("Enemy", EnemyFace);
 
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
+		showHelp ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (gameObject.activeSelf) {
 			Time.timeScale = 0;
-			if (Input.anyKeyDown) {
+			if (Input.GetMouseButtonDown(0)) {
 				if (currentLine < lines.Length) {
 					showDialog();
 				}
@@ -61,6 +64,12 @@ public class StoryScreenScript : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void showHelp() {
+		gameObject.SetActive (true);
+		loadText ("start/help");
+		showDialog();
 	}
 
 	public void showStart(int levelNumber, GameObject levelTransitionNotice) {

@@ -1288,8 +1288,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1373662010}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: .100000001}
-  m_AnchorMax: {x: .660000026, y: .899999976}
+  m_AnchorMin: {x: .370000005, y: .100000001}
+  m_AnchorMax: {x: .949999988, y: .899999976}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
@@ -1308,16 +1308,16 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 80278cabf4025fd4190a4c3fc0d09a6c, type: 3}
-    m_FontSize: 14
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
-    m_LineSpacing: 1
+    m_LineSpacing: 2
   m_Text: 
 --- !u!222 &188928039
 CanvasRenderer:
@@ -2574,6 +2574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a46278f0b2f444db25b24b3dc625d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &495668676
 GameObject:
   m_ObjectHideFlags: 0
@@ -9695,6 +9696,7 @@ MonoBehaviour:
   DawnFace: {fileID: 150972, guid: a1a1b397ecb7ed346a7b231b0f6d0c5d, type: 2}
   LukuFace: {fileID: 195750, guid: d6bf8a1d075c28143888c3b0b2cb5452, type: 2}
   MaessFace: {fileID: 181616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
+  EnemyFace: {fileID: 117650, guid: 5da1b19c6151b78498e3f4314c367790, type: 2}
   LowerThird: {fileID: 1373662008}
 --- !u!1 &2050185742
 GameObject:

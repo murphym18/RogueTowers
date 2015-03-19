@@ -22,7 +22,7 @@ public class CageScript : IsometricObject {
 
 	private float health;
 	private float maxHp;
-	private float magSqrt;
+	public float magSqrt;
 	private GameObject gameManager;
 	private WaveManagerScript waveManager;
 	private GameObject player;
@@ -41,6 +41,10 @@ public class CageScript : IsometricObject {
 	private static Color invisibleColor = Color.black * fadeOutColorMultiplier;
 
     private AudioSource unlockSound;
+
+	public bool isPlayerInRange() {
+		return magSqrt < unlockDistance * unlockDistance;
+	}
 
 	Animator anim;
 
