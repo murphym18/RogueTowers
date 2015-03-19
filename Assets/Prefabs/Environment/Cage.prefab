@@ -275,19 +275,11 @@ MonoBehaviour:
   hp: 15
   uiFadeOutDistance: 6
   unlockDistance: 3
-<<<<<<< HEAD
   unlockTime: 20
   fullHealthBarColor: {r: 0, g: 1, b: 0, a: 1}
   unlockReward: 0
   emptyHealthBarColor: {r: 1, g: 0, b: 0, a: 1}
   unlockMult: 1.10000002
-=======
-  unlockTime: 30
-  fullHealthBarColor: {r: 0, g: 1, b: 0, a: 1}
-  unlockReward: 0
-  emptyHealthBarColor: {r: 1, g: 0, b: 0, a: 1}
-  unlockMult: 1.20000005
->>>>>>> e5bf123edcc194767761bb8a71e7562afc3514fa
   lockPickClockColor: {r: 1, g: 1, b: 1, a: 1}
   magSqrt: 0
   isUnlocked: 0

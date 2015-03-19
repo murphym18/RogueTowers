@@ -89,10 +89,6 @@ MonoBehaviour:
   attackPower: .200000003
   attackRate: 3
   level: 1
-  healthMultiplier: .5
-  movementSpeedMultiplier: .119999997
-  attackPowerMultiplier: .119999997
-  attackRateMultiplier: .150000006
   spawnFrequency: 1.39999998
   enemyType: 1
   direction: 0
