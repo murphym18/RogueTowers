@@ -14,7 +14,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 	public int enemyPocketCount = 3;
 	public int enemyPocketSize = 5;
 	public int spawnPointOffsetX = 12;
-	public float unlockMult = 1.5F;
+	public float unlockMult = 1.2F;
 
 	private GameObject gameScript;
 	private BoardManager boardScript;
