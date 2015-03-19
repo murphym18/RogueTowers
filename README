@@ -1,0 +1,10 @@
+# Rogue Towers
+An interactive entertainment engineering project by,
+Nathan Farnum
+Jacob Bustamante
+David Maxson
+Michael Murphey
+
+The project can be installed from the provided zip file by unzipping the file and going into the appropriate folder for your operating system (windows or mac). The self-contained executable is within this folder.
+
+The project can be built from source using Unity 4.6. Unity 5.x may also work, but has not been tested and will not be supported. Just unzip the provided source archive file and open the project with Unity. From here you can run the game directly, or you can build it yourself using File -> Build & Run.

@@ -84,8 +84,11 @@ public class StoryScreenScript : MonoBehaviour {
 	public void resume() {
 		hud.GetComponent<HUD>().show();
 		gameObject.SetActive(false);
-		levelTransitionNotice.SetActive(true);
-		Destroy(levelTransitionNotice, 3.9f );
+	    if (levelTransitionNotice != null)
+	    {
+	        levelTransitionNotice.SetActive(true);
+	        Destroy(levelTransitionNotice, 3.9f);
+	    }
 	}
 
 
@@ -112,7 +115,7 @@ public class StoryScreenScript : MonoBehaviour {
 		dialogBox.GetComponent<Text> ().text = dialogText;
 		Debug.Log ("character is " + character);
 		GameObject g = Instantiate (charToFace [character], Vector3.zero, Quaternion.identity) as GameObject;
-		g.transform.parent = LowerThird.transform;
+		g.transform.SetParent(LowerThird.transform);
 		RectTransform rtx = g.GetComponent<RectTransform> ();
 		rtx.offsetMax = rtx.anchorMax + Vector2.zero;
 		rtx.offsetMin = rtx.anchorMin + Vector2.zero;
