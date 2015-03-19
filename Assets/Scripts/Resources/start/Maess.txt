@@ -1,6 +1,15 @@
-Tyrem	Oh no you're in a cage.
-Maess	WHY AREN'T YOU HOME?!?!
-Tyrem	What? I'm here saving the family.
-Maess	IT'S WAY PAST YOUR BEDTIME.
-Maess	GET ME OUT NOW!
-Tyrem	Okay.
+Maess	Oh hey there Tyrem!
+Tyrem	Hey Mom, how ya doing.
+Maess	Oh just peachy. How bout you?
+Tyrem	Just fine, just fine.
+Maess	So, the other's weren't able to escape on their own, huh?
+Tyrem	Nope.
+Maess	Oh well. I was hoping that they could get out without my or your father's help. 
+Maess	But it looks like you'll be the one to save us all.
+Tyrem	I figured you two were just allowing the kids to get some practice. 
+Tyrem	But I came just in case it was too dangerous. I'd say I was right.
+Maess	Oh really? Well, then I'm doubly glad you're here. 
+Maess	Now you can get even stronger saving us. Here, take my tower, 
+Maess	it's sure to demolish anything you encounter.
+Tyrem	Thanks Mom. See ya for dinner!
+Maess	Bye son! Supper is at 7pm!

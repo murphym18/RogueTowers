@@ -1,7 +1,16 @@
-Enemy	Tyrem, we've apprehend your family. 
-Tyrem	Villain!
-Enemy	We imprisoned them in cages.
-Tyrem	You don't know who your messing with. I'm a Rogue Bounty Hunter!
-Enemy	In that case, please don't attempt to rescue them by holding <space> near the cages.
-Tyrem	*&$%!
-Enemy	And even your <space or right click> gun won't save you from my minions!
+Enemy	*Smkee yibble mik mik* 
+Tyrem	Hey, you one of the guys that are keeping the Castellum family here? 
+Tyrem	On this rock, floating out in the middle of nowhere, no less?
+Enemy	*Twim twim! Hil cen yu ban!*
+Tyrem	... Well... I'll take that as a yes. 
+Tyrem	And since I probably won't be able to get any more info out of you, 
+Tyrem	time for you to say goodnight.
+Enemy	*Grur grur grur! Miv burs enven!*
+Tyrem	What the!? The little guy just went crazy! 
+Tyrem	Wait... what is that he's going after...? 
+Enemy	*Wimimimigu-ruupuuuuuuu!*
+Tyrem	Ah! A cage! 
+Tyrem	Look's like that's where my family members are being kept. 
+Tyrem	Time to get to work rescuing 'em. 
+Tyrem	Ah, I see, it looks like I can open the cage with the ~space bar~, 
+Tyrem	just like how I attack. How convenient. Let's do this.

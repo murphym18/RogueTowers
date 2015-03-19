@@ -1,3 +1,10 @@
-Claira	Please assist me in getting out of this cage!
-Tyrem	Like totally yeah.
-Claira	Here take some 
+Claira	Ah Tyrem, right on time!
+Tyrem	Oh hey Claira. You predicted me coming here just about now?
+Claira	Yup! After becoming the Castellum's official planner and time manager, 
+Claira	I've gotten pretty good predicting what's coming.
+Tyrem	Well color me impressed. Look's like you all have been doing just fine since I've left.
+Claira	Well, for the most part, but we would still love to have you back...
+Tyrem	I know. And one day, maybe. 
+Tyrem	But for now, let's just get everyone off this rock and home safely.
+Claira	Sounds like a plan! Here, take my Bishop tower - it's sure to be quite useful!
+Tyrem	Thanks sis. Now let's go fulfill your predictions of me saving everyone.
