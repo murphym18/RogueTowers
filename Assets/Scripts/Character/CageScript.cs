@@ -20,20 +20,15 @@ public class CageScript : IsometricObject {
 
 	public Color lockPickClockColor = new Color(1F,1F,1F,0.5F); 
 
-	public Sprite normalCageSprite;
-	public Sprite unlockedCageSprite;
-	public Sprite brokenCageSprite;
-
 	private float health;
 	private float maxHp;
 	private float magSqrt;
 	private GameObject gameManager;
 	private WaveManagerScript waveManager;
-	private SpriteRenderer spriteRenderer;
 	private GameObject player;
 	private float progress = 0F;	
-	public bool isUnlocked = false;
-	public bool isDestroyed = false;
+	private bool isUnlocked = false;
+	private bool isDestroyed = false;
 	private float uiFadeInDistance;
 
 	private SpriteRenderer healthBarForegroundSprite;
@@ -45,12 +40,16 @@ public class CageScript : IsometricObject {
 	private static Color fadeOutColorMultiplier = new Color(1F,1F,1F,0F);
 	private static Color invisibleColor = Color.black * fadeOutColorMultiplier;
 
+	Animator anim;
+
 	// Use this for initialization
 	void Start () {
+		anim = GetComponent<Animator> ();
+		anim.SetBool("Destroyed", false);
+		anim.SetBool("Unlocked", false);
 		gameManager = GameObject.Find("GameManager");
 		player = GameObject.FindWithTag("Player");
 		waveManager = gameManager.GetComponent<WaveManagerScript>();
-		spriteRenderer = GetComponent<SpriteRenderer>();
 		uiFadeInDistance = unlockDistance;
 
 		maxHp = (float) hp;
@@ -72,7 +71,7 @@ public class CageScript : IsometricObject {
 	}
 
 	private void updateCageLock() {
-		if (!isUnlocked && !isDestroyed) {
+		if (!isUnlocked) {
 			if (Input.GetButton ("UnlockCage")) {
 
 				
@@ -80,13 +79,13 @@ public class CageScript : IsometricObject {
 					progress += Time.deltaTime;
 					if (unlockTime < progress) {
 						isUnlocked = true;
+						anim.SetBool("Unlocked", isUnlocked);
 						lockPickClockColor = new Color(1F, 1F, 1F, 0F);
 						waveManager.TriggerCageUnlocked();
 						if (unlockReward != null) {
 							gameManager.GetComponent<GameManager>().DisplayMessage(unlockReward + " now available!");
 							TowerPlacement.AddTowerType(unlockReward);
 						}
-						spriteRenderer.sprite = unlockedCageSprite;
 					}
 					
 					//ResetProgressMesh();
@@ -110,7 +109,7 @@ public class CageScript : IsometricObject {
 		healthBarForegroundSprite.material.color = healthBarColor;
 		healthBarBackgroundSprite.material.color = healthBarColor;
 
-		Color clockColor = isDestroyed || magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
+		Color clockColor = magSqrt > unlockDistance*unlockDistance ? invisibleColor : lockPickClockColor;
 		clockBodySprite.material.color = clockColor;
 		clockProgressHandSprite.material.color = clockColor;
 	}
@@ -120,11 +119,9 @@ public class CageScript : IsometricObject {
 			if (hp > 0) {
 				hp -= 1;
 				if (hp == 0) {
-					isDestroyed = true;
-					spriteRenderer.sprite = brokenCageSprite;
 					waveManager.TriggerCageDestroyed();
-					GetComponent<BoxCollider2D>().center = new Vector2(0, -0.5);
-					GetComponent<BoxCollider2D>().size = new Vector2(2, 1);
+					anim.SetBool("Destroyed", true);
+					isDestroyed = true; //Just to stop it from being unlocked after it is destroyed
 					//Destroy(gameObject);
 				}
 			}

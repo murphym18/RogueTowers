@@ -314,6 +314,7 @@ GameObject:
   - 224: {fileID: 42599894}
   - 222: {fileID: 42599896}
   - 114: {fileID: 42599895}
+  - 114: {fileID: 42599897}
   m_Layer: 5
   m_Name: TowerTooltip
   m_TagString: Untagged
@@ -369,6 +370,19 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 405887794}
   m_GameObject: {fileID: 42599893}
+--- !u!114 &42599897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11428264, guid: fd29c80edc54e46e38c312a7bff183d2,
+    type: 2}
+  m_PrefabInternal: {fileID: 405887794}
+  m_GameObject: {fileID: 42599893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdbef85eff90c43d1a5922509e665776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textObject: {fileID: 795284854}
 --- !u!1 &43458215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,6 +2404,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 5
+  enemyCountMultiplier: 1.5
+  nextWaveMultiplier: .300000012
+  nextLevelMultiplier: .300000012
+  enemyList: []
+  wavePanelObject: {fileID: 0}
+  waveNumber: 0
+  nextWaveList: []
 --- !u!114 &491985821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3139,19 +3160,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'Tower Type
-
-    This is the description of this tower.
-
-
-    Level: 2
-
-    Attack: 1
-
-    Range: 3
-
-    Speed: 5'
+    m_LineSpacing: 1.10000002
+  m_Text: 
 --- !u!222 &795284857
 CanvasRenderer:
   m_ObjectHideFlags: 0
