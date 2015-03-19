@@ -1315,7 +1315,7 @@ MonoBehaviour:
     m_MaxSize: 40
     m_Alignment: 4
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
@@ -9636,6 +9636,7 @@ MonoBehaviour:
   DawnFace: {fileID: 150972, guid: a1a1b397ecb7ed346a7b231b0f6d0c5d, type: 2}
   LukuFace: {fileID: 195750, guid: d6bf8a1d075c28143888c3b0b2cb5452, type: 2}
   MaessFace: {fileID: 181616, guid: 9f09eab367c1bec4bbc4aecb40836e79, type: 2}
+  EnemyFace: {fileID: 117650, guid: 5da1b19c6151b78498e3f4314c367790, type: 2}
   LowerThird: {fileID: 1373662008}
 --- !u!1 &2050185742
 GameObject:

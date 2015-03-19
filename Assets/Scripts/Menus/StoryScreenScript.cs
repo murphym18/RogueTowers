@@ -15,6 +15,7 @@ public class StoryScreenScript : MonoBehaviour {
 	public GameObject DawnFace;
 	public GameObject LukuFace;
 	public GameObject MaessFace;
+	public GameObject EnemyFace;
 	public GameObject LowerThird;
 
 	private GameObject levelTransitionNotice;
@@ -44,8 +45,10 @@ public class StoryScreenScript : MonoBehaviour {
 		charToFace.Add ("Dawn", DawnFace);
 		charToFace.Add ("Luku", LukuFace);
 		charToFace.Add ("Maess", MaessFace);
+		charToFace.Add ("Enemy", MaessFace);
 
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
+		showHelp ();
 	}
 	
 	// Update is called once per frame
@@ -61,6 +64,12 @@ public class StoryScreenScript : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void showHelp() {
+		gameObject.SetActive (true);
+		loadText ("start/help");
+		showDialog();
 	}
 
 	public void showStart(int levelNumber, GameObject levelTransitionNotice) {
