@@ -37,8 +37,8 @@ public class HUD : MonoBehaviour
 		InitializeSprites();
 
 		// Temporarily start the player with all towers just for testing purposes
-		foreach (TestTowerScript.TowerType towerType in Enum.GetValues(typeof (TestTowerScript.TowerType)))
-			TowerPlacement.AddTowerType(towerType);
+		//foreach (TestTowerScript.TowerType towerType in Enum.GetValues(typeof (TestTowerScript.TowerType)))
+		//	TowerPlacement.AddTowerType(towerType);
 		PrepareChildren();
 	}
 

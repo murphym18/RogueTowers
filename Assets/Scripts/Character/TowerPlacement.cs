@@ -30,7 +30,7 @@ public class TowerPlacement : MonoBehaviour {
 	{
         foreach (TT towerType in Enum.GetValues(typeof (TT)))
         {
-            TowerCount[towerType] = InitialTowers[towerType];
+            TowerCount[towerType] = -1;
             PlacedTowers[towerType] = 0;
         }
 	}
@@ -98,6 +98,7 @@ public class TowerPlacement : MonoBehaviour {
 			towerInputKeys.Add(createTowerInput(buttonName, towerType));
 			TowerKeys.Add(towerType, curTowerKey);
 			curTowerKey++;
+			TowerCount[towerType] = InitialTowers[towerType];
 
 			hud.AddTowerButton(towerType);
 		}
