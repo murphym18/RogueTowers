@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TowerType = TestTowerScript.TowerType;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class StoryScreenScript : MonoBehaviour {
 	public GameObject hud;
@@ -31,21 +32,21 @@ public class StoryScreenScript : MonoBehaviour {
 
 	void Start(){
 
-		towerToChar.Add(TowerType.Bishop, "Claira");
-		towerToChar.Add(TowerType.King, "Arckhan");
-		towerToChar.Add(TowerType.Knight, "Alrey");
-		towerToChar.Add(TowerType.Pawn, "Dawn");
-		towerToChar.Add(TowerType.Queen, "Maess");
-		towerToChar.Add(TowerType.Rook, "Luku");
+        towerToChar.Add(TowerType.Bishop, "Claira".ToLower());
+        towerToChar.Add(TowerType.King, "Arckhan".ToLower());
+        towerToChar.Add(TowerType.Knight, "Alrey".ToLower());
+        towerToChar.Add(TowerType.Pawn, "Dawn".ToLower());
+        towerToChar.Add(TowerType.Queen, "Maess".ToLower());
+        towerToChar.Add(TowerType.Rook, "Luku".ToLower());
 
-		charToFace.Add ("Tyrem", TyremFace);
-		charToFace.Add ("Alrey", AlreyFace);
-		charToFace.Add ("Arckhan", ArckhanFace);
-		charToFace.Add ("Claira", ClairaFace);
-		charToFace.Add ("Dawn", DawnFace);
-		charToFace.Add ("Luku", LukuFace);
-		charToFace.Add ("Maess", MaessFace);
-		charToFace.Add ("Enemy", EnemyFace);
+	    charToFace.Add("Tyrem".ToLower(), TyremFace);
+        charToFace.Add("Alrey".ToLower(), AlreyFace);
+        charToFace.Add("Arckhan".ToLower(), ArckhanFace);
+        charToFace.Add("Claira".ToLower(), ClairaFace);
+        charToFace.Add("Dawn".ToLower(), DawnFace);
+        charToFace.Add("Luku".ToLower(), LukuFace);
+        charToFace.Add("Maess".ToLower(), MaessFace);
+        charToFace.Add("Enemy".ToLower(), EnemyFace);
 
 		//gameObject.SetActive(false);
 		showHelp ();
@@ -116,14 +117,19 @@ public class StoryScreenScript : MonoBehaviour {
 		dialogBox.GetComponent<Text>().text = "";
 	}
 
+    private Regex reg = new Regex(@"^(\S+)\s+(.+)$");
 	private void showDialog() {
 		clearDialog();
-		string[] tmp = lines[currentLine++].Split ('\t');
-		string character = tmp [0];
-		string dialogText = tmp [1];
+		//string[] tmp = lines[currentLine++].Split ('\t');
+	    while (!reg.IsMatch(lines[currentLine]))
+	        currentLine++;
+	    var tmp = reg.Match(lines[currentLine++]).Groups;
+
+		string character = tmp [1].Value;
+		string dialogText = tmp [2].Value;
 		dialogBox.GetComponent<Text> ().text = dialogText;
 		// Debug.Log ("character is " + character);
-		GameObject g = Instantiate (charToFace [character], Vector3.zero, Quaternion.identity) as GameObject;
+		GameObject g = Instantiate (charToFace [character.ToLower()], Vector3.zero, Quaternion.identity) as GameObject;
 		g.transform.SetParent(LowerThird.transform);
 		RectTransform rtx = g.GetComponent<RectTransform> ();
 		rtx.offsetMax = rtx.anchorMax + Vector2.zero;
