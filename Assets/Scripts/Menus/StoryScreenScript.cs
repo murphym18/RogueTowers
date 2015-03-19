@@ -45,7 +45,7 @@ public class StoryScreenScript : MonoBehaviour {
 		charToFace.Add ("Dawn", DawnFace);
 		charToFace.Add ("Luku", LukuFace);
 		charToFace.Add ("Maess", MaessFace);
-		charToFace.Add ("Enemy", MaessFace);
+		charToFace.Add ("Enemy", EnemyFace);
 
 		//gameObject.SetActive(false);
 		showHelp ();
