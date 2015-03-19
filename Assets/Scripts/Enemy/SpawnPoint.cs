@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpawnPoint : IsometricObject {
+public class SpawnPoint : MonoBehaviour {
 	
 	public int spawnInterval = 3;
 	public int nextWaveLevel = 1;

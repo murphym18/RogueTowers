@@ -40,6 +40,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c275ebf5023b4d02960de7e7048fedd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnInterval: 3
+  nextWaveLevel: 1
   enemySpawns:
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
@@ -49,8 +51,6 @@ MonoBehaviour:
   - {fileID: 182496, guid: e7811163ac21a44a4ba6951589b8c9bb, type: 2}
   - {fileID: 182496, guid: c7af498cde2d64e30ba63402ca4733de, type: 2}
   - {fileID: 182496, guid: e7811163ac21a44a4ba6951589b8c9bb, type: 2}
-  spawnInterval: 3
-  nextWaveLevel: 1
 --- !u!212 &21248762
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -69,8 +69,8 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 2511236001
-  m_SortingOrder: 0
+  m_SortingLayerID: 1535931219
+  m_SortingOrder: 26
   m_Sprite: {fileID: 21300000, guid: 4a1d267a0131647ec965c4861b93f566, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000

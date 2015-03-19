@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331086e721cf10f43b5933da3cbc579c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenSprite: {fileID: 21300002, guid: bbd9e1ad8db35c6458375958ecfebedb, type: 3}
+  OpenSprite: {fileID: 21300002, guid: 9be597f117d47ef4ea2faf8af991ca20, type: 3}
   PointsPerChest: 5
 --- !u!212 &21294354
 SpriteRenderer:
