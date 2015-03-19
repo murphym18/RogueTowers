@@ -135,10 +135,11 @@ public class BoardManager : MonoBehaviour
 
     }
 
-    private void ScatterObjects(int Count, GameObject ToGenerate, int XMin = 0, int XMax = -1, Func<int, int, bool> Condition = null)
+    private GameObject[] ScatterObjects(int Count, GameObject ToGenerate, int XMin = 0, int XMax = -1, Func<int, int, bool> Condition = null)
     {
         XMax = XMax == -1 ? numLevels*levelWidth : XMax;
         Condition = Condition ?? new Func<int, int, bool>((x, y) => true);
+        List<GameObject> objs = new List<GameObject>();
         while (Count > 0)
         {
             int x = Random.Range(XMin, XMax);
@@ -146,10 +147,11 @@ public class BoardManager : MonoBehaviour
             if (!map[x, y] && Condition(x, y))
             {
                 map[x, y] = true;
-                Instantiate(ToGenerate, new Vector3(x, y), Quaternion.identity);
+                objs.Add(Instantiate(ToGenerate, new Vector3(x, y), Quaternion.identity) as GameObject);
                 Count--;
             }
         }
+        return objs.ToArray();
     }
 
     private void CreateForeground()
@@ -158,7 +160,9 @@ public class BoardManager : MonoBehaviour
         {
             int left = lvl*levelWidth;
             int right = left + levelWidth;
-            ScatterObjects(Random.Range(minChestsPerLevel, maxChestsPerLevel), chestTile, left, right, chestPlacement);
+            var chests = ScatterObjects(Random.Range(minChestsPerLevel, maxChestsPerLevel), chestTile, left, right, chestPlacement);
+            foreach (var chest in chests)
+                chest.GetComponent<Chest>().PointsPerChest = lvl + 1;
         }
     }
 

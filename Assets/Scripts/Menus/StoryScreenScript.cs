@@ -55,7 +55,7 @@ public class StoryScreenScript : MonoBehaviour {
 	void Update () {
 		if (gameObject.activeSelf) {
 			Time.timeScale = 0;
-			if (Input.anyKeyDown) {
+			if (Input.GetMouseButtonDown(0)) {
 				if (currentLine < lines.Length) {
 					showDialog();
 				}

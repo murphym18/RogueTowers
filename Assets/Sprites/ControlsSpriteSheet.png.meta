@@ -5,6 +5,7 @@ TextureImporter:
     21300000: WASD
     21300002: NumberKeys
     21300004: Space
+    21300006: Reclaim
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -73,6 +74,16 @@ TextureImporter:
         y: 57
         width: 464
         height: 84
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Reclaim
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 313
+        width: 168
+        height: 87
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class AStar : MonoBehaviour {
 
-	private GameObject target;
+	public GameObject target;
 	private Node startNode;
 	private Node targetNode;
 	private int oldTargetX, oldTargetY;

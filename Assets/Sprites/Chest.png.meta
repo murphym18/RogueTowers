@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: bbd9e1ad8db35c6458375958ecfebedb
+guid: 9be597f117d47ef4ea2faf8af991ca20
 TextureImporter:
   fileIDToRecycleName:
-    21300000: chest (c)_0
-    21300002: chest (c)_1
+    21300000: Chest_0
+    21300002: Chest_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -39,31 +39,31 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 64
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: chest (c)_0
+    - name: Chest_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 50
-        height: 50
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chest (c)_1
+    - name: Chest_1
       rect:
         serializedVersion: 2
-        x: 50
+        x: 64
         y: 0
-        width: 50
-        height: 50
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
