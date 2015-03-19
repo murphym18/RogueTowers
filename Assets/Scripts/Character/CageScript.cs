@@ -17,7 +17,7 @@ public class CageScript : IsometricObject {
 	public Color fullHealthBarColor = Color.green;
 	public TT unlockReward;
 	public Color emptyHealthBarColor = Color.red;
-
+	public float unlockMult = 1.5F;
 	public Color lockPickClockColor = new Color(1F,1F,1F,0.5F); 
 
 	private float health;
