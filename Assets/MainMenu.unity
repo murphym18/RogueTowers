@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseOverColor: {r: 1, g: 0, b: 0, a: 1}
-  level: StartMenu
+  level: QUIT
   activationKey: Cancel
 --- !u!114 &1377142701
 MonoBehaviour:

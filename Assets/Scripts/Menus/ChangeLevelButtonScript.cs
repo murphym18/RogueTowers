@@ -5,6 +5,8 @@ public class ChangeLevelButtonScript : MainMenuTextButtonScript {
 	public string level = "GeneratedLevel";
     public string activationKey = "";
 	public override void onClick() {
+        if(level == "QUIT")
+            Application.Quit();
 		Application.LoadLevel(level);
 	}
 
