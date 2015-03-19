@@ -14,7 +14,6 @@ public class EnemyLayoutScript : MonoBehaviour {
 	public int enemyPocketCount = 3;
 	public int enemyPocketSize = 5;
 	public int spawnPointOffsetX = 12;
-	public float unlockMult = 1.5F;
 
 	private GameObject gameScript;
 	private BoardManager boardScript;
@@ -55,7 +54,7 @@ public class EnemyLayoutScript : MonoBehaviour {
 			int levelOffset_x = levelWidth * curLevel;
 			GameObject instance = Instantiate(CageObject, new Vector3(levelOffset_x + cageOffset_x, cageOffset_y), Quaternion.identity) as GameObject;
 			CageScript cage = instance.GetComponent<CageScript>();
-			cage.unlockTime *= (float) Math.Pow(unlockMult, curLevel);
+			cage.unlockTime *= (float) Math.Pow(cage.unlockMult, curLevel);
 			if (curLevel < boardScript.towers.Length)
 				cage.unlockReward = boardScript.towers[curLevel];
 			boardScript.levelCages[curLevel] = instance;
