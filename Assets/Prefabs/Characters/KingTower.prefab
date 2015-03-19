@@ -73,9 +73,9 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
-  damageUpgradeMultiplier: .25
+  damageUpgradeMultiplier: .5
   speedUpgradeMultiplier: .200000003
-  rangeUpgradeMultiplier: .25
+  rangeUpgradeMultiplier: 0
   _attackDelay: 1
   towerType: 4
   targetPriority: 0

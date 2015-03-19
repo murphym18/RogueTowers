@@ -13,7 +13,6 @@ GameObject:
   - 50: {fileID: 5073760}
   - 114: {fileID: 11473760}
   - 114: {fileID: 11454188}
-  - 114: {fileID: 11477558}
   - 95: {fileID: 9543644}
   - 114: {fileID: 11450178}
   m_Layer: 9
@@ -89,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basicBullet: {fileID: 5011720, guid: c58f66a1bfbf9426895d30f9170d4e69, type: 2}
   spreadBullet: {fileID: 5011720, guid: bd4ba01ccb6d44e64aa045034383d861, type: 2}
+  damageUpgradeMultiplier: .5
 --- !u!114 &11454188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,30 +121,6 @@ MonoBehaviour:
   maxSpeed: 5
   hp: 10
   gameOverScreen: {fileID: 0}
---- !u!114 &11477558
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173760}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90ca2ebd8eaa143448deace80c263ec0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bullet: {fileID: 133100, guid: 30eb39c130b0c3f49b92836da0a404d3, type: 2}
-  bulletYOffset: 0
-  whatIsTargetable:
-    serializedVersion: 2
-    m_Bits: 1024
-  damageUpgradeMultiplier: .25
-  speedUpgradeMultiplier: .200000003
-  rangeUpgradeMultiplier: .25
-  _attackDelay: 2
-  towerType: 0
-  targetPriority: 0
-  _attackRadius: 10
-  description: 
 --- !u!212 &21273760
 SpriteRenderer:
   m_ObjectHideFlags: 1

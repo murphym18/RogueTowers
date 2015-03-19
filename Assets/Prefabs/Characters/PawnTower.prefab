@@ -73,13 +73,13 @@ MonoBehaviour:
   whatIsTargetable:
     serializedVersion: 2
     m_Bits: 1024
-  damageUpgradeMultiplier: .25
+  damageUpgradeMultiplier: .400000006
   speedUpgradeMultiplier: .200000003
-  rangeUpgradeMultiplier: .25
+  rangeUpgradeMultiplier: .5
   _attackDelay: 1
   towerType: 0
   targetPriority: 0
-  _attackRadius: 10
+  _attackRadius: 4
   description: Average attack
 --- !u!212 &21201218
 SpriteRenderer:

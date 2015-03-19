@@ -74,12 +74,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   damageUpgradeMultiplier: .25
-  speedUpgradeMultiplier: .200000003
-  rangeUpgradeMultiplier: .25
+  speedUpgradeMultiplier: .150000006
+  rangeUpgradeMultiplier: .150000006
   _attackDelay: 3
   towerType: 5
   targetPriority: 1
-  _attackRadius: 10
+  _attackRadius: 15
   description: Sniper
 --- !u!212 &21201218
 SpriteRenderer:
