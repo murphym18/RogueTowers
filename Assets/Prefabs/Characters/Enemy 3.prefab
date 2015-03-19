@@ -12,7 +12,7 @@ GameObject:
   - 50: {fileID: 5082496}
   - 61: {fileID: 6182496}
   - 114: {fileID: 11476406}
-  - 95: {fileID: 9517976}
+  - 95: {fileID: 9578376}
   m_Layer: 10
   m_Name: Enemy 3
   m_TagString: Enemy
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6400001, y: 3.36999989, z: 0}
+  m_LocalPosition: {x: -20.2273979, y: 9.46145344, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -58,7 +58,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .639999986, y: .639999986}
   m_Center: {x: 0, y: 0}
---- !u!95 &9517976
+--- !u!95 &9578376
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -67,7 +67,7 @@ Animator:
   m_GameObject: {fileID: 182496}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: db775a85f010248cfb7f568a1c7aa816, type: 2}
+  m_Controller: {fileID: 9100000, guid: f5ba47aac068f4789873a87a72a9bc99, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -111,7 +111,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2511236001
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 03dac392d06894fd597c4e26c01df6e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5a7e6d6337c7c414d9a5560546ae751a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
