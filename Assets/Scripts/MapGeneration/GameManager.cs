@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
 
         TowerPlacement.Initialize();
         TestTowerScript.Initialize();
+		PlayerAttackScript.Initialize();
 
 	    Current = this;
 	}

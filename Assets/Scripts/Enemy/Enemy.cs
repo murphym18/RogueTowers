@@ -11,6 +11,12 @@ public class Enemy : IsometricObject {
 	public float attackRate = 1;
 	public float level = 1;
 
+	public float healthMultiplier = 0.20f;
+	public float movementSpeedMultiplier = 0.08f;
+	public float attackPowerMultiplier = 0.12f;
+	public float attackRateMultiplier = 0.15f;
+
+
 	public float spawnFrequency = 1.0f;
 	public enum EnemyType {Basic, Fast, Strong}
 	public EnemyType enemyType;
@@ -168,10 +174,10 @@ public class Enemy : IsometricObject {
 	void SetLevel(int level)
 	{
 		this.level = level;
-		health += health * level / 10;
-		movementSpeed += movementSpeed * level / 10;
-		attackPower += attackPower * level / 10;
-		attackRate += attackRate * level / 10;
+		health *= 1 + level*healthMultiplier;
+		movementSpeed *= 1 + level*movementSpeedMultiplier;
+		attackPower *= 1 + level*attackPowerMultiplier;
+		attackRate *= 1 + level*attackRateMultiplier;
 	}
 
 	// Follows the pathpoints.
