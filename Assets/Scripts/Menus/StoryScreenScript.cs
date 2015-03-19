@@ -15,6 +15,7 @@ public class StoryScreenScript : MonoBehaviour {
 	public GameObject DawnFace;
 	public GameObject LukuFace;
 	public GameObject MaessFace;
+	public GameObject EnemyFace;
 	public GameObject LowerThird;
 
 	private GameObject levelTransitionNotice;
@@ -32,7 +33,7 @@ public class StoryScreenScript : MonoBehaviour {
 
 		towerToChar.Add(TowerType.Bishop, "Claira");
 		towerToChar.Add(TowerType.King, "Arckhan");
-		towerToChar.Add(TowerType.Knight, "Alry");
+		towerToChar.Add(TowerType.Knight, "Alrey");
 		towerToChar.Add(TowerType.Pawn, "Dawn");
 		towerToChar.Add(TowerType.Queen, "Maess");
 		towerToChar.Add(TowerType.Rook, "Luku");
@@ -44,8 +45,10 @@ public class StoryScreenScript : MonoBehaviour {
 		charToFace.Add ("Dawn", DawnFace);
 		charToFace.Add ("Luku", LukuFace);
 		charToFace.Add ("Maess", MaessFace);
+		charToFace.Add ("Enemy", EnemyFace);
 
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
+		showHelp ();
 	}
 	
 	// Update is called once per frame
@@ -61,6 +64,12 @@ public class StoryScreenScript : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void showHelp() {
+		gameObject.SetActive (true);
+		loadText ("start/help");
+		showDialog();
 	}
 
 	public void showStart(int levelNumber, GameObject levelTransitionNotice) {
@@ -84,8 +93,11 @@ public class StoryScreenScript : MonoBehaviour {
 	public void resume() {
 		hud.GetComponent<HUD>().show();
 		gameObject.SetActive(false);
-		levelTransitionNotice.SetActive(true);
-		Destroy(levelTransitionNotice, 3.9f );
+	    if (levelTransitionNotice != null)
+	    {
+	        levelTransitionNotice.SetActive(true);
+	        Destroy(levelTransitionNotice, 3.9f);
+	    }
 	}
 
 
@@ -112,7 +124,7 @@ public class StoryScreenScript : MonoBehaviour {
 		dialogBox.GetComponent<Text> ().text = dialogText;
 		Debug.Log ("character is " + character);
 		GameObject g = Instantiate (charToFace [character], Vector3.zero, Quaternion.identity) as GameObject;
-		g.transform.parent = LowerThird.transform;
+		g.transform.SetParent(LowerThird.transform);
 		RectTransform rtx = g.GetComponent<RectTransform> ();
 		rtx.offsetMax = rtx.anchorMax + Vector2.zero;
 		rtx.offsetMin = rtx.anchorMin + Vector2.zero;

@@ -97,19 +97,32 @@ public class BoardManager : MonoBehaviour
 						instance = tileSets[tower].createFloorTile(x, y);
 						instance.transform.SetParent(boardHolder);
 					}
-					if (map[x, y])
-					{
-						instance = tileSets[tower].createWallTile(x, y);
-						instance.transform.SetParent(boardHolder);
-					}
-					else if (x%levelWidth == levelWidth - 1)
-					{
-						instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity) as GameObject;
-						instance.transform.SetParent(boardHolder);
-						map[x, y] = true;
-						levelBorderTiles[x / levelWidth].Add(instance);
-					}
-					if (x%levelWidth == 1 && !map[x-1,y])
+				    if (map[x, y])
+				    {
+				        instance = tileSets[tower].createWallTile(x, y);
+				        instance.transform.SetParent(boardHolder);
+				    }
+				    else
+				    {
+				        if (x%levelWidth == levelWidth - 1)
+				        {
+				            instance = Instantiate(borderTile, new Vector3(x, y), Quaternion.identity) as GameObject;
+				            instance.transform.SetParent(boardHolder);
+				            map[x, y] = true;
+				            levelBorderTiles[x/levelWidth].Add(instance);
+				        }
+				        if (x == 0)
+				        {
+				            instance = tileSets[tower].createWallTile(x - 1, y);
+				            instance.transform.SetParent(boardHolder);
+				        }
+				        if (x == levelWidth*numLevels - 1)
+				        {
+				            instance = tileSets[tower].createWallTile(x + 1, y);
+				            instance.transform.SetParent(boardHolder);
+				        }
+				    }
+				    if (x%levelWidth == 1 && !map[x-1,y])
 					{
 						instance = Instantiate(levelTriggerTile, new Vector3(x, y), Quaternion.identity) as GameObject;
 						instance.GetComponent<LevelTrigger>().levelTransitionNotice = nextLevelNotices[(x-1)/levelWidth];
