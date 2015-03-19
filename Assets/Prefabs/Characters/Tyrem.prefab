@@ -87,7 +87,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c3ee20b2182a46a68c2aa03e101cb0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 5011720, guid: dc5c99066161542bc975c4752e9dfca9, type: 2}
+  basicBullet: {fileID: 5011720, guid: c58f66a1bfbf9426895d30f9170d4e69, type: 2}
+  spreadBullet: {fileID: 5011720, guid: bd4ba01ccb6d44e64aa045034383d861, type: 2}
 --- !u!114 &11454188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,6 +144,7 @@ MonoBehaviour:
   towerType: 0
   targetPriority: 0
   _attackRadius: 10
+  description: 
 --- !u!212 &21273760
 SpriteRenderer:
   m_ObjectHideFlags: 1
